@@ -22,28 +22,32 @@ const DisplayComponent: React.FC = () => {
         <div className="absolute -bottom-[10%] -left-[10%] w-[50vw] h-[50vh] bg-amber-600/5 blur-[100px] rounded-full"></div>
       </div>
 
-      {/* 🚀 Header: Slim Luxury Rail - Responsive Height */}
+      {/* 🚀 Header: Slim Luxury Rail - Unified Branding on Right */}
       <div className="h-[12vh] min-h-[80px] bg-black/40 backdrop-blur-md flex items-center justify-between px-6 md:px-12 lg:px-20 border-b border-white/5 z-50 overflow-hidden">
-        {/* Brand */}
-        <div className="flex items-center gap-4 md:gap-6">
-           <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-xl flex items-center justify-center border border-amber-500 shadow-xl shrink-0">
-              <span className="text-2xl md:text-4xl">🍯</span>
+        {/* Left: Dynamic Promo Tags */}
+        <div className="flex gap-4 md:gap-8">
+           <div className="flex flex-col items-center">
+              <span className="text-xl md:text-2xl font-black text-white px-6 md:px-10 py-1.5 md:py-2.5 rounded-full border border-white/10 bg-white/5 leading-none">10% OFF</span>
+              <span className="text-[8px] md:text-[10px] font-bold text-white/40 mt-1 uppercase">AED 150+ ORDERS</span>
            </div>
-           <div className="flex flex-col">
-              <h1 className="text-2xl md:text-4xl font-black text-white tracking-tight leading-none">بيت العسل</h1>
-              <span className="text-[8px] md:text-[10px] font-bold text-amber-500 tracking-[0.4em] uppercase mt-1">Premium Al-Asal House</span>
+           <div className="flex flex-col items-center">
+              <span className="text-xl md:text-2xl font-black text-amber-500 px-6 md:px-10 py-1.5 md:py-2.5 rounded-full border border-amber-500/30 bg-amber-500/5 leading-none">15% OFF</span>
+              <span className="text-[8px] md:text-[11px] font-bold text-amber-500/40 mt-1 uppercase">AED 200+ ORDERS</span>
            </div>
         </div>
 
-        {/* Dynamic Promo Tags - Responsive Scaling */}
-        <div className="flex gap-4 md:gap-10">
-           <div className="flex flex-col items-center">
-              <span className="text-xl md:text-3xl font-black text-white px-4 md:px-8 py-1 md:py-2 rounded-full border border-white/10 bg-white/5 leading-none">10% OFF</span>
-              <span className="text-[8px] md:text-[11px] font-bold text-white/40 mt-1 uppercase">AED 150+ ORDERS</span>
+        {/* Right: Brand Identity - English Only */}
+        <div className="flex items-center gap-4 md:gap-6 flex-row-reverse">
+           <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-2xl overflow-hidden flex items-center justify-center border-2 border-amber-500 shadow-2xl shrink-0 p-1">
+              <img 
+                src="https://imgur.com/tpBWWTy.jpeg" 
+                alt="Honey House Logo" 
+                className="w-full h-full object-contain rounded-xl"
+              />
            </div>
-           <div className="flex flex-col items-center">
-              <span className="text-xl md:text-3xl font-black text-amber-500 px-4 md:px-8 py-1 md:py-2 rounded-full border border-amber-500/30 bg-amber-500/5 leading-none">15% OFF</span>
-              <span className="text-[8px] md:text-[11px] font-bold text-amber-500/40 mt-1 uppercase">AED 200+ ORDERS</span>
+           <div className="flex flex-col text-right">
+              <h1 className="text-xl md:text-3xl font-black text-white tracking-widest leading-none uppercase">Honey House</h1>
+              <span className="text-[8px] md:text-[10px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200 tracking-[0.4em] uppercase mt-1">Premium Quality</span>
            </div>
         </div>
       </div>
@@ -60,38 +64,54 @@ const DisplayComponent: React.FC = () => {
             className="w-full h-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center content-center"
           >
             {/* Left Column: Product Info */}
-            <div className="flex flex-col justify-center text-right space-y-6 md:space-y-8 lg:space-y-10 order-2 lg:order-1" dir="rtl">
-              <div className="space-y-2 md:space-y-4">
+            <div className="flex flex-col justify-center text-right space-y-4 md:space-y-6 lg:space-y-8 order-2 lg:order-1" dir="rtl">
+              <div className="space-y-2 md:space-y-3">
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  className="h-1.5 w-32 bg-amber-500 origin-right rounded-full shadow-[0_0_20px_rgba(245,158,11,0.4)]"
+                  className="h-1 w-24 bg-gradient-to-r from-amber-600 to-amber-400 origin-right rounded-full shadow-[0_0_20px_rgba(245,158,11,0.5)]"
                 />
-                <h2 className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-[1.1] tracking-tight drop-shadow-2xl">
+                <motion.h2 
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-100 to-amber-300 leading-[1.1] tracking-tight drop-shadow-2xl"
+                >
                   {product.titleAr}
-                </h2>
+                </motion.h2>
               </div>
 
               <motion.p 
-                className="text-xl md:text-3xl lg:text-4xl text-white/90 font-bold leading-relaxed border-r-8 border-amber-500/60 pr-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.3 }}
+                className="text-base md:text-lg lg:text-xl text-white/70 font-bold leading-relaxed border-r-4 border-amber-500 pr-5"
               >
                 {product.descriptionAr}
               </motion.p>
- 
-              {/* Pricing Grid */}
-              <div className="grid grid-cols-2 gap-4 md:gap-8 pt-4">
+
+              {/* Pricing Grid - Balanced & Eye-Catching */}
+              <div className="grid grid-cols-2 gap-3 md:gap-4 pt-2">
                 {product.prices.map((p, idx) => (
                   <motion.div 
                     key={p.id}
-                    initial={{ y: 20, opacity: 0 }}
+                    initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 + (idx * 0.1) }}
-                    className="bg-white/5 backdrop-blur-3xl p-6 md:p-10 rounded-[3rem] border border-white/10 flex flex-col items-center justify-center shadow-2xl group hover:border-amber-500/50 transition-all"
+                    className="bg-gradient-to-br from-white/10 to-amber-900/5 backdrop-blur-3xl p-4 md:p-5 rounded-[1.5rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group hover:border-amber-400 transition-all duration-500"
                   >
-                    <span className="text-xs md:text-sm font-black text-amber-500 uppercase tracking-widest mb-2">{p.sizeAr}</span>
-                    <div className="flex items-baseline gap-2">
-                       <span className="text-4xl md:text-6xl lg:text-7xl font-black text-white group-hover:text-amber-400 transition-colors">{p.price}</span>
-                       <span className="text-base md:text-2xl font-bold text-white/30 lowercase">درهم</span>
+                    <span className="text-[9px] md:text-[10px] font-black text-amber-500 uppercase tracking-widest mb-1">{p.sizeAr}</span>
+                    <div className="flex items-baseline gap-1">
+                       <motion.span 
+                         animate={{ 
+                           scale: [1, 1.05, 1],
+                           color: ['#ffffff', '#fcd34d', '#ffffff']
+                         }}
+                         transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: idx * 0.5 }}
+                         className="text-2xl md:text-3xl lg:text-4xl font-black"
+                       >
+                         {p.price}
+                       </motion.span>
+                       <span className="text-[10px] md:text-sm font-bold text-white/20 lowercase">درهم</span>
                     </div>
                   </motion.div>
                 ))}
@@ -122,17 +142,17 @@ const DisplayComponent: React.FC = () => {
       </div>
 
       {/* 📜 Footer: Robust Status Rail */}
-      <div className="h-[10vh] min-h-[70px] bg-black/90 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-10 md:px-20 relative shrink-0">
-        <div className="flex items-center gap-12 overflow-hidden">
+      <div className="h-[10vh] min-h-[60px] bg-black/95 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-10 md:px-20 relative shrink-0">
+        <div className="flex items-center gap-10 overflow-hidden">
           <div className="flex flex-col shrink-0">
-            <span className="text-[10px] uppercase text-white/20 font-black tracking-widest mb-1">PREMIUM SCALE HOUSE</span>
-            <span className="text-lg md:text-2xl font-bold text-white whitespace-nowrap">تطبق الخصومات تلقائياً عند الكاونتر ✦</span>
+            <span className="text-[9px] uppercase text-white/20 font-black tracking-widest mb-0.5">PREMIUM SELECTION VIEW</span>
+            <span className="text-base md:text-xl font-bold text-white whitespace-nowrap">تطبق الخصومات تلقائياً عند الكاونتر ✦</span>
           </div>
-          <div className="hidden lg:block w-px h-10 bg-white/10 mx-4"></div>
+          <div className="hidden lg:block w-px h-8 bg-white/10 mx-2"></div>
           <motion.span 
             animate={{ opacity: [0.5, 1, 0.5] }}
             transition={{ duration: 4, repeat: Infinity }}
-            className="hidden xl:block text-2xl font-bold text-amber-500"
+            className="hidden xl:block text-xl font-bold text-amber-500/80"
           >
             جودة تستحق الثقة لبيت العسل 🍯
           </motion.span>
