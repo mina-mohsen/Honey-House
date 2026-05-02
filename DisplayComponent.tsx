@@ -59,10 +59,10 @@ const DisplayComponent: React.FC = () => {
       </div>
 
       {/* 🍯 Main Presentation Console - Strictly Contained Within Frame */}
-      <div className="flex-1 relative p-8 flex items-center justify-center">
+      <div className="flex-1 relative p-4 flex items-center justify-center">
         {/* Decorative Frame */}
-        <div className="absolute inset-8 border-[12px] border-[#D97706]/10 rounded-[3rem] pointer-events-none"></div>
-        <div className="absolute inset-10 border-2 border-[#D97706]/20 rounded-[2.5rem] pointer-events-none"></div>
+        <div className="absolute inset-4 border-[12px] border-[#D97706]/10 rounded-[3rem] pointer-events-none"></div>
+        <div className="absolute inset-6 border-2 border-[#D97706]/20 rounded-[2.5rem] pointer-events-none"></div>
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -74,7 +74,7 @@ const DisplayComponent: React.FC = () => {
             className="w-full h-full flex flex-row-reverse items-center justify-center gap-12 max-w-7xl mx-auto px-10"
           >
             {/* 🖼️ Product Stage */}
-            <div className="w-[50%] h-[85%] flex items-center justify-center relative">
+            <div className="w-[50%] h-[90%] flex items-center justify-center relative">
               <motion.div
                 animate={{ scale: [1, 1.02, 1] }}
                 transition={{ duration: 4, repeat: Infinity }}
@@ -83,23 +83,23 @@ const DisplayComponent: React.FC = () => {
                 <img 
                   src={product.image} 
                   alt={product.titleAr}
-                  className="max-w-[95%] max-h-[95%] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] z-10"
+                  className="max-w-[105%] max-h-[105%] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] z-10"
                 />
                 <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1),transparent_70%)] rounded-full"></div>
               </motion.div>
             </div>
 
             {/* 📝 Content Area */}
-            <div className="w-[50%] flex flex-col justify-center text-right space-y-4" dir="rtl">
+            <div className="w-[50%] flex flex-col justify-center text-right space-y-6" dir="rtl">
               <div className="relative">
-                <h2 className="text-6xl font-black text-[#FBBF24] leading-tight drop-shadow-2xl">
+                <h2 className="text-7xl font-black text-[#FBBF24] leading-tight drop-shadow-2xl">
                   {product.titleAr}
                 </h2>
-                <div className="h-1.5 w-24 bg-[#FBBF24]/30 rounded-full mt-1"></div>
+                <div className="h-2 w-32 bg-[#FBBF24]/30 rounded-full mt-2"></div>
               </div>
 
               <motion.p 
-                className="text-2xl text-white/90 font-bold leading-relaxed pr-4 border-r-4 border-[#FBBF24]/50"
+                className="text-3xl text-white/90 font-bold leading-relaxed pr-6 border-r-8 border-[#FBBF24]/50"
               >
                 {product.descriptionAr}
               </motion.p>
@@ -128,22 +128,22 @@ const DisplayComponent: React.FC = () => {
       </div>
 
       {/* 📜 Bottom Footer: Terms & Progress */}
-      <div className="h-[10%] bg-black/60 backdrop-blur-xl border-t border-white/10 flex items-center justify-between px-16 relative">
+      <div className="h-[10%] bg-black/60 backdrop-blur-xl border-t border-white/10 flex items-center justify-between px-6 relative">
         {/* ❌ Exit Button - Small at bottom left */}
         <button 
           onClick={() => { window.location.hash = ""; window.location.reload(); }}
-          className="bg-red-600/80 hover:bg-red-500 text-white px-3 py-1 rounded-full text-[10px] font-black shadow-lg transition-all z-[100] border border-white/20 active:scale-95"
+          className="bg-red-600/80 hover:bg-red-500 text-white px-4 py-1.5 rounded-full text-[12px] font-black shadow-lg transition-all z-[100] border border-white/20 active:scale-95"
         >
            إغلاق ✕
         </button>
 
-        <div className="flex items-center gap-10">
+        <div className="flex items-center gap-6">
           <div className="flex flex-col">
-            <span className="text-xs uppercase text-white/40 font-bold tracking-widest">Discount Terms</span>
-            <span className="text-xl font-bold text-[#FBBF24]">تطبق الخصومات تلقائياً عند الكاونتر</span>
+            <span className="text-[10px] uppercase text-white/40 font-bold tracking-widest">Discount Terms</span>
+            <span className="text-lg font-bold text-[#FBBF24]">تطبق الخصومات تلقائياً عند الكاونتر</span>
           </div>
-          <div className="w-px h-8 bg-white/20"></div>
-          <p className="text-xl font-medium text-white/70">تذوق مجاني لجميع الأنواع! 🍯</p>
+          <div className="w-px h-6 bg-white/20"></div>
+          <p className="text-lg font-medium text-white/70">تذوق مجاني لجميع الأنواع! 🍯</p>
         </div>
 
         <div className="flex gap-3">
