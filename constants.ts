@@ -10,11 +10,22 @@ export interface ProductExtended extends Product {
 
 export const PRODUCTS: ProductExtended[] = [
   {
+    id: 'teaser-hook',
+    titleAr: 'جاري فحص الجودة...',
+    titleEn: 'Scanning Quality...',
+    descriptionAr: 'استعد لاكتشاف أنقى أنواع العسل في الإمارات. فحص النقاء: 100% عسل خام.',
+    descriptionEn: 'Get ready to discover the purest honey in UAE. Purity Check: 100% Raw Honey.',
+    image: 'https://images.unsplash.com/photo-1558611997-d60293774640?q=80&w=2070&auto=format&fit=crop',
+    benefitsAr: [],
+    benefitsEn: [],
+    prices: []
+  },
+  {
     id: 'squeeze-honey',
     titleAr: 'عسل طبيعي (عبوة اسكويز)',
     titleEn: 'Natural Honey (Squeeze Bottle)',
-    descriptionAr: 'عسلنا النقي في عبوة "اسكويز" العصرية. مثالية للاستخدام السريع، تمنحك تحكماً كامل بالكمية بدون تنقيط أو فوضى.',
-    descriptionEn: 'Pure honey in a modern squeeze bottle. Perfect for quick use, giving you full control with no drips or mess.',
+    descriptionAr: 'عسلنا النقي في عبوة "اسكويز" العصرية. رفيقك المثالي لتقوية مناعة أطفالك وحمايتهم يومياً من نوبات البرد المتكررة بلمسة واحدة سهلة.',
+    descriptionEn: 'Pure honey in a modern squeeze bottle. Your perfect companion to strengthen your children\'s immunity and protect them daily from recurring colds with one easy squeeze.',
     image: 'https://imgur.com/vIdADYw.jpeg',
     benefitsAr: ['سهل الاستخدام', 'غني بالأنزيمات'],
     benefitsEn: ['Mess-free', 'Enzyme Rich'],
@@ -27,8 +38,8 @@ export const PRODUCTS: ProductExtended[] = [
     id: 'clover-honey',
     titleAr: 'عسل نحل طبيعي بالشمع الفاخر',
     titleEn: 'Natural Honey with Premium Comb',
-    descriptionAr: 'عسل طبيعي فاخر، يأتيكم مباشرة من المنحل مع الشمع، ليضمن لكم تجربة فريدة ونكهة غنية أصيلة.',
-    descriptionEn: 'Luxurious natural honey, delivered directly from the apiary with comb, ensuring a unique and authentic flavor.',
+    descriptionAr: 'عسل طبيعي فاخر مباشرة من المنحل مع الشمع. يعتبر مضاداً حيوياً طبيعياً جباراً يحمي صدرك وجهازك التنفسي من الحساسية والكحة.',
+    descriptionEn: 'Luxurious natural honey direct from the apiary with comb. Acts as a powerful natural antibiotic that protects your chest and respiratory system from allergies and cough.',
     image: 'https://imgur.com/8ozxEOZ.jpeg',
     benefitsAr: ['مقوي للمناعة', 'مضاد حيوي طبيعي'],
     benefitsEn: ['Immunity Boost', 'Natural Antibiotic'],
@@ -42,8 +53,8 @@ export const PRODUCTS: ProductExtended[] = [
     id: 'health-offer',
     titleAr: 'عرض الطاقة القصوى والصحة الشاملة',
     titleEn: 'Ultimate Energy & Holistic Health Offer',
-    descriptionAr: 'مجموعة متكاملة لتعزيز طاقتك وصحتك العامة، تجمع بين نقاء العسل وفوائد اللقاح وغذاء الملكات.',
-    descriptionEn: 'A complete package to boost your energy and overall health, combining pure honey, pollen, and royal jelly.',
+    descriptionAr: 'الحل الشامل والمثالي للخمول والضعف العام؛ يمُدك بطاقة وحيوية مضاعفة ويقضي على الإجهاد الذهني والبدني بفضل غذاء الملكات.',
+    descriptionEn: 'The holistic solution for lethargy and general weakness; provides doubled energy and vitality, eliminating mental and physical stress thanks to royal jelly.',
     image: 'https://imgur.com/QCqn0kZ.jpeg',
     benefitsAr: ['طاقة فورية', 'تنشيط ذهني'],
     benefitsEn: ['Instant Energy', 'Mental Focus'],
@@ -57,8 +68,8 @@ export const PRODUCTS: ProductExtended[] = [
     id: 'honeycomb',
     titleAr: 'شهد العسل الطبيعي',
     titleEn: 'Natural Honeycomb',
-    descriptionAr: 'قرص العسل الطبيعي الذي يبنيه النحل من شمع العسل، ويحتوي على العسل الخام المختوم.',
-    descriptionEn: 'Natural honeycomb built by bees from beeswax, containing sealed raw honey.',
+    descriptionAr: 'قرص العسل الطبيعي كما بناه النحل. علاج مثالي لالتهابات اللثة والحلق، ومصدر خام 100% غني بالأنزيمات الحية.',
+    descriptionEn: 'Natural honeycomb as built by bees. Perfect treatment for gum and throat infections, and a 100% raw source rich in live enzymes.',
     image: 'https://imgur.com/GNhW77E.jpeg',
     benefitsAr: ['صحي لللثة', 'خام وغير مصفى'],
     benefitsEn: ['Gum Health', 'Raw & Unfiltered'],
@@ -71,8 +82,8 @@ export const PRODUCTS: ProductExtended[] = [
     id: 'royal-nuts',
     titleAr: 'عسل بالمكسرات الملكية',
     titleEn: 'Royal Nuts Honey',
-    descriptionAr: 'طاقة طبيعية وقرمشة لا تقاوم! مزيج فاخر من العسل المصري الأصيل مع تشكيلة ملكية من المكسرات المحمصة.',
-    descriptionEn: 'Natural energy and irresistible crunch! A luxurious blend of authentic honey with a royal selection of roasted nuts.',
+    descriptionAr: 'قنبلة من الفيتامينات والمعادن! بديل صحي ومقوي للأعصاب، يساعد في بناء العضلات وتعويض النقص الغذائي بطعم ملكي.',
+    descriptionEn: "A vitamins and minerals bomb! A healthy nerve-strengthening alternative that helps build muscle and compensate for nutritional deficiency with a royal taste.",
     image: 'https://imgur.com/FSyDB82.jpeg',
     benefitsAr: ['بديل صحي للحلويات', 'غني بالأوميغا'],
     benefitsEn: ['Healthy Dessert', 'Omega Rich'],
@@ -80,6 +91,17 @@ export const PRODUCTS: ProductExtended[] = [
       { id: 'royal_nuts_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 70 },
       { id: 'royal_nuts_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 130 },
     ]
+  },
+  {
+    id: 'brand-manifesto-hook',
+    titleAr: 'لماذا يختار النخبة "بيت العسل"؟',
+    titleEn: 'Why Choose Honey House?',
+    descriptionAr: 'لأننا نمتلك مناحلنا منذ أكثر من 25 عاماً. خبرة عريقة تضمن لك عسلاً خاماً لم تمسه يد العبث، من الخلية إلى مائدتك مباشرة.',
+    descriptionEn: "Because we have owned our apiaries for over 25 years. A long-standing heritage that guarantees you raw honey untouched by tampering, straight from the hive to your table.",
+    image: 'https://images.unsplash.com/photo-1558611997-d60293774640?q=80&w=2070&auto=format&fit=crop',
+    benefitsAr: ['25 عاماً من الخبرة', 'مناحلنا الخاصة', 'عسل خام 100%', 'تغليف فاخر'],
+    benefitsEn: ['25 Years Experience', 'Own Apiaries', '100% Raw Honey', 'Premium Packaging'],
+    prices: []
   }
 ];
 
