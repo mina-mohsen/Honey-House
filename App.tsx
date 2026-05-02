@@ -37,11 +37,7 @@ const App: React.FC = () => {
     };
   }, []);
 
-  const isDisplayRoute = route.endsWith('/display') || route === '#/display';
-
-  if (isDisplayRoute) {
-    return <DisplayComponent />;
-  }
+  const isDisplayRoute = route.includes('display');
 
   /* ================= Admin ================= */
   const [isAdmin, setIsAdmin] = useState(false);
@@ -406,6 +402,10 @@ const App: React.FC = () => {
       alert((lang === "ar" ? "حدث خطأ: " : "Error: ") + (error?.message || ""));
     }
   };
+
+  if (isDisplayRoute) {
+    return <DisplayComponent />;
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-amber-50 to-white text-slate-900 font-cairo">
@@ -1261,6 +1261,13 @@ const App: React.FC = () => {
                 className="px-4 py-2 rounded-lg bg-purple-700 hover:bg-purple-600 transition-colors text-sm font-bold"
               >
                 {isAdmin ? (lang === "ar" ? "خروج ادمن" : "Admin Logout") : (lang === "ar" ? "دخول ادمن" : "Admin Login")}
+              </button>
+
+              <button
+                onClick={() => { window.location.hash = "#/display"; }}
+                className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 transition-colors text-sm font-black flex items-center gap-2 shadow-lg scale-110"
+              >
+                🖥️ {lang === "ar" ? "شاشة عرض المتجر" : "Store Display Mode"}
               </button>
             </div>
 
