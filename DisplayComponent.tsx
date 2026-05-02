@@ -15,33 +15,41 @@ const DisplayComponent: React.FC = () => {
   const product = PRODUCTS[currentIndex];
 
   return (
-    <div className="fixed inset-0 bg-[#050505] text-white flex flex-col font-cairo overflow-hidden">
-      {/* 🚀 Header: Luxury Brand Console */}
-      <div className="h-[15%] bg-black flex items-center justify-between px-10 shadow-[0_10px_50px_rgba(0,0,0,0.9)] z-50 border-b-2 border-[#D97706] relative">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,119,6,0.1),transparent)] pointer-events-none"></div>
+    <div className="fixed inset-0 bg-[#020202] text-white flex flex-col font-cairo overflow-hidden selection:bg-gold/30">
+      {/* 🌌 Deep Atmospheric Layer */}
+      <div className="absolute inset-0 pointer-events-none opacity-40">
+        <div className="absolute top-[-10%] right-[-10%] w-[60%] h-[60%] bg-[#D97706]/20 blur-[120px] rounded-full"></div>
+        <div className="absolute bottom-[-10%] left-[-10%] w-[50%] h-[50%] bg-[#C5A059]/10 blur-[100px] rounded-full"></div>
+      </div>
+
+      {/* 🚀 Header: Premium Brand Console */}
+      <div className="h-[14%] bg-black/40 backdrop-blur-2xl flex items-center justify-between px-12 shadow-[0_15px_50px_rgba(0,0,0,0.8)] z-50 border-b border-gold/20 relative overflow-hidden">
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer pointer-events-none"></div>
         
         {/* Left: 10% Promo */}
         <motion.div 
-          animate={{ scale: [1, 1.02, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity }}
-          className="bg-[#FBBF24] px-6 py-3 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
+          animate={{ y: [0, -2, 0], filter: ["drop-shadow(0 0 5px rgba(217,119,6,0.3))", "drop-shadow(0 0 15px rgba(217,119,6,0.5))", "drop-shadow(0 0 5px rgba(217,119,6,0.3))"] }}
+          transition={{ duration: 3, repeat: Infinity }}
+          className="bg-gradient-to-br from-[#FBBF24] to-[#D97706] px-8 py-4 rounded-[2rem] border border-white/30 flex flex-col items-center justify-center shadow-2xl relative overflow-hidden group"
         >
-          <span className="text-3xl font-black text-black leading-none uppercase">10% OFF</span>
-          <span className="text-sm font-black text-black/60 mt-0.5">AED 150+</span>
+          <div className="absolute inset-0 bg-white/10 translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+          <span className="text-3xl font-black text-black leading-none uppercase tracking-tighter">10% OFF</span>
+          <span className="text-xs font-black text-black/70 mt-1">AED 150+ ORDERS</span>
         </motion.div>
 
         {/* Center: Brand Identity */}
         <div className="flex flex-col items-center z-10">
           <motion.div 
-             className="flex items-center gap-4"
+             className="flex items-center gap-6"
           >
-             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center border-2 border-[#FBBF24] shadow-xl relative">
-                <span className="text-3xl">🍯</span>
+             <div className="w-20 h-20 bg-white rounded-3xl flex items-center justify-center border-2 border-[#D97706] shadow-[0_0_30px_rgba(217,119,6,0.4)] relative transform -rotate-3 hover:rotate-0 transition-transform">
+                <span className="text-4xl">🍯</span>
+                <div className="absolute -top-2 -right-2 w-6 h-6 bg-[#D97706] rounded-full animate-ping"></div>
              </div>
-             <div className="flex flex-col items-center">
-                <h1 className="text-4xl font-black text-white leading-none tracking-tight">بيت العسل</h1>
-                <div className="bg-[#FBBF24] px-4 py-0.5 rounded-full mt-1">
-                   <span className="text-sm font-black text-black tracking-[0.2em] leading-none">HONEY HOUSE</span>
+             <div className="flex flex-col items-start">
+                <h1 className="text-5xl font-black text-white leading-none tracking-tight drop-shadow-lg">بيت العسل</h1>
+                <div className="bg-[#D97706] px-5 py-1 rounded-full mt-2 shadow-inner">
+                   <span className="text-xs font-black text-white tracking-[0.3em] leading-none uppercase">Premium Apiaries</span>
                 </div>
              </div>
           </motion.div>
@@ -49,75 +57,90 @@ const DisplayComponent: React.FC = () => {
 
         {/* Right: 15% Promo */}
         <motion.div 
-          animate={{ scale: [1, 1.02, 1] }}
-          transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-          className="bg-[#D97706] px-6 py-3 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
+          animate={{ y: [0, 2, 0], filter: ["drop-shadow(0 0 5px rgba(217,119,6,0.3))", "drop-shadow(0 0 15px rgba(217,119,6,0.6))", "drop-shadow(0 0 5px rgba(217,119,6,0.3))"] }}
+          transition={{ duration: 3, repeat: Infinity, delay: 1.5 }}
+          className="bg-black px-8 py-4 rounded-[2rem] border-2 border-[#D97706] flex flex-col items-center justify-center shadow-2xl relative group"
         >
-          <span className="text-3xl font-black text-white leading-none uppercase">15% OFF</span>
-          <span className="text-sm font-black text-white/60 mt-0.5">AED 200+</span>
+          <span className="text-3xl font-black text-[#D97706] leading-none uppercase tracking-tighter">15% OFF</span>
+          <span className="text-xs font-black text-white/40 mt-1">AED 200+ ORDERS</span>
         </motion.div>
       </div>
 
-      {/* 🍯 Main Presentation Console - Strictly Contained Within Frame */}
-      <div className="flex-1 relative p-4 flex items-center justify-center">
-        {/* Decorative Frame */}
-        <div className="absolute inset-4 border-[12px] border-[#D97706]/10 rounded-[3rem] pointer-events-none"></div>
-        <div className="absolute inset-6 border-2 border-[#D97706]/20 rounded-[2.5rem] pointer-events-none"></div>
+      {/* 🍯 Main Presentation Console */}
+      <div className="flex-1 relative p-8 flex items-center justify-center">
+        {/* Luxury Frame Glow */}
+        <div className="absolute inset-8 border-[1px] border-[#D97706]/10 rounded-[4rem] pointer-events-none"></div>
+        <div className="absolute inset-12 border-[1px] border-[#D97706]/5 rounded-[3.5rem] pointer-events-none"></div>
 
         <AnimatePresence mode="wait">
           <motion.div
             key={product.id}
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0, scale: 1.1 }}
-            transition={{ duration: 0.8 }}
-            className="w-full h-full flex flex-row-reverse items-center justify-center gap-12 max-w-7xl mx-auto px-10"
+            initial={{ opacity: 0, x: 100, scale: 0.95 }}
+            animate={{ opacity: 1, x: 0, scale: 1 }}
+            exit={{ opacity: 0, x: -100, scale: 1.05 }}
+            transition={{ duration: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="w-full h-full flex flex-row-reverse items-center justify-center gap-16 max-w-7xl mx-auto"
           >
             {/* 🖼️ Product Stage */}
-            <div className="w-[50%] h-[90%] flex items-center justify-center relative">
+            <div className="w-[50%] h-full flex items-center justify-center relative">
               <motion.div
-                animate={{ scale: [1, 1.02, 1] }}
-                transition={{ duration: 4, repeat: Infinity }}
-                className="relative w-full aspect-square bg-gradient-to-b from-white/10 to-transparent rounded-[4rem] flex items-center justify-center border-2 border-white/5 shadow-2xl"
+                animate={{ 
+                  y: [0, -15, 0],
+                  rotate: [-1, 1, -1]
+                }}
+                transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
+                className="relative w-full max-w-[550px] aspect-square bg-[radial-gradient(circle_at_50%_40%,rgba(217,119,6,0.15),transparent_70%)] rounded-full flex items-center justify-center"
               >
+                {/* Luminous Glow Behind */}
+                <div className="absolute w-[80%] h-[80%] bg-[#D97706]/10 blur-[80px] rounded-full animate-pulse"></div>
+                
                 <img 
                   src={product.image} 
                   alt={product.titleAr}
-                  className="max-w-[105%] max-h-[105%] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] z-10"
+                  className="max-w-[110%] max-h-[110%] object-contain drop-shadow-[0_60px_100px_rgba(0,0,0,0.9)] z-10 brightness-110 contrast-110"
                 />
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1),transparent_70%)] rounded-full"></div>
               </motion.div>
             </div>
 
             {/* 📝 Content Area */}
-            <div className="w-[50%] flex flex-col justify-center text-right space-y-6" dir="rtl">
-              <div className="relative">
-                <h2 className="text-7xl font-black text-[#FBBF24] leading-tight drop-shadow-2xl">
-                  {product.titleAr}
+            <div className="w-[50%] flex flex-col justify-center text-right space-y-10" dir="rtl">
+              <div>
+                <motion.span 
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="text-gold/60 text-xl font-bold uppercase tracking-[0.4em] mb-4 block"
+                >
+                  عسل طبيعي ممتاز
+                </motion.span>
+                <h2 className="text-[clamp(3.5rem,8vw,6rem)] font-black text-white leading-none drop-shadow-[0_2px_15px_rgba(217,119,6,0.4)]">
+                  {product.titleAr.split(' ').map((word, i) => (
+                    <span key={i} className={i === 0 ? "text-[#FBBF24]" : "text-white"}>{word} </span>
+                  ))}
                 </h2>
-                <div className="h-2 w-32 bg-[#FBBF24]/30 rounded-full mt-2"></div>
+                <div className="h-2 w-48 bg-gradient-to-l from-[#D97706] to-transparent rounded-full mt-6 shadow-[0_0_15px_rgba(217,119,6,0.3)]"></div>
               </div>
 
               <motion.p 
-                className="text-3xl text-white/90 font-bold leading-relaxed pr-6 border-r-8 border-[#FBBF24]/50"
+                className="text-[clamp(1.5rem,2.5vw,2.2rem)] text-white/80 font-medium leading-relaxed pr-10 border-r-4 border-[#D97706] py-2"
               >
                 {product.descriptionAr}
               </motion.p>
 
-              {/* Price Cards */}
-              <div className="flex gap-4 w-full pt-4">
+              {/* Price Cards - Glassmorphism */}
+              <div className="grid grid-cols-2 gap-6 w-full max-w-2xl pt-6">
                 {product.prices.map((price, idx) => (
                   <motion.div 
                     key={price.id}
-                    initial={{ y: 20, opacity: 0 }}
+                    initial={{ y: 30, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
-                    transition={{ delay: 0.5 + (idx * 0.1) }}
-                    className="flex-1 bg-white/5 backdrop-blur-xl p-6 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center shadow-xl"
+                    transition={{ delay: 0.6 + (idx * 0.15), type: "spring", stiffness: 100 }}
+                    className="group bg-gradient-to-br from-white/10 to-white/5 backdrop-blur-2xl p-8 rounded-[2.5rem] border border-white/10 flex flex-col items-center justify-center shadow-3xl hover:border-gold/40 transition-colors relative"
                   >
-                    <span className="text-lg text-white/40 font-black mb-1">{price.sizeAr}</span>
-                    <div className="flex items-baseline gap-1">
-                       <span className="text-5xl font-black text-[#FBBF24]">{price.price}</span>
-                       <span className="text-lg font-bold text-[#FBBF24]">درهم</span>
+                    <div className="absolute inset-0 bg-white/5 opacity-0 group-hover:opacity-100 transition-opacity rounded-[2.5rem]"></div>
+                    <span className="text-xl text-white/50 font-black mb-2 uppercase tracking-wide">{price.sizeAr}</span>
+                    <div className="flex items-baseline gap-3">
+                       <span className="text-6xl font-black text-white drop-shadow-sm">{price.price}</span>
+                       <span className="text-2xl font-black text-[#D97706]">درهم</span>
                     </div>
                   </motion.div>
                 ))}
@@ -127,46 +150,66 @@ const DisplayComponent: React.FC = () => {
         </AnimatePresence>
       </div>
 
-      {/* 📜 Bottom Footer: Terms & Progress */}
-      <div className="h-[10%] bg-black/60 backdrop-blur-xl border-t border-white/10 flex items-center justify-between px-6 relative">
-        {/* ❌ Exit Button - Small at bottom left */}
-        <button 
-          onClick={() => { window.location.hash = ""; window.location.reload(); }}
-          className="bg-red-600/80 hover:bg-red-500 text-white px-4 py-1.5 rounded-full text-[12px] font-black shadow-lg transition-all z-[100] border border-white/20 active:scale-95"
-        >
-           إغلاق ✕
-        </button>
-
-        <div className="flex items-center gap-6">
+      {/* 📜 Bottom Footer */}
+      <div className="h-[12%] bg-black/80 backdrop-blur-3xl border-t border-white/5 flex items-center justify-between px-12 relative">
+        <div className="flex items-center gap-10">
           <div className="flex flex-col">
-            <span className="text-[10px] uppercase text-white/40 font-bold tracking-widest">Discount Terms</span>
-            <span className="text-lg font-bold text-[#FBBF24]">تطبق الخصومات تلقائياً عند الكاونتر</span>
+            <span className="text-xs uppercase text-gold/40 font-black tracking-[0.3em] mb-1">PROMOTION POLICY</span>
+            <span className="text-xl font-bold text-white/90">تطبق الخصومات تلقائياً عند الكاونتر ✦</span>
           </div>
-          <div className="w-px h-6 bg-white/20"></div>
-          <p className="text-lg font-medium text-white/70">تذوق مجاني لجميع الأنواع! 🍯</p>
+          <div className="w-px h-10 bg-white/10"></div>
+          <motion.p 
+            animate={{ opacity: [0.5, 1, 0.5] }}
+            transition={{ duration: 4, repeat: Infinity }}
+            className="text-2xl font-black text-[#FBBF24] italic"
+          >
+            تذوق مجاني لجميع الأنواع! 🍯
+          </motion.p>
         </div>
 
-        <div className="flex gap-3">
+        <div className="flex gap-4">
           {PRODUCTS.map((_, idx) => (
             <div 
               key={idx} 
-              className={`h-2 rounded-full transition-all duration-500 ${currentIndex === idx ? 'w-12 bg-[#FBBF24]' : 'w-2 bg-white/20'}`} 
+              className={`h-1.5 rounded-full transition-all duration-700 shadow-sm ${currentIndex === idx ? 'w-16 bg-[#D97706] shadow-[#D97706]/50' : 'w-3 bg-white/10'}`} 
             />
           ))}
         </div>
 
         {/* Dynamic Progress Bar */}
-        <div className="absolute top-0 left-0 h-[2px] bg-[#FBBF24]/30 w-full overflow-hidden">
+        <div className="absolute top-0 left-0 h-[3px] bg-white/5 w-full overflow-hidden">
           <motion.div 
             key={currentIndex}
             initial={{ x: "-100%" }}
             animate={{ x: "0%" }}
             transition={{ duration: 10, ease: "linear" }}
-            className="h-full bg-[#FBBF24] w-full"
+            className="h-full bg-gradient-to-r from-transparent via-[#D97706] to-[#FBBF24] w-full shadow-[0_0_10px_rgba(217,119,6,0.8)]"
           />
         </div>
+
+        {/* ❌ Exit Control */}
+        <button 
+          onClick={() => { window.location.hash = ""; window.location.reload(); }}
+          className="ml-8 text-white/30 hover:text-white transition-colors text-xs font-black uppercase tracking-widest"
+        >
+          Close Display [ESC]
+        </button>
       </div>
+
+      <style>{`
+        @keyframes shimmer {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
+        .animate-shimmer {
+          animation: shimmer 5s infinite linear;
+        }
+        .text-gold { color: #C5A059; }
+        .bg-gold { background-color: #C5A059; }
+        .border-gold { border-color: #C5A059; }
+      `}</style>
     </div>
+
 
   );
 };
