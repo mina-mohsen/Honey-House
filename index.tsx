@@ -5,6 +5,7 @@ import './index.css';
 import App from './App';
 
 const rootElement = document.getElementById('root');
+console.log("React booting... Root element:", rootElement);
 if (!rootElement) {
   throw new Error("Could not find root element to mount to");
 }
