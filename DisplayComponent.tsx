@@ -24,24 +24,24 @@ const DisplayComponent: React.FC = () => {
         <motion.div 
           animate={{ scale: [1, 1.02, 1] }}
           transition={{ duration: 1.5, repeat: Infinity }}
-          className="bg-[#FBBF24] px-6 py-3 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
+          className="bg-[#FBBF24] px-14 py-4 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
         >
-          <span className="text-3xl font-black text-black leading-none uppercase">10% OFF</span>
-          <span className="text-sm font-black text-black/60 mt-0.5">AED 150+</span>
+          <span className="text-4xl font-black text-black leading-none uppercase tracking-tight">10% OFF</span>
+          <span className="text-base font-black text-black/60 mt-1 uppercase">AED 150+ ORDERS</span>
         </motion.div>
 
         {/* Center: Brand Identity */}
-        <div className="flex flex-col items-center z-10">
+        <div className="flex flex-col items-center z-10 px-10">
           <motion.div 
-             className="flex items-center gap-4"
+             className="flex items-center gap-8"
           >
-             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center border-2 border-[#FBBF24] shadow-xl relative">
-                <span className="text-3xl">🍯</span>
+             <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center border-4 border-[#FBBF24] shadow-2xl relative">
+                <span className="text-4xl">🍯</span>
              </div>
              <div className="flex flex-col items-center">
-                <h1 className="text-4xl font-black text-white leading-none tracking-tight">بيت العسل</h1>
-                <div className="bg-[#FBBF24] px-4 py-0.5 rounded-full mt-1">
-                   <span className="text-sm font-black text-black tracking-[0.2em] leading-none">HONEY HOUSE</span>
+                <h1 className="text-5xl font-black text-white leading-none tracking-tight drop-shadow-lg">بيت العسل</h1>
+                <div className="bg-[#FBBF24] px-10 py-1.5 rounded-full mt-2">
+                   <span className="text-base font-black text-black tracking-[0.3em] leading-none uppercase">HONEY HOUSE</span>
                 </div>
              </div>
           </motion.div>
@@ -51,10 +51,10 @@ const DisplayComponent: React.FC = () => {
         <motion.div 
           animate={{ scale: [1, 1.02, 1] }}
           transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
-          className="bg-[#D97706] px-6 py-3 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
+          className="bg-[#D97706] px-14 py-4 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
         >
-          <span className="text-3xl font-black text-white leading-none uppercase">15% OFF</span>
-          <span className="text-sm font-black text-white/60 mt-0.5">AED 200+</span>
+          <span className="text-4xl font-black text-white leading-none uppercase tracking-tight">15% OFF</span>
+          <span className="text-base font-black text-white/60 mt-1 uppercase">AED 200+ ORDERS</span>
         </motion.div>
       </div>
 
@@ -142,8 +142,6 @@ const DisplayComponent: React.FC = () => {
             <span className="text-[10px] uppercase text-white/40 font-bold tracking-widest">Discount Terms</span>
             <span className="text-lg font-bold text-[#FBBF24]">تطبق الخصومات تلقائياً عند الكاونتر</span>
           </div>
-          <div className="w-px h-6 bg-white/20"></div>
-          <p className="text-lg font-medium text-white/70">تذوق مجاني لجميع الأنواع! 🍯</p>
         </div>
 
         <div className="flex gap-3">
