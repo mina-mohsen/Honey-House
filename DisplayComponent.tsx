@@ -16,45 +16,32 @@ const DisplayComponent: React.FC = () => {
 
   return (
     <div className="fixed inset-0 bg-[#050505] text-white flex flex-col font-cairo overflow-hidden">
-      {/* 🚀 Header: Luxury Brand Console - NOW WITH LOGO & ENGLISH FOCUS */}
-      <div className="h-[20%] bg-black flex items-center justify-between px-16 shadow-[0_20px_80px_rgba(0,0,0,0.9)] z-50 border-b-[10px] border-[#D97706] relative">
+      {/* 🚀 Header: Luxury Brand Console */}
+      <div className="h-[15%] bg-black flex items-center justify-between px-10 shadow-[0_10px_50px_rgba(0,0,0,0.9)] z-50 border-b-2 border-[#D97706] relative">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,rgba(217,119,6,0.1),transparent)] pointer-events-none"></div>
         
         {/* Left: 10% Promo */}
         <motion.div 
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 1, repeat: Infinity }}
-          className="bg-[#FBBF24] p-8 rounded-[3rem] border-[6px] border-white flex flex-col items-center justify-center shadow-[0_0_60px_rgba(251,191,36,0.4)]"
+          animate={{ scale: [1, 1.02, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity }}
+          className="bg-[#FBBF24] px-6 py-3 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
         >
-          <span className="text-[5.5rem] font-black text-black leading-none tracking-tighter">10% OFF</span>
-          <span className="text-3xl font-black text-black/60 mt-1">AED 150+</span>
+          <span className="text-3xl font-black text-black leading-none uppercase">10% OFF</span>
+          <span className="text-sm font-black text-black/60 mt-0.5">AED 150+</span>
         </motion.div>
 
-        {/* Center: Brand Identity - Logo & Bilingual */}
-        <div className="flex flex-col items-center z-10 relative">
-          {/* ❌ Exit Button - To Home Site */}
-          <button 
-            onClick={() => { window.location.hash = ""; window.location.pathname = "/"; }}
-            className="absolute -top-12 bg-white/10 hover:bg-white/20 px-4 py-1 rounded-full text-xs font-bold border border-white/20 transition-all"
-          >
-             EXIT DISPLAY
-          </button>
-
+        {/* Center: Brand Identity */}
+        <div className="flex flex-col items-center z-10">
           <motion.div 
-             animate={{ scale: [1, 1.05, 1] }}
-             transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
-             className="flex items-center gap-10"
+             className="flex items-center gap-4"
           >
-             <div className="w-36 h-36 bg-white rounded-full flex items-center justify-center border-[10px] border-[#FBBF24] shadow-2xl relative">
-                <span className="text-8xl">🍯</span>
-                <div className="absolute -top-4 -right-4 bg-amber-500 w-12 h-12 rounded-full border-4 border-black flex items-center justify-center">
-                  <span className="text-2xl">✨</span>
-                </div>
+             <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center border-2 border-[#FBBF24] shadow-xl relative">
+                <span className="text-3xl">🍯</span>
              </div>
              <div className="flex flex-col items-center">
-                <h1 className="text-[7rem] font-black text-white leading-none tracking-tight drop-shadow-[0_10px_20px_rgba(251,191,36,0.5)]">بيت العسل</h1>
-                <div className="bg-[#FBBF24] px-10 py-2 rounded-full mt-2 shadow-lg">
-                   <span className="text-4xl font-black text-black tracking-[0.2em] leading-none">HONEY HOUSE</span>
+                <h1 className="text-4xl font-black text-white leading-none tracking-tight">بيت العسل</h1>
+                <div className="bg-[#FBBF24] px-4 py-0.5 rounded-full mt-1">
+                   <span className="text-sm font-black text-black tracking-[0.2em] leading-none">HONEY HOUSE</span>
                 </div>
              </div>
           </motion.div>
@@ -62,87 +49,75 @@ const DisplayComponent: React.FC = () => {
 
         {/* Right: 15% Promo */}
         <motion.div 
-          animate={{ scale: [1, 1.05, 1] }}
-          transition={{ duration: 1, repeat: Infinity, delay: 0.5 }}
-          className="bg-[#D97706] p-8 rounded-[3rem] border-[6px] border-white flex flex-col items-center justify-center shadow-[0_0_60px_rgba(217,119,6,0.4)]"
+          animate={{ scale: [1, 1.02, 1] }}
+          transition={{ duration: 1.5, repeat: Infinity, delay: 0.5 }}
+          className="bg-[#D97706] px-6 py-3 rounded-[1.5rem] border-2 border-white flex flex-col items-center justify-center shadow-lg"
         >
-          <span className="text-[5.5rem] font-black text-white leading-none tracking-tighter">15% OFF</span>
-          <span className="text-3xl font-black text-white/60 mt-1">AED 200+</span>
+          <span className="text-3xl font-black text-white leading-none uppercase">15% OFF</span>
+          <span className="text-sm font-black text-white/60 mt-0.5">AED 200+</span>
         </motion.div>
       </div>
 
       {/* 🍯 Main Presentation Console - Strictly Contained Within Frame */}
-      <div className="flex-1 relative p-16 overflow-hidden flex items-center justify-center">
+      <div className="flex-1 relative p-8 flex items-center justify-center">
         {/* Decorative Frame */}
-        <div className="absolute inset-12 border-[20px] border-[#D97706]/10 rounded-[5rem] pointer-events-none"></div>
-        <div className="absolute inset-16 border-4 border-[#D97706]/20 rounded-[4.5rem] pointer-events-none"></div>
+        <div className="absolute inset-8 border-[12px] border-[#D97706]/10 rounded-[3rem] pointer-events-none"></div>
+        <div className="absolute inset-10 border-2 border-[#D97706]/20 rounded-[2.5rem] pointer-events-none"></div>
 
         <AnimatePresence mode="wait">
           <motion.div
             key={product.id}
-            initial={{ opacity: 0, filter: "blur(20px)" }}
-            animate={{ opacity: 1, filter: "blur(0px)" }}
-            exit={{ opacity: 0, filter: "blur(20px)" }}
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0, scale: 1.1 }}
             transition={{ duration: 0.8 }}
-            className="w-full h-full flex flex-row-reverse items-center justify-center gap-20 max-w-7xl mx-auto px-12"
+            className="w-full h-full flex flex-row-reverse items-center justify-center gap-12 max-w-7xl mx-auto px-10"
           >
-            {/* 🖼️ Product Stage - More Focused & Contained */}
-            <div className="w-[42%] h-[75%] flex items-center justify-center relative">
+            {/* 🖼️ Product Stage */}
+            <div className="w-[50%] h-[85%] flex items-center justify-center relative">
               <motion.div
-                animate={{ 
-                   scale: [1, 1.03, 1]
-                }}
-                transition={{ duration: 6, repeat: Infinity }}
-                className="relative w-full aspect-square bg-gradient-to-b from-white/10 to-transparent rounded-[5rem] flex items-center justify-center border-[6px] border-white/5 shadow-[0_0_200px_rgba(217,119,6,0.3)]"
+                animate={{ scale: [1, 1.02, 1] }}
+                transition={{ duration: 4, repeat: Infinity }}
+                className="relative w-full aspect-square bg-gradient-to-b from-white/10 to-transparent rounded-[4rem] flex items-center justify-center border-2 border-white/5 shadow-2xl"
               >
                 <img 
                   src={product.image} 
-                  alt={product.titleAr} 
-                  className="max-w-[80%] max-h-[80%] object-contain drop-shadow-[0_80px_120px_rgba(0,0,0,1)] z-10"
+                  alt={product.titleAr}
+                  className="max-w-[95%] max-h-[95%] object-contain drop-shadow-[0_40px_80px_rgba(0,0,0,0.8)] z-10"
                 />
-                
-                {/* Visual Focus Spotlight - Stronger Focal Point */}
-                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.3),transparent_70%)] rounded-full"></div>
+                <div className="absolute inset-0 bg-[radial-gradient(circle_at_50%_50%,rgba(251,191,36,0.1),transparent_70%)] rounded-full"></div>
               </motion.div>
             </div>
 
-            {/* 📝 Content Area - Strictly Within Frame */}
-            <div className="w-[58%] flex flex-col justify-center text-right space-y-14" dir="rtl">
+            {/* 📝 Content Area */}
+            <div className="w-[50%] flex flex-col justify-center text-right space-y-4" dir="rtl">
               <div className="relative">
-                <motion.div
-                  initial={{ width: 0 }}
-                  animate={{ width: "100%" }}
-                  transition={{ duration: 0.6 }}
-                  className="absolute -bottom-6 right-0 h-4 bg-[#FBBF24]/40 rounded-full"
-                ></motion.div>
-                <h2 className="text-[13rem] font-black text-[#FBBF24] leading-[0.85] drop-shadow-[0_25px_50px_rgba(0,0,0,0.9)]">
+                <h2 className="text-6xl font-black text-[#FBBF24] leading-tight drop-shadow-2xl">
                   {product.titleAr}
                 </h2>
+                <div className="h-1.5 w-24 bg-[#FBBF24]/30 rounded-full mt-1"></div>
               </div>
 
               <motion.p 
-                initial={{ opacity: 0, x: 20 }}
-                animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: 0.4 }}
-                className="text-7xl text-white font-black leading-tight drop-shadow-lg pr-4 border-r-8 border-[#FBBF24]"
+                className="text-2xl text-white/90 font-bold leading-relaxed pr-4 border-r-4 border-[#FBBF24]/50"
               >
                 {product.descriptionAr}
               </motion.p>
 
               {/* Price Cards */}
-              <div className="flex gap-10 w-full pt-8">
+              <div className="flex gap-4 w-full pt-4">
                 {product.prices.map((price, idx) => (
                   <motion.div 
                     key={price.id}
-                    initial={{ scale: 0, opacity: 0 }}
-                    animate={{ scale: 1, opacity: 1 }}
+                    initial={{ y: 20, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.5 + (idx * 0.1) }}
-                    className="flex-1 bg-white/5 backdrop-blur-3xl p-12 rounded-[4rem] border-4 border-white/10 flex flex-col items-center justify-center shadow-2xl"
+                    className="flex-1 bg-white/5 backdrop-blur-xl p-6 rounded-[2rem] border border-white/10 flex flex-col items-center justify-center shadow-xl"
                   >
-                    <span className="text-4xl text-white/50 font-black mb-6">{price.sizeAr}</span>
-                    <div className="flex items-baseline gap-4">
-                       <span className="text-[10rem] font-black text-[#FBBF24] leading-none">{price.price}</span>
-                       <span className="text-5xl font-bold text-[#FBBF24]">درهم</span>
+                    <span className="text-lg text-white/40 font-black mb-1">{price.sizeAr}</span>
+                    <div className="flex items-baseline gap-1">
+                       <span className="text-5xl font-black text-[#FBBF24]">{price.price}</span>
+                       <span className="text-lg font-bold text-[#FBBF24]">درهم</span>
                     </div>
                   </motion.div>
                 ))}
@@ -154,6 +129,14 @@ const DisplayComponent: React.FC = () => {
 
       {/* 📜 Bottom Footer: Terms & Progress */}
       <div className="h-[10%] bg-black/60 backdrop-blur-xl border-t border-white/10 flex items-center justify-between px-16 relative">
+        {/* ❌ Exit Button - Small at bottom left */}
+        <button 
+          onClick={() => { window.location.hash = ""; window.location.reload(); }}
+          className="bg-red-600/80 hover:bg-red-500 text-white px-3 py-1 rounded-full text-[10px] font-black shadow-lg transition-all z-[100] border border-white/20 active:scale-95"
+        >
+           إغلاق ✕
+        </button>
+
         <div className="flex items-center gap-10">
           <div className="flex flex-col">
             <span className="text-xs uppercase text-white/40 font-bold tracking-widest">Discount Terms</span>
