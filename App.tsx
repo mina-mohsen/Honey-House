@@ -25,15 +25,21 @@ const ADMIN_KEY_STORAGE = "honeyhouse_admin_key_v1";
 
 const App: React.FC = () => {
   const [lang, setLang] = useState<Language>("ar");
-  const [route, setRoute] = useState(window.location.pathname);
+  const [route, setRoute] = useState(window.location.hash || window.location.pathname);
 
   useEffect(() => {
-    const handlePopState = () => setRoute(window.location.pathname);
-    window.addEventListener('popstate', handlePopState);
-    return () => window.removeEventListener('popstate', handlePopState);
+    const handleRoute = () => setRoute(window.location.hash || window.location.pathname);
+    window.addEventListener('popstate', handleRoute);
+    window.addEventListener('hashchange', handleRoute);
+    return () => {
+      window.removeEventListener('popstate', handleRoute);
+      window.removeEventListener('hashchange', handleRoute);
+    };
   }, []);
 
-  if (route === '/display') {
+  const isDisplayRoute = route.endsWith('/display') || route === '#/display';
+
+  if (isDisplayRoute) {
     return <DisplayComponent />;
   }
 
