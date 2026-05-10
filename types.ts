@@ -5,6 +5,7 @@ export interface ProductPrice {
   sizeAr: string;
   sizeEn: string;
   price: number;
+  originalPrice?: number;
   id: string;
 }
 

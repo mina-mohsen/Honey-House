@@ -30,8 +30,8 @@ export const PRODUCTS: ProductExtended[] = [
     benefitsAr: ['سهل الاستخدام', 'غني بالأنزيمات'],
     benefitsEn: ['Mess-free', 'Enzyme Rich'],
     prices: [
-      { id: 'squeeze_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 30 },
-      { id: 'squeeze_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 50 },
+      { id: 'squeeze_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 20, originalPrice: 30 },
+      { id: 'squeeze_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 50 },
     ]
   },
   {
@@ -44,9 +44,9 @@ export const PRODUCTS: ProductExtended[] = [
     benefitsAr: ['مقوي للمناعة', 'مضاد حيوي طبيعي'],
     benefitsEn: ['Immunity Boost', 'Natural Antibiotic'],
     prices: [
-      { id: 'clover_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 25 },
-      { id: 'clover_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 45 },
-      { id: 'clover_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 85 },
+      { id: 'clover_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 15, originalPrice: 25 },
+      { id: 'clover_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 30, originalPrice: 45 },
+      { id: 'clover_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 50, originalPrice: 85 },
     ]
   },
   {
@@ -61,7 +61,7 @@ export const PRODUCTS: ProductExtended[] = [
     featuresAr: ['500 جم عسل برسيم نقي', '20 جم حبوب لقاح طبيعية', '10 جم غذاء ملكات النحل الأصلي'],
     featuresEn: ['500g Pure Clover Honey', '20g Natural Bee Pollen', '10g Original Royal Jelly'],
     prices: [
-      { id: 'health_full', sizeAr: 'عرض كامل', sizeEn: 'Full Package', price: 100 }
+      { id: 'health_full', sizeAr: 'عرض كامل', sizeEn: 'Full Package', price: 50, originalPrice: 100 }
     ]
   },
   {
@@ -74,8 +74,7 @@ export const PRODUCTS: ProductExtended[] = [
     benefitsAr: ['صحي لللثة', 'خام وغير مصفى'],
     benefitsEn: ['Gum Health', 'Raw & Unfiltered'],
     prices: [
-      { id: 'honeycomb_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 50 },
-      { id: 'honeycomb_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 90 },
+      { id: 'honeycomb_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 40, originalPrice: 65 },
     ]
   },
   {
@@ -88,8 +87,7 @@ export const PRODUCTS: ProductExtended[] = [
     benefitsAr: ['بديل صحي للحلويات', 'غني بالأوميغا'],
     benefitsEn: ['Healthy Dessert', 'Omega Rich'],
     prices: [
-      { id: 'royal_nuts_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 70 },
-      { id: 'royal_nuts_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 130 },
+      { id: 'royal_nuts_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 50, originalPrice: 80 },
     ]
   },
   {

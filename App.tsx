@@ -980,12 +980,18 @@ const App: React.FC = () => {
                               key={price.id}
                               className="flex items-center justify-between p-3 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors"
                             >
-                              <div>
-                                <span className="font-bold text-sm">{lang === "ar" ? price.sizeAr : price.sizeEn}</span>
-                                <span className="mx-2 text-gray-400">•</span>
-                                <span className="font-bold text-green-600">
-                                  {price.price} {t.currency}
-                                </span>
+                              <div className="flex flex-col">
+                                <span className="font-bold text-sm text-amber-900">{lang === "ar" ? price.sizeAr : price.sizeEn}</span>
+                                <div className="flex items-center gap-2">
+                                  <span className="font-bold text-green-600">
+                                    {price.price} {t.currency}
+                                  </span>
+                                  {price.originalPrice && (
+                                    <span className="text-xs text-gray-400 line-through">
+                                      {price.originalPrice} {t.currency}
+                                    </span>
+                                  )}
+                                </div>
                               </div>
 
                               <button

@@ -355,40 +355,47 @@ const DisplayComponent: React.FC = () => {
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 + (idx * 0.1) }}
-                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-4 md:p-5 rounded-[1.5rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group ${
-                      p.price === 0 
+                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-4 md:p-5 rounded-[1.5rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group relative overflow-hidden ${
+                      product.prices.length === 1 
                       ? 'col-span-2 from-amber-500/20 to-amber-950/40 border-amber-500/50 scale-105' 
-                      : 'from-white/10 to-amber-950/20'
+                      : 'from-white/10 to-amber-950/20 hover:border-amber-500/30'
                     }`}
                   >
-                    <span className={`font-black uppercase tracking-widest mb-1 ${p.price === 0 ? 'text-2xl md:text-3xl text-white' : 'text-xl md:text-2xl text-amber-500'}`}>
+                    {p.originalPrice && (
+                      <div className="absolute top-2 right-4 flex flex-col items-end gap-1">
+                        <div className="flex items-center gap-1">
+                          <span className="text-xs md:text-sm font-bold text-white/30 line-through decoration-red-500/50 decoration-2">
+                             {p.originalPrice}
+                          </span>
+                          <span className="text-[10px] text-white/40">درهم</span>
+                        </div>
+                        <div className="bg-red-500 text-[9px] md:text-[11px] font-black px-2 py-0.5 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
+                          وفر {Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}%
+                        </div>
+                      </div>
+                    )}
+
+                    <span className={`font-black uppercase tracking-widest mb-1 ${product.prices.length === 1 ? 'text-2xl md:text-3xl text-white' : 'text-xl md:text-2xl text-amber-500'}`}>
                       {p.sizeAr}
                     </span>
                     
                     {p.price > 0 && (
-                      <div className="flex items-baseline gap-1">
-                        <motion.span 
-                          animate={{ 
-                            scale: [1, 1.05, 1],
-                            color: ['#ffffff', '#fbbf24', '#ffffff']
-                          }}
-                          transition={{ duration: 3, repeat: Infinity, ease: "easeInOut", delay: idx * 0.5 }}
-                          className="text-2xl md:text-3xl lg:text-4xl font-black"
-                        >
-                          {p.price}
-                        </motion.span>
-                        <span className="text-sm md:text-lg font-bold text-white/30 lowercase">درهم</span>
+                      <div className="flex flex-col items-center">
+                        <div className="flex items-baseline gap-1">
+                          <motion.span 
+                            animate={{ 
+                              textShadow: ['0 0 10px rgba(251,191,36,0)', '0 0 30px rgba(251,191,36,0.8)', '0 0 10px rgba(251,191,36,0)'],
+                              scale: [1, 1.08, 1]
+                            }}
+                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
+                            className="text-4xl md:text-5xl lg:text-7xl font-black text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
+                          >
+                            {p.price}
+                          </motion.span>
+                          <span className="text-sm md:text-xl font-bold text-white/60 lowercase">درهم</span>
+                        </div>
+                        <span className="text-[10px] md:text-xs font-bold text-amber-500/50 uppercase tracking-[0.2em] mt-1">Special Offer Price</span>
                       </div>
-                    )}
-                    
-                    {p.price === 0 && (
-                      <motion.div
-                        animate={{ y: [0, -5, 0] }}
-                        transition={{ duration: 2, repeat: Infinity }}
-                        className="text-amber-400 font-bold text-sm md:text-lg mt-2"
-                      >
-                        اطلب مجموعتك المميزة الآن ✦
-                      </motion.div>
                     )}
                   </motion.div>
                 ))}
