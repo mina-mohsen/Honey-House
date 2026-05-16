@@ -10,7 +10,7 @@ const DisplayComponent: React.FC = () => {
     const isTeaser = PRODUCTS[currentIndex]?.id === 'teaser-hook';
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % PRODUCTS.length);
-    }, isTeaser ? 25000 : (isManifesto ? 15000 : 10000)); // 25s for teaser, 15s for manifesto, 10s for products
+    }, 10000); // 10s for all slides as requested
     return () => clearInterval(timer);
   }, [currentIndex]);
 
@@ -124,16 +124,16 @@ const DisplayComponent: React.FC = () => {
     const [step, setStep] = useState(0);
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const messages = [
-      { text: "أحس بالخمول المستمر ومناعتي في النازل، هل هناك حل طبيعي يغير حياتي؟ 📉", sender: "user" },
-      { text: "بيت العسل يقدم لك 'السر الذهبي'.. عسل بري خام يعيد لك الحيوية والنشاط في ٧ أيام فقط! 🛡️", sender: "ai" },
-      { text: "سمعت أن العسل الأصلي يصعب الحصول عليه، ما الذي يجعلكم مختلفين عن غيركم؟ ✨", sender: "user" },
-      { text: "خبرة ٢٥ عاماً ومناحلنا الخاصة.. نحن لا نبيع مجرد عسل، نحن نبيع 'الدرع الصحي' لعائلتك. شاهد رحلة الشفاء بالأسفل! 👇", sender: "ai" }
+      { text: "تعبت من المنتجات المغشوشة، عايز عسل يرفع مناعتي بجد؟ 💔", sender: "user" },
+      { text: "جرب 'خلاصة المنحل'.. عسل خام 100% غير مسخن، مفعوله جبار للنشاط والصحة! 🔥", sender: "ai" },
+      { text: "الأسعار غالية في المتاجر، كيف أسعاركم وجودتكم؟ 💸", sender: "user" },
+      { text: "أفضل جودة وأقل سعر في الإمارات! خصومات كبرى الآن.. اطلب قبل نفاذ الكمية! 🏃‍♂️💨", sender: "ai" }
     ];
 
     useEffect(() => {
       const interval = setInterval(() => {
         setStep(prev => (prev < messages.length ? prev + 1 : prev));
-      }, 4500); // Slower sequence for better readability
+      }, 2000); // Faster sequence to fit 10s
       return () => clearInterval(interval);
     }, []);
 
@@ -147,21 +147,21 @@ const DisplayComponent: React.FC = () => {
     }, [step]);
 
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center p-6 lg:p-12" dir="rtl">
-        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <div className="w-full h-full flex flex-col items-center justify-center p-4 lg:p-8" dir="rtl">
+        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full max-h-[75vh]">
           
-          {/* Simulation Chat Box */}
-          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[3rem] border border-amber-500/20 p-8 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-6 h-[550px] flex flex-col">
-            <div className="flex items-center gap-3 border-b border-white/5 pb-4 mb-2">
-               <div className="w-3 h-3 rounded-full bg-red-500/50" />
-               <div className="w-3 h-3 rounded-full bg-amber-500/50" />
-               <div className="w-3 h-3 rounded-full bg-green-500/50" />
-               <span className="text-xs text-amber-500 font-black uppercase tracking-[0.2em] mr-auto">Wellness Journey Advisor</span>
+          {/* Simulation Chat Box - Tighter for fitting */}
+          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[2.5rem] border border-amber-500/20 p-6 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-4 h-[400px] lg:h-[450px] flex flex-col relative overflow-hidden">
+            <div className="flex items-center gap-2 border-b border-white/5 pb-3 mb-1">
+               <div className="w-2 h-2 rounded-full bg-red-500/50" />
+               <div className="w-2 h-2 rounded-full bg-amber-500/50" />
+               <div className="w-2 h-2 rounded-full bg-green-500/50" />
+               <span className="text-[10px] text-amber-500 font-black uppercase tracking-[0.2em] mr-auto">Wellness Advisor</span>
             </div>
             
             <div 
               ref={chatContainerRef}
-              className="flex-1 space-y-6 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className="flex-1 space-y-4 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                <AnimatePresence mode="popLayout">
                  {messages.slice(0, step).map((msg, i) => (
@@ -202,35 +202,35 @@ const DisplayComponent: React.FC = () => {
                 <motion.div 
                   animate={{ rotate: 360 }}
                   transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                  className="absolute -inset-16 bg-gradient-to-tr from-amber-500/0 via-amber-500/10 to-amber-500/0 rounded-full blur-[80px]"
+                  className="absolute -inset-12 bg-gradient-to-tr from-amber-500/0 via-amber-500/10 to-amber-500/0 rounded-full blur-[60px]"
                 />
                 <img 
                   src="https://imgur.com/tpBWWTy.jpeg" 
                   alt="Honey House Logo" 
-                  className="w-32 h-32 md:w-44 md:h-44 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-105 transition-transform duration-700"
+                  className="w-28 h-28 md:w-40 md:h-40 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-105 transition-transform duration-700"
                 />
-                <div className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-4 py-1 rounded-full border-2 border-black z-20 text-sm shadow-2xl skew-x-[-10deg]">
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-3 py-0.5 rounded-full border-2 border-black z-20 text-xs shadow-2xl skew-x-[-10deg]">
                   مـنـذ ٢٠٠١
                 </div>
              </div>
-             <div className="space-y-6">
-                <h2 className="text-5xl md:text-7xl font-black text-white leading-tight">
-                  بيت العسل: <br/> <span className="text-amber-500">حيث تبدأ صحتك</span>
+             <div className="space-y-4">
+                <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
+                  بيت العسل: <br/> <span className="text-amber-500">صحتك هي استثمارك</span>
                 </h2>
-                <p className="text-2xl md:text-3xl text-white/40 font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed italic">
-                  "لا نبيع مجرد عسل، بل نقدم خلاصة ٢٥ عاماً من الخبرة في كل قطرة شفاء."
+                <p className="text-xl md:text-2xl text-white/40 font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed italic">
+                  "عسل خام، نقي، ومضمون.. أقوى عروض التعافي والنشاط تبدأ من هنا!"
                 </p>
              </div>
           </motion.div>
         </div>
         
         <motion.div 
-          animate={{ y: [0, 8, 0] }}
+          animate={{ y: [0, 5, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="mt-16 flex flex-col items-center gap-3"
+          className="mt-8 flex flex-col items-center gap-2"
         >
-           <span className="text-amber-500/60 font-black text-sm tracking-[0.4em] uppercase">Start Your Healing Journey</span>
-           <div className="w-px h-12 bg-gradient-to-b from-amber-500 to-transparent" />
+           <span className="text-amber-500/60 font-black text-[10px] tracking-[0.4em] uppercase">Scroll For Products</span>
+           <div className="w-px h-8 bg-gradient-to-b from-amber-500 to-transparent" />
         </motion.div>
       </div>
     );
@@ -255,9 +255,9 @@ const DisplayComponent: React.FC = () => {
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[35deg] pointer-events-none"
                 />
-                <span className="text-xl md:text-2xl font-black text-white leading-none relative z-10">10% OFF</span>
+                <span className="text-xl md:text-2xl font-black text-white leading-none relative z-10">الحق العرض اليوم</span>
               </div>
-              <span className="text-xs md:text-sm font-bold text-white/50 mt-1 uppercase tracking-wider">AED 150+ ORDERS</span>
+              <span className="text-xs md:text-sm font-bold text-white/50 mt-1 uppercase tracking-wider">LIMITED QUANTITY</span>
            </div>
            
            <div className="flex flex-col items-center group relative">
@@ -267,9 +267,9 @@ const DisplayComponent: React.FC = () => {
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/30 to-transparent skew-x-[35deg] pointer-events-none"
                 />
-                <span className="text-xl md:text-2xl font-black text-amber-500 leading-none relative z-10">15% OFF</span>
+                <span className="text-xl md:text-2xl font-black text-amber-500 leading-none relative z-10">خصم خاص وحصري</span>
               </div>
-              <span className="text-xs md:text-sm font-bold text-amber-500/50 mt-1 uppercase tracking-wider">AED 200+ ORDERS</span>
+              <span className="text-xs md:text-sm font-bold text-amber-500/50 mt-1 uppercase tracking-wider">LIMITED TIME PROMO</span>
            </div>
         </div>
 
