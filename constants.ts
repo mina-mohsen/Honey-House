@@ -99,6 +99,17 @@ export const PRODUCTS: ProductExtended[] = [
     image: 'https://images.unsplash.com/photo-1558611997-d60293774640?q=80&w=2070&auto=format&fit=crop',
     benefitsAr: ['25 عاماً من الخبرة', 'مناحلنا الخاصة', 'عسل خام 100%', 'تغليف فاخر'],
     benefitsEn: ['25 Years Experience', 'Own Apiaries', '100% Raw Honey', 'Premium Packaging'],
+    prices: [],
+  },
+  {
+    id: 'full-menu-summary',
+    titleAr: 'قائمة الأسعار والعروض',
+    titleEn: 'Price List & Offers',
+    descriptionAr: 'كل ما تحتاجه في مكان واحد! استمتع بصحة عائلتك مع أفضل أنواع العسل.',
+    descriptionEn: 'Everything you need in one place! Enjoy your family health with the best honey types.',
+    image: 'https://imgur.com/tpBWWTy.jpeg',
+    benefitsAr: ['خصم 10% للطلبات فوق 250 درهم', 'توصيل مجاني'],
+    benefitsEn: ['10% OFF over 250 AED', 'Free Delivery'],
     prices: []
   }
 ];

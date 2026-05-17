@@ -5,6 +5,8 @@ import { PRODUCTS } from './constants';
 
 const DisplayComponent: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [lang, setLang] = useState<'ar' | 'en'>('ar');
+  const [isStandardMode, setIsStandardMode] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordDuration, setRecordDuration] = useState(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
@@ -89,40 +91,40 @@ const DisplayComponent: React.FC = () => {
   const BrandManifesto = () => {
     const values = [
       { 
-        title: "25 عاماً من الخبرة", 
-        desc: "أصالة بدأت منذ ربع قرن في إنتاج أجود أنواع العسل.", 
+        title: lang === 'ar' ? "25 عاماً من الخبرة" : "25 Years of Experience", 
+        desc: lang === 'ar' ? "أصالة بدأت منذ ربع قرن في إنتاج أجود أنواع العسل." : "Began a quarter-century ago producing the finest honey.", 
         icon: "🏅",
         color: "from-amber-600/30 to-amber-900/40"
       },
       { 
-        title: "مناحلنا الخاصة", 
-        desc: "نمتلك مناحلنا ونشرف على كل قطرة تخرج منها لضمان الجودة.", 
+        title: lang === 'ar' ? "مناحلنا الخاصة" : "Our Own Apiaries", 
+        desc: lang === 'ar' ? "نمتلك مناحلنا ونشرف على كل قطرة تخرج منها لضمان الجودة." : "We own our apiaries and oversee every drop to ensure quality.", 
         icon: "🐝",
         color: "from-amber-500/20 to-amber-700/30"
       },
       { 
-        title: "نقاء مطلق", 
-        desc: "عسل خام 100% غير مسخن يحافظ على الإنزيمات الحية.", 
+        title: lang === 'ar' ? "نقاء مطلق" : "Absolute Purity", 
+        desc: lang === 'ar' ? "عسل خام 100% غير مسخن يحافظ على الإنزيمات الحية." : "100% raw unheated honey that preserves live enzymes.", 
         icon: "🛡️",
         color: "from-white/10 to-amber-900/20"
       },
       { 
-        title: "شفاء طبيعي", 
-        desc: "يستخدم كدرع لمناعتك ومصدر طبيعي مستدام للطاقة.", 
+        title: lang === 'ar' ? "شفاء طبيعي" : "Natural Healing", 
+        desc: lang === 'ar' ? "يستخدم كدرع لمناعتك ومصدر طبيعي مستدام للطاقة." : "Used as an immunity shield and sustainable energy source.", 
         icon: "✨",
         color: "from-amber-600/20 to-amber-800/40"
       }
     ];
 
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center py-4 md:py-10 px-4 md:px-12 lg:px-20" dir="rtl">
+      <div className="w-full h-full flex flex-col items-center justify-center py-4 md:py-10 px-4 md:px-12 lg:px-20" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-16 items-center w-full max-w-[1600px] flex-1">
           
           {/* Visual Side: Logo + Slogan */}
           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: lang === 'ar' ? 50 : -50 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col items-center lg:items-start text-center lg:text-right space-y-6 md:space-y-8"
+            className={`flex flex-col items-center ${lang === 'ar' ? 'lg:items-start text-center lg:text-right' : 'lg:items-end text-center lg:text-left'} space-y-6 md:space-y-8`}
           >
              <div className="relative">
                 <motion.div 
@@ -138,17 +140,17 @@ const DisplayComponent: React.FC = () => {
                 <motion.div 
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-1 -right-1 bg-amber-500 text-black font-black px-2 py-0.5 md:px-3 md:py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm rotate-12"
+                  className={`absolute -top-1 ${lang === 'ar' ? '-right-1' : '-left-1'} bg-amber-500 text-black font-black px-2 py-0.5 md:px-3 md:py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm rotate-12`}
                 >
-                  منذ ٢٠٠١
+                  {lang === 'ar' ? 'منذ ٢٠٠١' : 'Since 2001'}
                 </motion.div>
              </div>
              <div className="space-y-3 md:space-y-4">
                 <h2 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight">
-                  <span className="text-amber-500">25 عاماً</span> من الخبرة <br/> بين يديك.
+                  <span className="text-amber-500">{lang === 'ar' ? '25 عاماً' : '25 Years'}</span> {lang === 'ar' ? 'من الخبرة' : 'of Expertise'} <br/> {lang === 'ar' ? 'بين يديك.' : 'in Your Hands.'}
                 </h2>
                 <p className="text-lg md:text-xl lg:text-2xl text-white/60 font-bold max-w-xl">
-                  خلاصة الطبيعة والخبرة في كل عبوة عسل.
+                  {lang === 'ar' ? 'خلاصة الطبيعة والخبرة في كل عبوة عسل.' : 'Nature\'s essence and expertise in every honey jar.'}
                 </p>
              </div>
           </motion.div>
@@ -181,7 +183,7 @@ const DisplayComponent: React.FC = () => {
           transition={{ delay: 0.8 }}
           className="mt-6 md:mt-12 py-2 md:py-4 px-6 md:px-12 rounded-full border border-amber-500/30 bg-amber-500/5 flex flex-wrap items-center justify-center gap-3 md:gap-6"
         >
-           <span className="text-amber-500 font-black text-sm md:text-xl">✦ خبرة ربع قرن ✦</span>
+           <span className="text-amber-500 font-black text-sm md:text-xl">✦ {lang === 'ar' ? 'خبرة ربع قرن' : 'Quarter Century of Experience'} ✦</span>
            <div className="hidden md:block h-4 w-px bg-amber-500/30"></div>
            <span className="text-white/60 font-bold uppercase tracking-widest text-[9px] md:text-sm">Certified Pure & Bio-Active Selection</span>
         </motion.div>
@@ -193,10 +195,22 @@ const DisplayComponent: React.FC = () => {
     const [step, setStep] = useState(0);
     const chatContainerRef = useRef<HTMLDivElement>(null);
     const messages = [
-      { text: "تعبت من المنتجات المغشوشة، عايز عسل يرفع مناعتي بجد؟ 💔", sender: "user" },
-      { text: "جرب 'خلاصة المنحل'.. عسل خام 100% غير مسخن، مفعوله جبار للنشاط والصحة! 🔥", sender: "ai" },
-      { text: "الأسعار غالية في المتاجر، كيف أسعاركم وجودتكم؟ 💸", sender: "user" },
-      { text: "أفضل جودة وأقل سعر في الإمارات! خصومات كبرى الآن.. اطلب قبل نفاذ الكمية! 🏃‍♂️💨", sender: "ai" }
+      { 
+        text: lang === 'ar' ? "تعبت من المنتجات المغشوشة، عايز عسل يرفع مناعتي بجد؟ 💔" : "Tired of fake products, I want honey that really boosts my immunity? 💔", 
+        sender: "user" 
+      },
+      { 
+        text: lang === 'ar' ? "جرب 'خلاصة المنحل'.. عسل خام 100% غير مسخن، مفعوله جبار للنشاط والصحة! 🔥" : "Try 'Apiary Essence'.. 100% raw unheated honey, powerful for energy and health! 🔥", 
+        sender: "ai" 
+      },
+      { 
+        text: lang === 'ar' ? "الأسعار غالية في المتاجر، كيف أسعاركم وجودتكم؟ 💸" : "Prices are high in stores, how about your prices and quality? 💸", 
+        sender: "user" 
+      },
+      { 
+        text: lang === 'ar' ? "أفضل جودة وأقل سعر في الإمارات! خصومات كبرى الآن.. اطلب قبل نفاذ الكمية! 🏃‍♂️💨" : "Best quality and lowest price in UAE! Big discounts now.. Order before stock runs out! 🏃‍♂️💨", 
+        sender: "ai" 
+      }
     ];
 
     useEffect(() => {
@@ -204,7 +218,7 @@ const DisplayComponent: React.FC = () => {
         setStep(prev => (prev < messages.length ? prev + 1 : prev));
       }, 2000); // Faster sequence to fit 10s
       return () => clearInterval(interval);
-    }, []);
+    }, [lang]);
 
     useEffect(() => {
       if (chatContainerRef.current) {
@@ -216,7 +230,7 @@ const DisplayComponent: React.FC = () => {
     }, [step]);
 
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center p-4 lg:p-12 xl:p-16" dir="rtl">
+      <div className="w-full h-full flex flex-col items-center justify-center p-4 lg:p-12 xl:p-16" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center flex-1 h-full max-h-[85vh]">
           
           {/* Simulation Chat Box - Fluid Height Intelligence */}
@@ -225,7 +239,7 @@ const DisplayComponent: React.FC = () => {
                <div className="w-1.5 h-1.5 rounded-full bg-red-500/50" />
                <div className="w-1.5 h-1.5 rounded-full bg-amber-500/50" />
                <div className="w-1.5 h-1.5 rounded-full bg-green-500/50" />
-               <span className="text-[9px] md:text-xs text-amber-500 font-black uppercase tracking-[0.2em] mr-auto">Wellness Advisor</span>
+               <span className={`text-[9px] md:text-xs text-amber-500 font-black uppercase tracking-[0.2em] ${lang === 'ar' ? 'mr-auto' : 'ml-auto'}`}>Wellness Advisor</span>
             </div>
             
             <div 
@@ -263,9 +277,9 @@ const DisplayComponent: React.FC = () => {
 
           {/* Marketing Visuals: The Legacy */}
           <motion.div 
-            initial={{ opacity: 0, x: 50 }}
+            initial={{ opacity: 0, x: lang === 'ar' ? 50 : -50 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col items-center lg:items-start text-center lg:text-right space-y-8 lg:space-y-12"
+            className={`flex flex-col items-center ${lang === 'ar' ? 'lg:items-start text-center lg:text-right' : 'lg:items-end text-center lg:text-left'} space-y-8 lg:space-y-12`}
           >
              <div className="relative group">
                 <motion.div 
@@ -278,16 +292,16 @@ const DisplayComponent: React.FC = () => {
                   alt="Honey House Logo" 
                   className="w-24 h-24 md:w-44 md:h-44 xl:w-56 xl:h-56 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-4 py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm shadow-2xl skew-x-[-10deg]">
-                  مـنـذ ٢٠٠١
+                <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-4 py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm shadow-2xl skew-x-[-10deg]`}>
+                  {lang === 'ar' ? 'مـنـذ ٢٠٠١' : 'Since 2001'}
                 </div>
              </div>
              <div className="space-y-4">
                 <h2 className="text-3xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-tight">
-                  بيت العسل: <br/> <span className="text-amber-500">صحتك هي استثمارك</span>
+                  {lang === 'ar' ? 'بيت العسل:' : 'Honey House:'} <br/> <span className="text-amber-500">{lang === 'ar' ? 'صحتك هي استثمارك' : 'Your Health is Your Investment'}</span>
                 </h2>
                 <p className="text-lg md:text-2xl lg:text-3xl text-white/40 font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed italic">
-                  "عسل خام، نقي، ومضمون.. أقوى عروض التعافي والنشاط تبدأ من هنا!"
+                  {lang === 'ar' ? '"عسل خام، نقي، ومضمون.. أقوى عروض التعافي والنشاط تبدأ من هنا!"' : '"Raw, pure, guaranteed honey.. The strongest recovery and vitality offers start here!"'}
                 </p>
              </div>
           </motion.div>
@@ -298,8 +312,76 @@ const DisplayComponent: React.FC = () => {
           transition={{ duration: 2, repeat: Infinity }}
           className="mt-6 md:mt-10 flex flex-col items-center gap-2"
         >
-           <span className="text-amber-500/60 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">Scroll For Products</span>
+           <span className="text-amber-500/60 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">{lang === 'ar' ? 'Scroll For Products' : 'Scroll For Products'}</span>
            <div className="w-px h-6 md:h-10 bg-gradient-to-b from-amber-500 to-transparent" />
+        </motion.div>
+      </div>
+    );
+  };
+
+  const FullMenuSummary = () => {
+    const productsList = PRODUCTS.filter(p => !['teaser-hook', 'brand-manifesto-hook', 'full-menu-summary'].includes(p.id));
+    
+    return (
+      <div className="w-full h-full flex flex-col items-center justify-center p-4 md:p-8 lg:p-12 overflow-hidden" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        <motion.div 
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="max-w-[1600px] w-full flex flex-col items-center gap-6"
+        >
+          {/* Header Section */}
+          <div className="text-center space-y-2">
+            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-amber-500 uppercase tracking-tight">
+              {lang === 'ar' ? 'قائمة الأسعار والأوزان الرئيسية' : 'Main Price List & Weights'}
+            </h2>
+            <div className="flex items-center justify-center gap-4 flex-wrap">
+              <span className="bg-green-600/20 text-green-500 border border-green-500/30 px-6 py-2 rounded-full font-black text-sm md:text-xl">
+                {lang === 'ar' ? 'توصيل مجاني 🚚' : 'Free Delivery 🚚'}
+              </span>
+              <span className="bg-amber-500 text-black px-6 py-2 rounded-full font-black text-sm md:text-xl shadow-[0_0_20px_rgba(245,158,11,0.5)]">
+                {lang === 'ar' ? '10% خصم للمبيعات فوق 250 درهم 🔥' : '10% OFF on orders over 250 AED 🔥'}
+              </span>
+            </div>
+          </div>
+
+          {/* Catalog Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full overflow-y-auto max-h-[60vh] pr-2 custom-scrollbar">
+            {productsList.map((prod, pIdx) => (
+              <motion.div 
+                key={prod.id} 
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: pIdx * 0.05 }}
+                className="bg-white/5 border border-white/10 rounded-[1.5rem] p-4 flex flex-col gap-3 group hover:border-amber-500/30 transition-all hover:bg-white/[0.08]"
+              >
+                 <div className={`flex items-center gap-4 ${lang === 'ar' ? '' : 'flex-row-reverse text-left'}`}>
+                   <img src={prod.image} className="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-lg group-hover:scale-110 transition-transform" alt="" />
+                   <div className="flex-1">
+                     <h3 className="text-sm md:text-lg font-black text-white">{lang === 'ar' ? prod.titleAr : prod.titleEn}</h3>
+                     <p className="text-[10px] md:text-xs text-white/40 font-bold leading-tight line-clamp-2 mt-0.5">{lang === 'ar' ? prod.descriptionAr : prod.descriptionEn}</p>
+                   </div>
+                 </div>
+                 <div className="flex flex-wrap gap-2">
+                    {prod.prices.map(price => (
+                      <div key={price.id} className="bg-black/40 border border-white/5 px-3 py-2 rounded-xl flex items-center justify-between flex-1 min-w-[120px]">
+                        <span className="text-[10px] md:text-xs font-black text-amber-500">{lang === 'ar' ? price.sizeAr : price.sizeEn}</span>
+                        <div className="flex flex-col items-end">
+                           <span className="text-sm md:text-lg font-black text-white">{price.originalPrice || price.price} {lang === 'ar' ? 'درهم' : 'AED'}</span>
+                           {price.originalPrice && !isStandardMode && (
+                             <span className="text-[8px] md:text-[10px] text-white/20 line-through">{lang === 'ar' ? 'خصم خاص' : 'Special Discount'}</span>
+                           )}
+                        </div>
+                      </div>
+                    ))}
+                 </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="mt-4 flex flex-col items-center gap-1">
+             <span className="text-white/40 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">Trusted and Certified Honey House</span>
+             <div className="w-px h-8 bg-gradient-to-b from-amber-500 to-transparent" />
+          </div>
         </motion.div>
       </div>
     );
@@ -318,15 +400,21 @@ const DisplayComponent: React.FC = () => {
         {/* Left: Dynamic Promo Tags */}
         <div className="flex gap-4 md:gap-8">
            <div className="flex flex-col items-center group relative">
-              <div className="relative overflow-hidden rounded-full border border-white/10 bg-white/5 px-6 md:px-10 py-1.5 md:py-2.5">
+              <div className={`relative overflow-hidden rounded-full border border-white/10 ${isStandardMode ? 'bg-green-600/20 border-green-500/30' : 'bg-white/5'} px-6 md:px-10 py-1.5 md:py-2.5`}>
                 <motion.div 
                   animate={{ x: ['-200%', '200%'] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[35deg] pointer-events-none"
                 />
-                <span className="text-xl md:text-2xl font-black text-white leading-none relative z-10">الحق العرض اليوم</span>
+                <span className={`text-xl md:text-2xl font-black ${isStandardMode ? 'text-green-500' : 'text-white'} leading-none relative z-10`}>
+                  {isStandardMode 
+                    ? (lang === 'ar' ? 'توصيل مجاني 🚚' : 'Free Delivery 🚚') 
+                    : (lang === 'ar' ? 'الحق العرض اليوم' : 'Grab Today\'s Offer')}
+                </span>
               </div>
-              <span className="text-xs md:text-sm font-bold text-white/50 mt-1 uppercase tracking-wider">LIMITED QUANTITY</span>
+              <span className={`text-xs md:text-sm font-bold ${isStandardMode ? 'text-green-500/50' : 'text-white/50'} mt-1 uppercase tracking-wider`}>
+                {isStandardMode ? 'FREE UAE DELIVERY' : 'LIMITED QUANTITY'}
+              </span>
            </div>
            
            <div className="flex flex-col items-center group relative">
@@ -336,9 +424,15 @@ const DisplayComponent: React.FC = () => {
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/30 to-transparent skew-x-[35deg] pointer-events-none"
                 />
-                <span className="text-xl md:text-2xl font-black text-amber-500 leading-none relative z-10">خصم خاص وحصري</span>
+                <span className="text-xl md:text-2xl font-black text-amber-500 leading-none relative z-10">
+                  {isStandardMode 
+                    ? (lang === 'ar' ? 'خصم %10 فوق 250د.إ' : '10% OFF over 250 AED') 
+                    : (lang === 'ar' ? 'خصم خاص وحصري' : 'Exclusive Discount')}
+                </span>
               </div>
-              <span className="text-xs md:text-sm font-bold text-amber-500/50 mt-1 uppercase tracking-wider">LIMITED TIME PROMO</span>
+              <span className="text-xs md:text-sm font-bold text-amber-500/50 mt-1 uppercase tracking-wider">
+                {isStandardMode ? 'LOYALTY DISCOUNT' : 'LIMITED TIME PROMO'}
+              </span>
            </div>
         </div>
 
@@ -381,6 +475,16 @@ const DisplayComponent: React.FC = () => {
             >
               <QualityTeaser />
             </motion.div>
+          ) : product.id === 'full-menu-summary' ? (
+            <motion.div
+              key="full-menu-summary"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="w-full h-full flex flex-col items-center justify-center"
+            >
+              <FullMenuSummary />
+            </motion.div>
           ) : (
             <motion.div
               key={product.id}
@@ -391,19 +495,19 @@ const DisplayComponent: React.FC = () => {
               className="w-full h-full max-w-[1700px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 xl:gap-24 items-center content-center"
             >
             {/* Left Column: Product Info */}
-            <div className="flex flex-col justify-center text-right space-y-4 md:space-y-6 lg:space-y-10 order-2 lg:order-1" dir="rtl">
+            <div className={`flex flex-col justify-center ${lang === 'ar' ? 'text-right' : 'text-left'} space-y-4 md:space-y-6 lg:space-y-10 order-2 lg:order-1`} dir={lang === 'ar' ? 'rtl' : 'ltr'}>
               <div className="space-y-2 md:space-y-4">
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  className="h-1 md:h-2 w-24 md:w-32 bg-gradient-to-r from-amber-600 to-amber-400 origin-right rounded-full shadow-[0_0_20px_rgba(245,158,11,0.5)]"
+                  className={`h-1 md:h-2 w-24 md:w-32 bg-gradient-to-r from-amber-600 to-amber-400 ${lang === 'ar' ? 'origin-right' : 'origin-left'} rounded-full shadow-[0_0_20px_rgba(245,158,11,0.5)]`}
                 />
                 <motion.h2 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
                   className="text-3xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-200 to-amber-500 leading-tight tracking-tight drop-shadow-2xl"
                 >
-                  {product.titleAr}
+                  {lang === 'ar' ? product.titleAr : product.titleEn}
                 </motion.h2>
               </div>
 
@@ -411,9 +515,9 @@ const DisplayComponent: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-base md:text-2xl lg:text-3xl text-white/80 font-bold leading-relaxed border-r-4 md:border-r-8 border-amber-500 pr-5"
+                className={`text-base md:text-2xl lg:text-3xl text-white/80 font-bold leading-relaxed ${lang === 'ar' ? 'border-r-4 md:border-r-8' : 'border-l-4 md:border-l-8'} border-amber-500 ${lang === 'ar' ? 'pr-5' : 'pl-5'}`}
               >
-                {product.descriptionAr}
+                {lang === 'ar' ? product.descriptionAr : product.descriptionEn}
               </motion.p>
 
               {/* Pricing Grid - Balanced & Eye-Catching */}
@@ -430,40 +534,44 @@ const DisplayComponent: React.FC = () => {
                       : 'from-white/10 to-amber-950/20 hover:border-amber-500/30'
                     }`}
                   >
-                    {p.originalPrice && (
-                      <div className="absolute top-1.5 right-3 md:top-3 md:right-6 flex flex-col items-end gap-0.5 md:gap-1">
+                    {p.originalPrice && !isStandardMode && (
+                      <div className={`absolute top-1.5 ${lang === 'ar' ? 'right-3 md:right-6' : 'left-3 md:left-6'} md:top-3 flex flex-col items-end gap-0.5 md:gap-1`}>
                         <div className="flex items-center gap-1">
                           <span className="text-[10px] md:text-xl font-bold text-white/30 line-through decoration-red-500/50 decoration-1 md:decoration-2">
                              {p.originalPrice}
                           </span>
-                          <span className="text-[8px] md:text-sm text-white/40">درهم</span>
+                          <span className="text-[8px] md:text-sm text-white/40">{lang === 'ar' ? 'درهم' : 'AED'}</span>
                         </div>
                         <div className="bg-red-500 text-[8px] md:text-sm font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
-                          وفر {Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}%
+                          {lang === 'ar' ? 'وفر' : 'Save'} {Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}%
                         </div>
                       </div>
                     )}
 
                     <span className={`font-black uppercase tracking-widest mb-1 md:mb-2 ${product.prices.length === 1 ? 'text-lg md:text-4xl text-white' : 'text-sm md:text-3xl text-amber-500'}`}>
-                      {p.sizeAr}
+                      {lang === 'ar' ? p.sizeAr : p.sizeEn}
                     </span>
                     
-                    {p.price > 0 && (
+                    {(isStandardMode ? (p.originalPrice || p.price) : p.price) > 0 && (
                       <div className="flex flex-col items-center">
                         <div className="flex items-baseline gap-1 md:gap-2">
                           <motion.span 
                             animate={{ 
-                              textShadow: ['0 0 10px rgba(251,191,36,0)', '0 0 30px rgba(251,191,36,0.8)', '0 0 10px rgba(251,191,36,0)'],
-                              scale: [1, 1.08, 1]
+                              textShadow: isStandardMode ? [] : ['0 0 10px rgba(251,191,36,0)', '0 0 30px rgba(251,191,36,0.8)', '0 0 10px rgba(251,191,36,0)'],
+                              scale: isStandardMode ? [1] : [1, 1.08, 1]
                             }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
-                            className="text-2xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
+                            className={`text-2xl md:text-7xl lg:text-8xl xl:text-9xl font-black ${isStandardMode ? 'text-white' : 'text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]'}`}
                           >
-                            {p.price}
+                            {isStandardMode ? (p.originalPrice || p.price) : p.price}
                           </motion.span>
-                          <span className="text-[10px] md:text-2xl lg:text-3xl font-bold text-white/60 lowercase">درهم</span>
+                          <span className="text-[10px] md:text-2xl lg:text-3xl font-bold text-white/60 lowercase">{lang === 'ar' ? 'درهم' : 'AED'}</span>
                         </div>
-                        <span className="text-[8px] md:text-base font-black text-amber-500/50 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-1 md:mt-4">Final Price</span>
+                        <span className="text-[8px] md:text-base font-black text-amber-500/50 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-1 md:mt-4">
+                          {isStandardMode 
+                            ? (lang === 'ar' ? 'السعر الأساسي' : 'Standard Price') 
+                            : (lang === 'ar' ? 'السعر النهائي' : 'Final Price')}
+                        </span>
                       </div>
                     )}
                   </motion.div>
@@ -500,7 +608,9 @@ const DisplayComponent: React.FC = () => {
         <div className="flex items-center gap-10 overflow-hidden">
           <div className="flex flex-col shrink-0">
             <span className="text-[9px] uppercase text-white/20 font-black tracking-widest mb-0.5">PREMIUM SELECTION VIEW</span>
-            <span className="text-base md:text-xl font-bold text-white whitespace-nowrap">عسل طبيعي 100% من المنحل مباشرة إلى منزلك في الإمارات</span>
+            <span className="text-base md:text-xl font-bold text-white whitespace-nowrap">
+              {lang === 'ar' ? 'عسل طبيعي 100% من المنحل مباشرة إلى منزلك في الإمارات' : '100% Natural Honey from the Apiary directly to your home in UAE'}
+            </span>
           </div>
           <div className="hidden lg:block w-px h-8 bg-white/10 mx-2"></div>
           <motion.span 
@@ -508,7 +618,7 @@ const DisplayComponent: React.FC = () => {
             transition={{ duration: 4, repeat: Infinity }}
             className="hidden xl:block text-xl font-bold text-amber-500/80"
           >
-            جودة تستحق الثقة لبيت العسل 🍯
+            {lang === 'ar' ? 'جودة تستحق الثقة لبيت العسل 🍯' : 'Quality You Can Trust at Honey House 🍯'}
           </motion.span>
         </div>
 
@@ -518,7 +628,7 @@ const DisplayComponent: React.FC = () => {
              onClick={() => { window.location.hash = ""; window.location.reload(); }}
              className="text-[10px] font-black text-white/20 hover:text-white transition-colors tracking-widest uppercase mr-6"
           >
-            CloseView
+            {lang === 'ar' ? 'إغلاق الشاشة' : 'Close View'}
           </button>
 
           {PRODUCTS.map((_, idx) => (
@@ -531,6 +641,26 @@ const DisplayComponent: React.FC = () => {
 
         {/* 🎥 Recording Controls - Floating Left */}
         <div className="absolute left-6 bottom-4 md:left-12 md:bottom-6 flex items-center gap-3">
+          <button
+            onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
+            className="flex items-center gap-2 px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-xl border bg-amber-500 text-black border-amber-500 hover:bg-amber-400"
+          >
+            {lang === 'ar' ? 'English' : 'عربي'}
+          </button>
+
+          <button
+            onClick={() => setIsStandardMode(!isStandardMode)}
+            className={`flex items-center gap-2 px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-xl border ${
+              isStandardMode 
+              ? 'bg-white text-black border-white' 
+              : 'bg-black/40 text-amber-500 border-amber-500/30 hover:bg-black/60'
+            }`}
+          >
+            {isStandardMode 
+              ? (lang === 'ar' ? 'شاشة العروض' : 'Promo View') 
+              : (lang === 'ar' ? 'شاشة العرض الأساسية' : 'Standard View')}
+          </button>
+
           <AnimatePresence>
             {isRecording && (
               <motion.div
@@ -558,7 +688,9 @@ const DisplayComponent: React.FC = () => {
               }`}
             >
               {isRecording ? <Square size={14} fill="currentColor" /> : <Video size={14} fill="currentColor" />}
-              {isRecording ? 'إيقاف التسجيل' : 'حفظ كفيديو'}
+              {isRecording 
+                ? (lang === 'ar' ? 'إيقاف التسجيل' : 'Stop Recording') 
+                : (lang === 'ar' ? 'حفظ كفيديو' : 'Save Video')}
             </button>
 
             {!isRecording && (
@@ -567,11 +699,23 @@ const DisplayComponent: React.FC = () => {
                    <div className="flex items-start gap-2">
                      <Info size={14} className="text-amber-500 shrink-0 mt-0.5" />
                      <p className="text-[10px] text-white/60 leading-relaxed font-bold">
-                       لتحويل الشاشة إلى فيديو لمشاركته على واتساب: <br/>
-                       ١. اضغط "حفظ كفيديو"<br/>
-                       ٢. اختر <span className="text-amber-500">هذه العلامة (Current Tab)</span><br/>
-                       ٣. اختر <span className="text-amber-500">مشاركة (Share)</span><br/>
-                       ٤. سيبدأ التسجيل فوراً ويحفظ تلقائياً عند الإيقاف.
+                       {lang === 'ar' ? (
+                         <>
+                           لتحويل الشاشة إلى فيديو لمشاركته على واتساب: <br/>
+                           ١. اضغط "حفظ كفيديو"<br/>
+                           ٢. اختر <span className="text-amber-500">هذه العلامة (Current Tab)</span><br/>
+                           ٣. اختر <span className="text-amber-500">مشاركة (Share)</span><br/>
+                           ٤. سيبدأ التسجيل فوراً ويحفظ تلقائياً عند الإيقاف.
+                         </>
+                       ) : (
+                         <>
+                           To convert screen to video: <br/>
+                           1. Click "Save Video"<br/>
+                           2. Select <span className="text-amber-500">This Tab (Current Tab)</span><br/>
+                           3. Click <span className="text-amber-500">Share</span><br/>
+                           4. Recording starts and saves automatically on stop.
+                         </>
+                       )}
                      </p>
                    </div>
                 </div>
