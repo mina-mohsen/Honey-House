@@ -107,64 +107,63 @@ const DisplayComponent: React.FC = () => {
     ];
 
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center py-10 px-6 lg:px-20" dir="rtl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center w-full max-w-[1400px]">
+      <div className="w-full h-full flex flex-col items-center justify-center py-6 md:py-10 px-4 md:px-12 lg:px-20" dir="rtl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center w-full max-w-[1600px] flex-1">
           
           {/* Visual Side: Logo + Slogan */}
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col items-center lg:items-start text-center lg:text-right space-y-8"
+            className="flex flex-col items-center lg:items-start text-center lg:text-right space-y-6 md:space-y-8"
           >
              <div className="relative">
                 <motion.div 
                   animate={{ rotate: 360 }}
                   transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-                  className="absolute -inset-10 bg-gradient-to-tr from-amber-500/0 via-amber-500/20 to-amber-500/0 rounded-full blur-3xl"
+                  className="absolute -inset-10 bg-gradient-to-tr from-amber-500/0 via-amber-500/20 to-amber-500/0 rounded-full blur-3xl opacity-60"
                 />
                 <img 
                   src="https://imgur.com/tpBWWTy.jpeg" 
                   alt="Honey House Legacy" 
-                  className="w-24 h-24 md:w-36 md:h-36 object-contain relative z-10 drop-shadow-[0_0_50px_rgba(245,158,11,0.4)]"
+                  className="w-20 h-20 md:w-32 md:h-32 xl:w-40 xl:h-40 object-contain relative z-10 drop-shadow-[0_0_50px_rgba(245,158,11,0.4)]"
                 />
                 <motion.div 
                   initial={{ scale: 0 }}
                   animate={{ scale: 1 }}
-                  className="absolute -top-2 -right-2 bg-amber-500 text-black font-black px-3 py-1 rounded-full border-2 border-black z-20 text-xs md:text-sm rotate-12"
+                  className="absolute -top-1 -right-1 bg-amber-500 text-black font-black px-2 py-0.5 md:px-3 md:py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm rotate-12"
                 >
                   منذ ٢٠٠١
                 </motion.div>
              </div>
-             <div className="space-y-4">
-                <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
+             <div className="space-y-3 md:space-y-4">
+                <h2 className="text-3xl md:text-5xl lg:text-6xl xl:text-7xl font-black text-white leading-tight">
                   <span className="text-amber-500">25 عاماً</span> من الخبرة <br/> بين يديك.
                 </h2>
-                <p className="text-xl md:text-2xl text-white/60 font-bold max-w-xl">
-                  بدأنا بمناحلنا الخاصة منذ ربع قرن، لنقدم لكم اليوم خلاصة الطبيعة والخبرة في كل عبوة عسل.
+                <p className="text-lg md:text-xl lg:text-2xl text-white/60 font-bold max-w-xl">
+                  خلاصة الطبيعة والخبرة في كل عبوة عسل.
                 </p>
              </div>
           </motion.div>
 
           {/* Bento Grid Side: Values */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
              {values.map((v, i) => (
                 <motion.div
                   key={i}
                   initial={{ opacity: 0, y: 30 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className={`p-8 rounded-[2.5rem] border border-white/10 bg-gradient-to-br ${v.color} backdrop-blur-xl relative overflow-hidden group hover:border-amber-500/50 transition-all duration-500 shadow-2xl`}
+                  className={`p-4 md:p-6 lg:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-white/10 bg-gradient-to-br ${v.color} backdrop-blur-xl relative overflow-hidden group hover:border-amber-500/50 transition-all duration-500 shadow-2xl flex flex-col justify-center h-full min-h-[140px] md:min-h-[200px]`}
                 >
-                  <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-20 transition-opacity">
-                    <span className="text-8xl">{v.icon}</span>
+                  <div className="absolute top-0 right-0 p-2 md:p-4 opacity-5 group-hover:opacity-20 transition-opacity">
+                    <span className="text-6xl md:text-8xl">{v.icon}</span>
                   </div>
-                  <span className="text-4xl mb-4 block">{v.icon}</span>
-                  <h3 className="text-2xl font-black text-white mb-2">{v.title}</h3>
-                  <p className="text-white/60 text-lg font-bold leading-relaxed">{v.desc}</p>
+                  <span className="text-2xl md:text-4xl mb-2 md:mb-4 block">{v.icon}</span>
+                  <h3 className="text-lg md:text-2xl font-black text-white mb-1 md:mb-2">{v.title}</h3>
+                  <p className="text-white/60 text-xs md:text-lg font-bold leading-relaxed">{v.desc}</p>
                 </motion.div>
              ))}
           </div>
-
         </div>
 
         {/* Global Assurance Banner */}
@@ -172,11 +171,11 @@ const DisplayComponent: React.FC = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.8 }}
-          className="mt-16 py-4 px-12 rounded-full border border-amber-500/30 bg-amber-500/5 flex items-center gap-6"
+          className="mt-6 md:mt-12 py-2 md:py-4 px-6 md:px-12 rounded-full border border-amber-500/30 bg-amber-500/5 flex flex-wrap items-center justify-center gap-3 md:gap-6"
         >
-           <span className="text-amber-500 font-black text-xl">✦ خبرة 25 عاماً في المناحل ✦</span>
-           <div className="h-4 w-px bg-amber-500/30"></div>
-           <span className="text-white/60 font-bold uppercase tracking-widest text-sm">Laboratories Certified Organic & Bio-Active</span>
+           <span className="text-amber-500 font-black text-sm md:text-xl">✦ خبرة ربع قرن ✦</span>
+           <div className="hidden md:block h-4 w-px bg-amber-500/30"></div>
+           <span className="text-white/60 font-bold uppercase tracking-widest text-[9px] md:text-sm">Certified Pure & Bio-Active Selection</span>
         </motion.div>
       </div>
     );
@@ -209,21 +208,21 @@ const DisplayComponent: React.FC = () => {
     }, [step]);
 
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center p-4 lg:p-8" dir="rtl">
-        <div className="max-w-6xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 items-center h-full max-h-[75vh]">
+      <div className="w-full h-full flex flex-col items-center justify-center p-4 lg:p-12 xl:p-16" dir="rtl">
+        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center flex-1 h-full max-h-[85vh]">
           
-          {/* Simulation Chat Box - Tighter for fitting */}
-          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[2.5rem] border border-amber-500/20 p-6 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-4 h-[400px] lg:h-[450px] flex flex-col relative overflow-hidden">
-            <div className="flex items-center gap-2 border-b border-white/5 pb-3 mb-1">
+          {/* Simulation Chat Box - Fluid Height Intelligence */}
+          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[2rem] md:rounded-[3rem] border border-amber-500/20 p-5 md:p-8 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-4 h-full min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col relative overflow-hidden">
+            <div className="flex items-center gap-2 border-b border-white/5 pb-3">
                <div className="w-2 h-2 rounded-full bg-red-500/50" />
                <div className="w-2 h-2 rounded-full bg-amber-500/50" />
                <div className="w-2 h-2 rounded-full bg-green-500/50" />
-               <span className="text-[10px] text-amber-500 font-black uppercase tracking-[0.2em] mr-auto">Wellness Advisor</span>
+               <span className="text-[10px] md:text-xs text-amber-500 font-black uppercase tracking-[0.2em] mr-auto">Wellness Advisor</span>
             </div>
             
             <div 
               ref={chatContainerRef}
-              className="flex-1 space-y-4 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className="flex-1 space-y-4 md:space-y-6 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                <AnimatePresence mode="popLayout">
                  {messages.slice(0, step).map((msg, i) => (
@@ -233,7 +232,7 @@ const DisplayComponent: React.FC = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     className={`flex ${msg.sender === 'user' ? 'justify-start' : 'justify-end'}`}
                    >
-                      <div className={`max-w-[90%] p-4 md:p-5 rounded-[1.8rem] text-sm md:text-base lg:text-lg font-bold shadow-xl overflow-hidden relative
+                      <div className={`max-w-[85%] p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] text-sm md:text-lg lg:text-xl font-bold shadow-xl overflow-hidden relative
                         ${msg.sender === 'user' 
                           ? 'bg-white/5 text-white/60 border border-white/10 rounded-tr-none' 
                           : 'bg-gradient-to-br from-amber-500 to-amber-600 text-black border border-amber-400 rounded-tl-none shadow-[0_8px_25px_rgba(245,158,11,0.2)]'
@@ -258,7 +257,7 @@ const DisplayComponent: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
-            className="flex flex-col items-center lg:items-start text-center lg:text-right space-y-10"
+            className="flex flex-col items-center lg:items-start text-center lg:text-right space-y-8 lg:space-y-12"
           >
              <div className="relative group">
                 <motion.div 
@@ -269,17 +268,17 @@ const DisplayComponent: React.FC = () => {
                 <img 
                   src="https://imgur.com/tpBWWTy.jpeg" 
                   alt="Honey House Logo" 
-                  className="w-28 h-28 md:w-40 md:h-40 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-105 transition-transform duration-700"
+                  className="w-24 h-24 md:w-44 md:h-44 xl:w-56 xl:h-56 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-3 py-0.5 rounded-full border-2 border-black z-20 text-xs shadow-2xl skew-x-[-10deg]">
+                <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-4 py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm shadow-2xl skew-x-[-10deg]">
                   مـنـذ ٢٠٠١
                 </div>
              </div>
              <div className="space-y-4">
-                <h2 className="text-4xl md:text-6xl font-black text-white leading-tight">
+                <h2 className="text-3xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-tight">
                   بيت العسل: <br/> <span className="text-amber-500">صحتك هي استثمارك</span>
                 </h2>
-                <p className="text-xl md:text-2xl text-white/40 font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed italic">
+                <p className="text-lg md:text-2xl lg:text-3xl text-white/40 font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed italic">
                   "عسل خام، نقي، ومضمون.. أقوى عروض التعافي والنشاط تبدأ من هنا!"
                 </p>
              </div>
@@ -289,10 +288,10 @@ const DisplayComponent: React.FC = () => {
         <motion.div 
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="mt-8 flex flex-col items-center gap-2"
+          className="mt-6 md:mt-10 flex flex-col items-center gap-2"
         >
-           <span className="text-amber-500/60 font-black text-[10px] tracking-[0.4em] uppercase">Scroll For Products</span>
-           <div className="w-px h-8 bg-gradient-to-b from-amber-500 to-transparent" />
+           <span className="text-amber-500/60 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">Scroll For Products</span>
+           <div className="w-px h-6 md:h-10 bg-gradient-to-b from-amber-500 to-transparent" />
         </motion.div>
       </div>
     );
@@ -352,7 +351,7 @@ const DisplayComponent: React.FC = () => {
       </div>
 
       {/* 🍯 Advertising Canvas: Strictly Contained Layout */}
-      <div className="flex-1 relative flex items-center justify-center overflow-hidden px-8 md:px-16 lg:px-24 py-10">
+      <div className="flex-1 relative flex items-center justify-center overflow-hidden px-4 md:px-16 lg:px-24 py-6 md:py-12">
         <AnimatePresence mode="wait">
           {product.id === 'brand-manifesto-hook' ? (
             <motion.div
@@ -360,7 +359,7 @@ const DisplayComponent: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="w-full h-full"
+              className="w-full h-full flex flex-col items-center justify-center"
             >
               <BrandManifesto />
             </motion.div>
@@ -370,7 +369,7 @@ const DisplayComponent: React.FC = () => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              className="w-full h-full"
+              className="w-full h-full flex flex-col items-center justify-center"
             >
               <QualityTeaser />
             </motion.div>
@@ -381,20 +380,20 @@ const DisplayComponent: React.FC = () => {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 1.05 }}
               transition={{ duration: 0.8 }}
-              className="w-full h-full max-w-[1600px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center content-center"
+              className="w-full h-full max-w-[1700px] mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 xl:gap-24 items-center content-center"
             >
             {/* Left Column: Product Info */}
-            <div className="flex flex-col justify-center text-right space-y-4 md:space-y-6 lg:space-y-8 order-2 lg:order-1" dir="rtl">
-              <div className="space-y-2 md:space-y-3">
+            <div className="flex flex-col justify-center text-right space-y-4 md:space-y-6 lg:space-y-10 order-2 lg:order-1" dir="rtl">
+              <div className="space-y-2 md:space-y-4">
                 <motion.div
                   initial={{ scaleX: 0 }}
                   animate={{ scaleX: 1 }}
-                  className="h-1 w-24 bg-gradient-to-r from-amber-600 to-amber-400 origin-right rounded-full shadow-[0_0_20px_rgba(245,158,11,0.5)]"
+                  className="h-1 md:h-2 w-24 md:w-32 bg-gradient-to-r from-amber-600 to-amber-400 origin-right rounded-full shadow-[0_0_20px_rgba(245,158,11,0.5)]"
                 />
                 <motion.h2 
                   initial={{ opacity: 0, y: 10 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="text-3xl md:text-4xl lg:text-5xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-200 to-amber-500 leading-[1.1] tracking-tight drop-shadow-2xl"
+                  className="text-3xl md:text-5xl lg:text-7xl xl:text-8xl font-black text-transparent bg-clip-text bg-gradient-to-b from-white via-amber-200 to-amber-500 leading-tight tracking-tight drop-shadow-2xl"
                 >
                   {product.titleAr}
                 </motion.h2>
@@ -404,59 +403,59 @@ const DisplayComponent: React.FC = () => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3 }}
-                className="text-base md:text-lg lg:text-xl text-white/80 font-bold leading-relaxed border-r-4 border-amber-500 pr-5"
+                className="text-base md:text-2xl lg:text-3xl text-white/80 font-bold leading-relaxed border-r-4 md:border-r-8 border-amber-500 pr-5"
               >
                 {product.descriptionAr}
               </motion.p>
 
               {/* Pricing Grid - Balanced & Eye-Catching */}
-              <div className="grid grid-cols-2 gap-3 md:gap-4 pt-2">
+              <div className="grid grid-cols-2 gap-3 md:gap-5 xl:gap-8 pt-4">
                 {product.prices.map((p, idx) => (
                    <motion.div 
                     key={p.id}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 + (idx * 0.1) }}
-                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-4 md:p-5 rounded-[1.5rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group relative overflow-hidden ${
+                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-5 md:p-8 xl:p-12 rounded-[1.8rem] md:rounded-[3rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group relative overflow-hidden ${
                       product.prices.length === 1 
                       ? 'col-span-2 from-amber-500/20 to-amber-950/40 border-amber-500/50 scale-105' 
                       : 'from-white/10 to-amber-950/20 hover:border-amber-500/30'
                     }`}
                   >
                     {p.originalPrice && (
-                      <div className="absolute top-2 right-4 flex flex-col items-end gap-1">
+                      <div className="absolute top-3 right-6 flex flex-col items-end gap-1">
                         <div className="flex items-center gap-1">
-                          <span className="text-xs md:text-sm font-bold text-white/30 line-through decoration-red-500/50 decoration-2">
+                          <span className="text-xs md:text-xl font-bold text-white/30 line-through decoration-red-500/50 decoration-2">
                              {p.originalPrice}
                           </span>
-                          <span className="text-[10px] text-white/40">درهم</span>
+                          <span className="text-[10px] md:text-sm text-white/40">درهم</span>
                         </div>
-                        <div className="bg-red-500 text-[9px] md:text-[11px] font-black px-2 py-0.5 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
+                        <div className="bg-red-500 text-[10px] md:text-sm font-black px-2 py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
                           وفر {Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}%
                         </div>
                       </div>
                     )}
 
-                    <span className={`font-black uppercase tracking-widest mb-1 ${product.prices.length === 1 ? 'text-2xl md:text-3xl text-white' : 'text-xl md:text-2xl text-amber-500'}`}>
+                    <span className={`font-black uppercase tracking-widest mb-2 ${product.prices.length === 1 ? 'text-2xl md:text-4xl text-white' : 'text-xl md:text-3xl text-amber-500'}`}>
                       {p.sizeAr}
                     </span>
                     
                     {p.price > 0 && (
                       <div className="flex flex-col items-center">
-                        <div className="flex items-baseline gap-1">
+                        <div className="flex items-baseline gap-1 md:gap-2">
                           <motion.span 
                             animate={{ 
                               textShadow: ['0 0 10px rgba(251,191,36,0)', '0 0 30px rgba(251,191,36,0.8)', '0 0 10px rgba(251,191,36,0)'],
                               scale: [1, 1.08, 1]
                             }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
-                            className="text-4xl md:text-5xl lg:text-7xl font-black text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
+                            className="text-4xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
                           >
                             {p.price}
                           </motion.span>
-                          <span className="text-sm md:text-xl font-bold text-white/60 lowercase">درهم</span>
+                          <span className="text-sm md:text-2xl lg:text-3xl font-bold text-white/60 lowercase">درهم</span>
                         </div>
-                        <span className="text-[10px] md:text-xs font-bold text-amber-500/50 uppercase tracking-[0.2em] mt-1">Special Offer Price</span>
+                        <span className="text-[10px] md:text-base font-black text-amber-500/50 uppercase tracking-[0.3em] mt-2 md:mt-4">Factory Direct Price</span>
                       </div>
                     )}
                   </motion.div>
@@ -473,13 +472,13 @@ const DisplayComponent: React.FC = () => {
                   scale: [1, 1.02, 1]
                 }}
                 transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-                className="relative w-full h-[35vh] lg:h-full flex items-center justify-center"
+                className="relative w-full h-[40vh] md:h-[50vh] lg:h-full flex items-center justify-center"
               >
                 <div className="absolute inset-0 bg-amber-500/10 blur-[120px] rounded-full"></div>
                 <img 
                   src={product.image} 
                   alt={product.titleAr}
-                  className="max-w-[120%] max-h-[120%] object-contain drop-shadow-[0_80px_100px_rgba(0,0,0,0.85)] z-10"
+                  className="max-w-[130%] max-h-[130%] object-contain drop-shadow-[0_80px_100px_rgba(0,0,0,0.85)] z-10"
                 />
               </motion.div>
             </div>
