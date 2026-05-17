@@ -1,9 +1,15 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
+import { Video, Square, Download, Settings, Info } from 'lucide-react';
 import { PRODUCTS } from './constants';
 
 const DisplayComponent: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordDuration, setRecordDuration] = useState(0);
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const chunksRef = useRef<Blob[]>([]);
+  const timerRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     const isManifesto = PRODUCTS[currentIndex]?.id === 'brand-manifesto-hook';
@@ -13,6 +19,62 @@ const DisplayComponent: React.FC = () => {
     }, 10000); // 10s for all slides as requested
     return () => clearInterval(timer);
   }, [currentIndex]);
+
+  const startRecording = async () => {
+    try {
+      const stream = await navigator.mediaDevices.getDisplayMedia({
+        video: {
+          displaySurface: 'browser',
+        },
+        audio: false
+      });
+
+      const recorder = new MediaRecorder(stream, {
+        mimeType: 'video/webm;codecs=vp9'
+      });
+
+      mediaRecorderRef.current = recorder;
+      chunksRef.current = [];
+      
+      recorder.ondataavailable = (e) => {
+        if (e.data.size > 0) chunksRef.current.push(e.data);
+      };
+
+      recorder.onstop = () => {
+        const blob = new Blob(chunksRef.current, { type: 'video/webm' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `HoneyHouse_Promo_${new Date().getTime()}.webm`;
+        a.click();
+        URL.revokeObjectURL(url);
+        
+        // Stop all tracks
+        stream.getTracks().forEach(track => track.stop());
+        setIsRecording(false);
+        setRecordDuration(0);
+        if (timerRef.current) clearInterval(timerRef.current);
+      };
+
+      recorder.start();
+      setIsRecording(true);
+      
+      // Start duration counter
+      timerRef.current = setInterval(() => {
+        setRecordDuration(prev => prev + 1);
+      }, 1000);
+
+    } catch (err) {
+      console.error("Recording error:", err);
+      alert("عذراً، يجب اختيار 'هذه العلامة' (Current Tab) لبدء التسجيل بنجاح.");
+    }
+  };
+
+  const stopRecording = () => {
+    if (mediaRecorderRef.current && isRecording) {
+      mediaRecorderRef.current.stop();
+    }
+  };
 
   const product = PRODUCTS[currentIndex];
 
@@ -458,6 +520,58 @@ const DisplayComponent: React.FC = () => {
               className={`h-2.5 rounded-full transition-all duration-700 ${currentIndex === idx ? 'w-24 bg-amber-500' : 'w-4 bg-white/10'}`} 
             />
           ))}
+        </div>
+
+        {/* 🎥 Recording Controls - Floating Left */}
+        <div className="absolute left-6 bottom-4 md:left-12 md:bottom-6 flex items-center gap-3">
+          <AnimatePresence>
+            {isRecording && (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                exit={{ opacity: 0, x: -20 }}
+                className="flex items-center gap-3 bg-red-600 px-4 py-2 rounded-full border border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.5)]"
+              >
+                <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
+                <span className="text-xs font-black uppercase tracking-widest text-white">Recording </span>
+                <span className="text-xs font-mono font-bold text-white/80">
+                  {Math.floor(recordDuration / 60)}:{String(recordDuration % 60).padStart(2, '0')}
+                </span>
+              </motion.div>
+            )}
+          </AnimatePresence>
+          
+          <div className="relative group">
+            <button
+              onClick={isRecording ? stopRecording : startRecording}
+              className={`flex items-center gap-2 px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-xl ${
+                isRecording 
+                ? 'bg-white text-black hover:bg-gray-200' 
+                : 'bg-amber-500 text-black hover:bg-amber-400 hover:scale-105 active:scale-95'
+              }`}
+            >
+              {isRecording ? <Square size={14} fill="currentColor" /> : <Video size={14} fill="currentColor" />}
+              {isRecording ? 'إيقاف التسجيل' : 'حفظ كفيديو'}
+            </button>
+
+            {!isRecording && (
+              <div className="absolute bottom-full left-0 mb-4 w-64 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-[100]">
+                <div className="bg-black/90 backdrop-blur-xl border border-white/10 p-3 rounded-2xl shadow-2xl">
+                   <div className="flex items-start gap-2">
+                     <Info size={14} className="text-amber-500 shrink-0 mt-0.5" />
+                     <p className="text-[10px] text-white/60 leading-relaxed font-bold">
+                       لتحويل الشاشة إلى فيديو لمشاركته على واتساب: <br/>
+                       ١. اضغط "حفظ كفيديو"<br/>
+                       ٢. اختر <span className="text-amber-500">هذه العلامة (Current Tab)</span><br/>
+                       ٣. اختر <span className="text-amber-500">مشاركة (Share)</span><br/>
+                       ٤. سيبدأ التسجيل فوراً ويحفظ تلقائياً عند الإيقاف.
+                     </p>
+                   </div>
+                </div>
+                <div className="w-3 h-3 bg-black/90 rotate-45 border-r border-b border-white/10 ml-6 -mt-1.5" />
+              </div>
+            )}
+          </div>
         </div>
 
         <div className="absolute top-0 left-0 h-[3px] bg-white/5 w-full">

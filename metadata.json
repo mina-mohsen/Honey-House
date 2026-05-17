@@ -1,5 +1,5 @@
 {
   "name": "بيت العسل - Honey House",
-  "description": "A professional landing page and order system for Honey House, featuring premium Egyptian honey products with direct WhatsApp ordering.",
-  "majorCapabilities": []
+  "description": "A professional landing page and order system for Honey House, featuring premium Egyptian honey products with direct WhatsApp ordering and video export capabilities.",
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }
