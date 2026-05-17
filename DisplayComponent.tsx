@@ -21,6 +21,14 @@ const DisplayComponent: React.FC = () => {
   }, [currentIndex]);
 
   const startRecording = async () => {
+    // Check if we're on a mobile device
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    
+    if (isMobile) {
+      alert("⚠️ ميزة التسجيل المباشر تعمل بشكل أفضل على أجهزة الكمبيوتر. \n\nعلى الموبايل: يرجى استخدام ميزة 'تسجيل الشاشة' (Screen Record) الموجودة في إعدادات موبايلك للحصول على أفضل جودة فيديو.");
+      return;
+    }
+
     try {
       const stream = await navigator.mediaDevices.getDisplayMedia({
         video: {
@@ -107,8 +115,8 @@ const DisplayComponent: React.FC = () => {
     ];
 
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center py-6 md:py-10 px-4 md:px-12 lg:px-20" dir="rtl">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 lg:gap-16 items-center w-full max-w-[1600px] flex-1">
+      <div className="w-full h-full flex flex-col items-center justify-center py-4 md:py-10 px-4 md:px-12 lg:px-20" dir="rtl">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-12 lg:gap-16 items-center w-full max-w-[1600px] flex-1">
           
           {/* Visual Side: Logo + Slogan */}
           <motion.div 
@@ -146,21 +154,21 @@ const DisplayComponent: React.FC = () => {
           </motion.div>
 
           {/* Bento Grid Side: Values */}
-          <div className="grid grid-cols-2 gap-3 md:gap-4 lg:gap-6">
+          <div className="grid grid-cols-2 gap-2 md:gap-4 lg:gap-6">
              {values.map((v, i) => (
                 <motion.div
                   key={i}
-                  initial={{ opacity: 0, y: 30 }}
+                  initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: i * 0.1 }}
-                  className={`p-4 md:p-6 lg:p-8 rounded-[1.5rem] md:rounded-[2.5rem] border border-white/10 bg-gradient-to-br ${v.color} backdrop-blur-xl relative overflow-hidden group hover:border-amber-500/50 transition-all duration-500 shadow-2xl flex flex-col justify-center h-full min-h-[140px] md:min-h-[200px]`}
+                  className={`p-3 md:p-6 lg:p-8 rounded-[1.2rem] md:rounded-[2.5rem] border border-white/10 bg-gradient-to-br ${v.color} backdrop-blur-xl relative overflow-hidden group hover:border-amber-500/50 transition-all duration-500 shadow-2xl flex flex-col justify-center h-full min-h-[100px] md:min-h-[200px]`}
                 >
                   <div className="absolute top-0 right-0 p-2 md:p-4 opacity-5 group-hover:opacity-20 transition-opacity">
-                    <span className="text-6xl md:text-8xl">{v.icon}</span>
+                    <span className="text-4xl md:text-8xl">{v.icon}</span>
                   </div>
-                  <span className="text-2xl md:text-4xl mb-2 md:mb-4 block">{v.icon}</span>
-                  <h3 className="text-lg md:text-2xl font-black text-white mb-1 md:mb-2">{v.title}</h3>
-                  <p className="text-white/60 text-xs md:text-lg font-bold leading-relaxed">{v.desc}</p>
+                  <span className="text-xl md:text-4xl mb-1 md:mb-4 block">{v.icon}</span>
+                  <h3 className="text-sm md:text-2xl font-black text-white mb-0.5 md:mb-2">{v.title}</h3>
+                  <p className="text-white/60 text-[9px] md:text-lg font-bold leading-tight md:leading-relaxed">{v.desc}</p>
                 </motion.div>
              ))}
           </div>
@@ -212,27 +220,27 @@ const DisplayComponent: React.FC = () => {
         <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center flex-1 h-full max-h-[85vh]">
           
           {/* Simulation Chat Box - Fluid Height Intelligence */}
-          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[2rem] md:rounded-[3rem] border border-amber-500/20 p-5 md:p-8 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-4 h-full min-h-[300px] md:min-h-[400px] lg:min-h-[500px] flex flex-col relative overflow-hidden">
-            <div className="flex items-center gap-2 border-b border-white/5 pb-3">
-               <div className="w-2 h-2 rounded-full bg-red-500/50" />
-               <div className="w-2 h-2 rounded-full bg-amber-500/50" />
-               <div className="w-2 h-2 rounded-full bg-green-500/50" />
-               <span className="text-[10px] md:text-xs text-amber-500 font-black uppercase tracking-[0.2em] mr-auto">Wellness Advisor</span>
+          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[1.5rem] md:rounded-[3rem] p-4 md:p-8 border border-amber-500/20 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-3 md:space-y-4 h-full min-h-[280px] md:min-h-[400px] lg:min-h-[500px] flex flex-col relative overflow-hidden">
+            <div className="flex items-center gap-2 border-b border-white/5 pb-2">
+               <div className="w-1.5 h-1.5 rounded-full bg-red-500/50" />
+               <div className="w-1.5 h-1.5 rounded-full bg-amber-500/50" />
+               <div className="w-1.5 h-1.5 rounded-full bg-green-500/50" />
+               <span className="text-[9px] md:text-xs text-amber-500 font-black uppercase tracking-[0.2em] mr-auto">Wellness Advisor</span>
             </div>
             
             <div 
               ref={chatContainerRef}
-              className="flex-1 space-y-4 md:space-y-6 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className="flex-1 space-y-3 md:space-y-6 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                <AnimatePresence mode="popLayout">
                  {messages.slice(0, step).map((msg, i) => (
                    <motion.div
                     key={i}
-                    initial={{ opacity: 0, y: 20, scale: 0.95 }}
+                    initial={{ opacity: 0, y: 10, scale: 0.95 }}
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     className={`flex ${msg.sender === 'user' ? 'justify-start' : 'justify-end'}`}
                    >
-                      <div className={`max-w-[85%] p-4 md:p-6 rounded-[1.5rem] md:rounded-[2rem] text-sm md:text-lg lg:text-xl font-bold shadow-xl overflow-hidden relative
+                      <div className={`max-w-[85%] p-3 md:p-6 rounded-[1.2rem] md:rounded-[2rem] text-xs md:text-lg lg:text-xl font-bold shadow-xl overflow-hidden relative
                         ${msg.sender === 'user' 
                           ? 'bg-white/5 text-white/60 border border-white/10 rounded-tr-none' 
                           : 'bg-gradient-to-br from-amber-500 to-amber-600 text-black border border-amber-400 rounded-tl-none shadow-[0_8px_25px_rgba(245,158,11,0.2)]'
@@ -409,34 +417,34 @@ const DisplayComponent: React.FC = () => {
               </motion.p>
 
               {/* Pricing Grid - Balanced & Eye-Catching */}
-              <div className="grid grid-cols-2 gap-3 md:gap-5 xl:gap-8 pt-4">
+              <div className="grid grid-cols-2 gap-2 md:gap-5 xl:gap-8 pt-2 md:pt-4">
                 {product.prices.map((p, idx) => (
                    <motion.div 
                     key={p.id}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 + (idx * 0.1) }}
-                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-5 md:p-8 xl:p-12 rounded-[1.8rem] md:rounded-[3rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group relative overflow-hidden ${
+                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-3 md:p-8 xl:p-12 rounded-[1.2rem] md:rounded-[3rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group relative overflow-hidden ${
                       product.prices.length === 1 
-                      ? 'col-span-2 from-amber-500/20 to-amber-950/40 border-amber-500/50 scale-105' 
+                      ? 'col-span-2 from-amber-500/20 to-amber-950/40 border-amber-500/50 scale-[1.02] md:scale-105' 
                       : 'from-white/10 to-amber-950/20 hover:border-amber-500/30'
                     }`}
                   >
                     {p.originalPrice && (
-                      <div className="absolute top-3 right-6 flex flex-col items-end gap-1">
+                      <div className="absolute top-1.5 right-3 md:top-3 md:right-6 flex flex-col items-end gap-0.5 md:gap-1">
                         <div className="flex items-center gap-1">
-                          <span className="text-xs md:text-xl font-bold text-white/30 line-through decoration-red-500/50 decoration-2">
+                          <span className="text-[10px] md:text-xl font-bold text-white/30 line-through decoration-red-500/50 decoration-1 md:decoration-2">
                              {p.originalPrice}
                           </span>
-                          <span className="text-[10px] md:text-sm text-white/40">درهم</span>
+                          <span className="text-[8px] md:text-sm text-white/40">درهم</span>
                         </div>
-                        <div className="bg-red-500 text-[10px] md:text-sm font-black px-2 py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
+                        <div className="bg-red-500 text-[8px] md:text-sm font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
                           وفر {Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}%
                         </div>
                       </div>
                     )}
 
-                    <span className={`font-black uppercase tracking-widest mb-2 ${product.prices.length === 1 ? 'text-2xl md:text-4xl text-white' : 'text-xl md:text-3xl text-amber-500'}`}>
+                    <span className={`font-black uppercase tracking-widest mb-1 md:mb-2 ${product.prices.length === 1 ? 'text-lg md:text-4xl text-white' : 'text-sm md:text-3xl text-amber-500'}`}>
                       {p.sizeAr}
                     </span>
                     
@@ -449,13 +457,13 @@ const DisplayComponent: React.FC = () => {
                               scale: [1, 1.08, 1]
                             }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
-                            className="text-4xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
+                            className="text-2xl md:text-7xl lg:text-8xl xl:text-9xl font-black text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]"
                           >
                             {p.price}
                           </motion.span>
-                          <span className="text-sm md:text-2xl lg:text-3xl font-bold text-white/60 lowercase">درهم</span>
+                          <span className="text-[10px] md:text-2xl lg:text-3xl font-bold text-white/60 lowercase">درهم</span>
                         </div>
-                        <span className="text-[10px] md:text-base font-black text-amber-500/50 uppercase tracking-[0.3em] mt-2 md:mt-4">Factory Direct Price</span>
+                        <span className="text-[8px] md:text-base font-black text-amber-500/50 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-1 md:mt-4">Final Price</span>
                       </div>
                     )}
                   </motion.div>
