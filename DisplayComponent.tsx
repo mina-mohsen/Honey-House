@@ -9,6 +9,7 @@ const DisplayComponent: React.FC = () => {
   const [isStandardMode, setIsStandardMode] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordDuration, setRecordDuration] = useState(0);
+  const [permissionError, setPermissionError] = useState(false);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
@@ -23,6 +24,13 @@ const DisplayComponent: React.FC = () => {
   }, [currentIndex]);
 
   const startRecording = async () => {
+    // Detect if embedded inside an iframe (e.g. AI Studio preview)
+    const isInIframe = typeof window !== 'undefined' && window.self !== window.top;
+    if (isInIframe) {
+      setPermissionError(true);
+      return;
+    }
+
     // Check if we're on a mobile device
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
     
@@ -74,9 +82,17 @@ const DisplayComponent: React.FC = () => {
         setRecordDuration(prev => prev + 1);
       }, 1000);
 
-    } catch (err) {
-      console.error("Recording error:", err);
-      alert("عذراً، يجب اختيار 'هذه العلامة' (Current Tab) لبدء التسجيل بنجاح.");
+    } catch (err: any) {
+      console.warn("Recording error logged:", err);
+      const errMsg = err?.message || String(err);
+      if (errMsg.includes("permissions policy") || errMsg.includes("disallowed") || err?.name === "SecurityError" || errMsg.includes("NotAllowedError")) {
+        setPermissionError(true);
+      } else {
+        alert(lang === 'ar' 
+          ? "عذراً، يجب اختيار 'هذه العلامة' (Current Tab) لبدء التسجيل بنجاح." 
+          : "Sorry, you must select 'This Tab' (Current Tab) to start recording successfully."
+        );
+      }
     }
   };
 
@@ -735,6 +751,63 @@ const DisplayComponent: React.FC = () => {
            />
         </div>
       </div>
+
+      {/* 🛡️ Browser/iFrame Permission Policy Error Guidance Modal */}
+      <AnimatePresence>
+        {permissionError && (
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 bg-black/85 backdrop-blur-md z-[9999] flex items-center justify-center p-4 font-cairo"
+          >
+            <motion.div 
+              initial={{ scale: 0.95, y: 30 }}
+              animate={{ scale: 1, y: 0 }}
+              exit={{ scale: 0.95, y: 30 }}
+              className="bg-black/95 border border-amber-500/30 rounded-[2rem] p-6 md:p-10 max-w-xl w-full flex flex-col items-center text-center gap-6 shadow-[0_0_50px_rgba(245,158,11,0.15)] relative overflow-hidden"
+              dir={lang === 'ar' ? 'rtl' : 'ltr'}
+            >
+              <div className="absolute -top-10 -left-10 w-40 h-40 bg-amber-500/10 blur-3xl rounded-full" />
+              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-500/5 blur-3xl rounded-full" />
+              
+              <div className="w-16 h-16 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 border border-amber-500/30 text-3xl shadow-[0_0_20px_rgba(245,158,11,0.1)]">
+                ⚠️
+              </div>
+
+              <div className="space-y-3 relative z-10">
+                <h3 className="text-2xl md:text-3xl font-black text-amber-500 tracking-tight">
+                  {lang === 'ar' ? 'تنبيه أمان المتصفح' : 'Browser Security Alert'}
+                </h3>
+                <p className="text-sm md:text-lg text-white/80 leading-relaxed font-bold">
+                  {lang === 'ar' ? (
+                    'ميزة تسجيل الشاشة لتصدير الفيديو غير مسموح بها داخل إطار المعاينة (iFrame) الخاص بـ AI Studio لأسباب أمنية بالمتصفح. يرجى فتح التطبيق في علامة تبويب جديدة وسيعمل التسجيل بشكل مثالي وبأعلى دقة!'
+                  ) : (
+                    'Screen recording is disabled inside the AI Studio preview iframe due to browser security policy. Please open the app in a new tab to capture and save your video with pristine quality!'
+                  )}
+                </p>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-4 w-full mt-2 relative z-10">
+                <a 
+                  href={typeof window !== 'undefined' ? window.location.href : '#'}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex-1 bg-amber-500 text-black px-6 py-4 rounded-xl font-black text-xs md:text-sm uppercase tracking-wider hover:bg-amber-400 hover:scale-[1.02] active:scale-[0.98] transition-all text-center flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(245,158,11,0.4)]"
+                >
+                  🚀 {lang === 'ar' ? 'افتح في صفحة جديدة' : 'Open in New Tab'}
+                </a>
+                <button 
+                  onClick={() => setPermissionError(false)}
+                  className="flex-1 bg-white/5 border border-white/10 text-white hover:bg-white/10 px-6 py-4 rounded-xl font-black text-xs md:text-sm uppercase tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all text-center"
+                >
+                  {lang === 'ar' ? 'إغلاق' : 'Close'}
+                </button>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <style>{`
         @keyframes shimmer {
