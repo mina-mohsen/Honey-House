@@ -590,20 +590,6 @@ const App: React.FC = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              {isAdmin ? (
-                <div className="hidden sm:flex items-center gap-2">
-                  <span className="text-sm bg-purple-100 text-purple-800 px-3 py-1 rounded-full">
-                    👑 {lang === "ar" ? "مدير" : "Admin"}
-                  </span>
-                  <button
-                    onClick={handleAdminLogout}
-                    className="px-3 py-2 bg-gray-200 text-gray-700 rounded-lg font-bold hover:bg-gray-300 text-sm"
-                  >
-                    {lang === "ar" ? "خروج" : "Logout"}
-                  </button>
-                </div>
-              ) : null}
-
               {/* Cart Button */}
               <button
                 onClick={() => setShowOrderForm(!showOrderForm)}
@@ -632,7 +618,6 @@ const App: React.FC = () => {
             <button
               onClick={() => {
                 setOpenProducts(!openProducts);
-                setOpenReviews(false);
               }}
               className={`px-5 py-2.5 rounded-full font-black whitespace-nowrap flex items-center gap-2 text-sm ${
                 openProducts ? "bg-amber-500 text-white shadow" : "bg-amber-100 text-amber-900"
@@ -640,22 +625,6 @@ const App: React.FC = () => {
             >
               <span className="text-lg">🍯</span>
               <span>{lang === "ar" ? "المنتجات" : "Products"}</span>
-            </button>
-
-            <button
-              onClick={() => {
-                setOpenReviews(!openReviews);
-                setOpenProducts(false);
-              }}
-              className={`px-5 py-2.5 rounded-full font-black whitespace-nowrap flex items-center gap-2 text-sm ${
-                openReviews ? "bg-amber-500 text-white shadow" : "bg-amber-100 text-amber-900"
-              }`}
-            >
-              <span className="text-lg">⭐</span>
-              <span>{lang === "ar" ? "آراء العملاء" : "Reviews"}</span>
-              <span className={`text-xs px-2 py-1 rounded-full ${openReviews ? "bg-white text-amber-500" : "bg-amber-500 text-white"}`}>
-                {approvedReviews.length}
-              </span>
             </button>
 
             <a
@@ -667,14 +636,6 @@ const App: React.FC = () => {
               <span className="text-lg">📱</span>
               <span>{lang === "ar" ? "واتساب" : "WhatsApp"}</span>
             </a>
-
-            <button
-              onClick={() => setShowAdminLogin(true)}
-              className="hidden md:inline-flex px-4 py-2.5 bg-purple-100 text-purple-800 rounded-full font-black whitespace-nowrap items-center gap-2 hover:bg-purple-200 text-sm"
-              title="Admin"
-            >
-              👑 Admin
-            </button>
           </nav>
         </div>
       </header>
@@ -931,7 +892,7 @@ const App: React.FC = () => {
           {openProducts && (
             <div className="px-5 md:px-6 pb-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-                {PRODUCTS.map((product) => (
+                {PRODUCTS.filter(p => !['teaser-hook', 'brand-manifesto-hook', 'full-menu-summary'].includes(p.id)).map((product) => (
                   <div
                     key={product.id}
                     className="bg-gradient-to-b from-white to-amber-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-amber-100 overflow-hidden"
@@ -1020,178 +981,7 @@ const App: React.FC = () => {
           )}
         </section>
 
-        {/* ================= REVIEWS SECTION ================= */}
-        <section className="bg-white rounded-2xl shadow-xl border border-amber-100 overflow-hidden">
-          <button onClick={() => setOpenReviews(!openReviews)} className="w-full text-start p-5 md:p-6">
-            <div className="flex justify-between items-center">
-              <div className="flex items-center gap-3">
-                <div className="relative">
-                  <span className="text-2xl">⭐</span>
-                  <span className="absolute -top-2 -right-2 bg-amber-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                    {approvedReviews.length}
-                  </span>
-                </div>
-                <div>
-                  <h2 className="text-xl md:text-2xl font-black text-amber-900">{t.reviewsTitle}</h2>
-                  <p className="text-sm text-gray-600">
-                    {lang === "ar" ? "متوسط التقييم" : "Average rating"}:{" "}
-                    <span className="font-bold text-amber-600">{avgRating}/5</span>{" "}
-                    • <span className="font-bold">{approvedReviews.length} {lang === "ar" ? "مقيم" : "ratings"}</span>
-                  </p>
-                </div>
-              </div>
-              <span className={`text-amber-500 text-xl transition-transform duration-300 ${openReviews ? "rotate-180" : ""}`}>▾</span>
-            </div>
-          </button>
 
-          {openReviews && (
-            <div className="px-5 md:px-6 pb-6">
-              <button
-                onClick={() => setShowReviewForm(!showReviewForm)}
-                className="w-full mb-4 p-4 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-xl font-bold hover:from-amber-600 hover:to-orange-600 transition-all flex items-center justify-center gap-2"
-              >
-                <span className="text-xl">✍️</span>
-                <span>{t.leaveReview}</span>
-              </button>
-
-              {showReviewForm && (
-                <form onSubmit={submitReview} className="mb-6 p-4 bg-amber-50 rounded-xl space-y-4 border border-amber-200">
-                  <div className="space-y-2">
-                    <label className="font-bold text-amber-900 text-sm">{t.reviewNameLabel}</label>
-                    <input
-                      required
-                      placeholder={t.namePlaceholder}
-                      value={newReview.name}
-                      onChange={(e) => setNewReview({ ...newReview, name: e.target.value })}
-                      className="w-full p-3 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm"
-                    />
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="font-bold text-amber-900 text-sm">{t.reviewRatingLabel}</label>
-                    <div className="flex gap-2 items-center">
-                      {[1, 2, 3, 4, 5].map((star) => (
-                        <button
-                          type="button"
-                          key={star}
-                          onClick={() => setNewReview({ ...newReview, rating: star })}
-                          className={`text-2xl md:text-3xl transition-all hover:scale-110 ${
-                            star <= newReview.rating ? "text-amber-500" : "text-gray-300"
-                          }`}
-                        >
-                          ⭐
-                        </button>
-                      ))}
-                      <span className="font-bold text-amber-700 ml-2 md:ml-4 text-lg">{newReview.rating}/5</span>
-                    </div>
-                  </div>
-
-                  <div className="space-y-2">
-                    <label className="font-bold text-amber-900 text-sm">{t.reviewCommentLabel}</label>
-                    <textarea
-                      required
-                      placeholder={lang === "ar" ? "اكتب رأيك هنا..." : "Write your review here..."}
-                      value={newReview.comment}
-                      onChange={(e) => setNewReview({ ...newReview, comment: e.target.value })}
-                      className="w-full p-3 border border-amber-200 rounded-lg focus:ring-2 focus:ring-amber-500 focus:border-transparent text-sm min-h-[100px]"
-                      rows={3}
-                    />
-                  </div>
-
-                  <div className="flex flex-col sm:flex-row gap-3">
-                    <button type="submit" className="flex-1 px-4 py-3 bg-green-500 text-white rounded-lg font-bold hover:bg-green-600 transition-colors text-sm">
-                      {t.reviewSubmit}
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setShowReviewForm(false);
-                        setNewReview({ name: "", rating: 5, comment: "" });
-                      }}
-                      className="px-4 py-3 bg-gray-200 text-gray-700 rounded-lg font-bold hover:bg-gray-300 transition-colors text-sm"
-                    >
-                      {t.reviewCancel}
-                    </button>
-                  </div>
-                </form>
-              )}
-
-              <div className="space-y-4">
-                {isLoadingReviews ? (
-                  <div className="text-center py-8">
-                    <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-amber-500 mx-auto"></div>
-                    <p className="mt-4 text-amber-700">{t.reviewLoading}</p>
-                  </div>
-                ) : approvedReviews.length === 0 ? (
-                  <div className="text-center py-8 bg-amber-50 rounded-xl border border-amber-200">
-                    <p className="text-gray-500">{t.reviewEmpty}</p>
-                  </div>
-                ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    {/* ✅ هنا بنعرض كل التقييمات */}
-                    {approvedReviews.map((review, index) => (
-                      <div
-                        key={review.id || index}
-                        className="bg-gradient-to-br from-white to-amber-50 p-4 rounded-xl shadow border border-amber-100 hover:shadow-md transition-shadow"
-                      >
-                        <div className="flex justify-between items-start mb-3">
-                          <div>
-                            <div className="font-bold text-amber-900 text-sm md:text-base flex items-center gap-2">
-                              {review.name}
-                              <span className="text-xs bg-green-100 text-green-800 px-2 py-1 rounded-full">✅</span>
-                            </div>
-                            <div className="text-xs text-gray-500">
-                              {new Date(review.createdAt).toLocaleDateString(lang === "ar" ? "ar-EG" : "en-US", {
-                                year: "numeric",
-                                month: "short",
-                                day: "numeric",
-                              })}
-                              {review.updatedAt && (
-                                <span className="text-xs text-blue-500 mr-2"> ✏️ {lang === "ar" ? "معدل" : "edited"}</span>
-                              )}
-                            </div>
-                          </div>
-                          <div className="flex items-center gap-1 bg-amber-100 px-2 py-1 rounded-full">
-                            <span className="text-amber-700 font-bold text-sm md:text-base">{review.rating}</span>
-                            <span className="text-lg text-amber-500">⭐</span>
-                          </div>
-                        </div>
-
-                        <p className="text-gray-700 text-sm leading-relaxed mb-3">{review.comment}</p>
-
-                        {/* Admin Actions */}
-                        {isAdmin && (
-                          <div className="flex flex-wrap gap-2 pt-3 border-t border-amber-100">
-                            <button
-                              onClick={() => startEditReview(review)}
-                              className="px-3 py-1 bg-blue-100 text-blue-700 rounded-lg text-sm hover:bg-blue-200 transition-colors"
-                            >
-                              ✏️ {lang === "ar" ? "تعديل" : "Edit"}
-                            </button>
-
-                            <button
-                              onClick={() => deleteReview(review.id)}
-                              className="px-3 py-1 bg-red-100 text-red-700 rounded-lg text-sm hover:bg-red-200 transition-colors"
-                            >
-                              🗑️ {lang === "ar" ? "حذف" : "Delete"}
-                            </button>
-
-                            <button
-                              onClick={() => toggleApprove(review.id, false)}
-                              className="px-3 py-1 bg-yellow-100 text-yellow-700 rounded-lg text-sm hover:bg-yellow-200 transition-colors"
-                            >
-                              ⏸️ {lang === "ar" ? "إخفاء" : "Hide"}
-                            </button>
-                          </div>
-                        )}
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </div>
-          )}
-        </section>
 
         {/* ================= CONTACT SECTION ================= */}
         <section className="bg-gradient-to-r from-amber-600 to-amber-800 text-white rounded-2xl shadow-xl overflow-hidden">
@@ -1265,12 +1055,14 @@ const App: React.FC = () => {
                 {isAdmin ? (lang === "ar" ? "خروج ادمن" : "Admin Logout") : (lang === "ar" ? "دخول ادمن" : "Admin Login")}
               </button>
 
-              <button
-                onClick={() => { window.location.hash = "#/display"; }}
-                className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 transition-colors text-sm font-black flex items-center gap-2 shadow-lg scale-110"
-              >
-                🖥️ {lang === "ar" ? "شاشة عرض المتجر" : "Store Display Mode"}
-              </button>
+              {isAdmin && (
+                <button
+                  onClick={() => { window.location.hash = "#/display"; }}
+                  className="px-4 py-2 rounded-lg bg-orange-600 hover:bg-orange-500 transition-colors text-sm font-black flex items-center gap-2 shadow-lg scale-110"
+                >
+                  🖥️ {lang === "ar" ? "شاشة عرض المتجر" : "Store Display Mode"}
+                </button>
+              )}
             </div>
 
             <p className="text-sm opacity-60">© {new Date().getFullYear()} بيت العسل. {t.copyright}.</p>

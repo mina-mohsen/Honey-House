@@ -91,6 +91,21 @@ export const PRODUCTS: ProductExtended[] = [
     ]
   },
   {
+    id: 'citrus-blossom-saim',
+    titleAr: 'عسل زهرة الموالح صائم',
+    titleEn: 'Citrus Blossom Saim Honey',
+    descriptionAr: 'عسل زهرة الموالح صائم طبيعي فاخر بدون أي تغذية زيرو سكريات.',
+    descriptionEn: 'Premium Citrus Blossom Saim Honey, 100% natural, produced without any feeding and with zero sugars.',
+    image: 'https://imgur.com/QCqn0kZ.jpeg',
+    benefitsAr: ['طبيعي وصائم', 'بدون أي تغذية', 'زيرو سكريات'],
+    benefitsEn: ['Natural & Saim', 'No Bee-Feeding', 'Zero Sugars'],
+    prices: [
+      { id: 'saim_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 70, originalPrice: 120 },
+      { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 75, originalPrice: 130 },
+      { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 150, originalPrice: 250 },
+    ]
+  },
+  {
     id: 'brand-manifesto-hook',
     titleAr: 'لماذا يختار النخبة "بيت العسل"؟',
     titleEn: 'Why Choose Honey House?',

@@ -537,34 +537,40 @@ const DisplayComponent: React.FC = () => {
               </motion.p>
 
               {/* Pricing Grid - Balanced & Eye-Catching */}
-              <div className="grid grid-cols-2 gap-2 md:gap-5 xl:gap-8 pt-2 md:pt-4">
+              <div className={`grid gap-2 md:gap-4 xl:gap-6 pt-2 md:pt-4 ${
+                product.prices.length === 3 
+                  ? 'grid-cols-2 sm:grid-cols-3' 
+                  : 'grid-cols-2'
+              }`}>
                 {product.prices.map((p, idx) => (
                    <motion.div 
                     key={p.id}
                     initial={{ y: 15, opacity: 0 }}
                     animate={{ y: 0, opacity: 1 }}
                     transition={{ delay: 0.4 + (idx * 0.1) }}
-                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-3 md:p-8 xl:p-12 rounded-[1.2rem] md:rounded-[3rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group relative overflow-hidden ${
+                    className={`bg-gradient-to-br transition-all duration-500 backdrop-blur-3xl p-3 md:p-6 xl:p-8 rounded-xl md:rounded-[2rem] border border-white/10 flex flex-col items-center justify-center shadow-lg group relative overflow-hidden ${
                       product.prices.length === 1 
-                      ? 'col-span-2 from-amber-500/20 to-amber-950/40 border-amber-500/50 scale-[1.02] md:scale-105' 
-                      : 'from-white/10 to-amber-950/20 hover:border-amber-500/30'
+                        ? 'col-span-2 from-amber-500/20 to-amber-950/40 border-amber-500/50 scale-[1.02]' 
+                        : product.prices.length === 3 && idx === 2
+                        ? 'max-sm:col-span-2 from-white/10 to-amber-950/20 hover:border-amber-500/30'
+                        : 'from-white/10 to-amber-950/20 hover:border-amber-500/30'
                     }`}
                   >
                     {p.originalPrice && !isStandardMode && (
                       <div className={`absolute top-1.5 ${lang === 'ar' ? 'right-3 md:right-6' : 'left-3 md:left-6'} md:top-3 flex flex-col items-end gap-0.5 md:gap-1`}>
                         <div className="flex items-center gap-1">
-                          <span className="text-[10px] md:text-xl font-bold text-white/30 line-through decoration-red-500/50 decoration-1 md:decoration-2">
+                          <span className="text-[10px] md:text-lg font-bold text-white/30 line-through decoration-red-500/50 decoration-1 md:decoration-2">
                              {p.originalPrice}
                           </span>
-                          <span className="text-[8px] md:text-sm text-white/40">{lang === 'ar' ? 'درهم' : 'AED'}</span>
+                          <span className="text-[8px] md:text-xs text-white/40">{lang === 'ar' ? 'درهم' : 'AED'}</span>
                         </div>
-                        <div className="bg-red-500 text-[8px] md:text-sm font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
+                        <div className="bg-red-500 text-[8px] md:text-xs font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
                           {lang === 'ar' ? 'وفر' : 'Save'} {Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}%
                         </div>
                       </div>
                     )}
 
-                    <span className={`font-black uppercase tracking-widest mb-1 md:mb-2 ${product.prices.length === 1 ? 'text-lg md:text-4xl text-white' : 'text-sm md:text-3xl text-amber-500'}`}>
+                    <span className={`font-black uppercase tracking-widest mb-1 md:mb-2 ${product.prices.length === 1 ? 'text-lg md:text-2xl text-white' : 'text-sm md:text-xl text-amber-500'}`}>
                       {lang === 'ar' ? p.sizeAr : p.sizeEn}
                     </span>
                     
@@ -577,13 +583,13 @@ const DisplayComponent: React.FC = () => {
                               scale: isStandardMode ? [1] : [1, 1.08, 1]
                             }}
                             transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
-                            className={`text-2xl md:text-7xl lg:text-8xl xl:text-9xl font-black ${isStandardMode ? 'text-white' : 'text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]'}`}
+                            className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black ${isStandardMode ? 'text-white' : 'text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]'}`}
                           >
                             {isStandardMode ? (p.originalPrice || p.price) : p.price}
                           </motion.span>
-                          <span className="text-[10px] md:text-2xl lg:text-3xl font-bold text-white/60 lowercase">{lang === 'ar' ? 'درهم' : 'AED'}</span>
+                          <span className="text-[10px] md:text-xl lg:text-2xl font-bold text-white/60 lowercase">{lang === 'ar' ? 'درهم' : 'AED'}</span>
                         </div>
-                        <span className="text-[8px] md:text-base font-black text-amber-500/50 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-1 md:mt-4">
+                        <span className="text-[8px] md:text-sm font-black text-amber-500/50 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-1 md:mt-2">
                           {isStandardMode 
                             ? (lang === 'ar' ? 'السعر الأساسي' : 'Standard Price') 
                             : (lang === 'ar' ? 'السعر النهائي' : 'Final Price')}
