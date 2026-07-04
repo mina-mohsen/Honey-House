@@ -4,7 +4,7 @@ import { createServer as createViteServer } from 'vite';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { GoogleGenerativeAI } from '@google/generative-ai';
+import { GoogleGenAI } from '@google/genai';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const REVIEWS_FILE = path.join(__dirname, 'data', 'reviews.json');
@@ -57,14 +57,21 @@ async function startServer() {
         return res.status(500).json({ error: 'GEMINI_API_KEY is not configured' });
       }
 
-      const genAI = new GoogleGenerativeAI(apiKey);
-      const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+      const ai = new GoogleGenAI({
+        apiKey,
+        httpOptions: {
+          headers: {
+            'User-Agent': 'aistudio-build',
+          }
+        }
+      });
       
-      const result = await model.generateContent(message);
-      const response = await result.response;
-      const text = response.text();
+      const response = await ai.models.generateContent({
+        model: 'gemini-3.5-flash',
+        contents: message,
+      });
       
-      res.json({ reply: text });
+      res.json({ reply: response.text });
     } catch (error) {
       console.error('Gemini Error:', error);
       res.status(500).json({ error: 'AI Error', details: String(error) });

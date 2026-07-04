@@ -91,6 +91,28 @@ export const PRODUCTS: ProductExtended[] = [
     ]
   },
   {
+    id: 'brand-manifesto-hook',
+    titleAr: 'لماذا يختار النخبة "بيت العسل"؟',
+    titleEn: 'Why Choose Honey House?',
+    descriptionAr: 'لأننا نمتلك مناحلنا منذ أكثر من 25 عاماً. خبرة عريقة تضمن لك عسلاً خاماً لم تمسه يد العبث، من الخلية إلى مائدتك مباشرة.',
+    descriptionEn: "Because we have owned our apiaries for over 25 years. A long-standing heritage that guarantees you raw honey untouched by tampering, straight from the hive to your table.",
+    image: 'https://images.unsplash.com/photo-1558611997-d60293774640?q=80&w=2070&auto=format&fit=crop',
+    benefitsAr: ['25 عاماً من الخبرة', 'مناحلنا الخاصة', 'عسل خام 100%', 'تغليف فاخر'],
+    benefitsEn: ['25 Years Experience', 'Own Apiaries', '100% Raw Honey', 'Premium Packaging'],
+    prices: [],
+  },
+  {
+    id: 'full-menu-summary',
+    titleAr: 'قائمة الأسعار والعروض',
+    titleEn: 'Price List & Offers',
+    descriptionAr: 'كل ما تحتاجه في مكان واحد! استمتع بصحة عائلتك مع أفضل أنواع العسل.',
+    descriptionEn: 'Everything you need in one place! Enjoy your family health with the best honey types.',
+    image: 'https://imgur.com/tpBWWTy.jpeg',
+    benefitsAr: ['خصم 10% للطلبات فوق 250 درهم', 'توصيل مجاني'],
+    benefitsEn: ['10% OFF over 250 AED', 'Free Delivery'],
+    prices: []
+  },
+  {
     id: 'citrus-blossom-saim',
     titleAr: 'عسل زهرة الموالح الصائم',
     titleEn: 'Citrus Blossom Saim Honey',
@@ -117,28 +139,6 @@ export const PRODUCTS: ProductExtended[] = [
       { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 40, originalPrice: 75 },
       { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 75, originalPrice: 150 },
     ]
-  },
-  {
-    id: 'brand-manifesto-hook',
-    titleAr: 'لماذا يختار النخبة "بيت العسل"؟',
-    titleEn: 'Why Choose Honey House?',
-    descriptionAr: 'لأننا نمتلك مناحلنا منذ أكثر من 25 عاماً. خبرة عريقة تضمن لك عسلاً خاماً لم تمسه يد العبث، من الخلية إلى مائدتك مباشرة.',
-    descriptionEn: "Because we have owned our apiaries for over 25 years. A long-standing heritage that guarantees you raw honey untouched by tampering, straight from the hive to your table.",
-    image: 'https://images.unsplash.com/photo-1558611997-d60293774640?q=80&w=2070&auto=format&fit=crop',
-    benefitsAr: ['25 عاماً من الخبرة', 'مناحلنا الخاصة', 'عسل خام 100%', 'تغليف فاخر'],
-    benefitsEn: ['25 Years Experience', 'Own Apiaries', '100% Raw Honey', 'Premium Packaging'],
-    prices: [],
-  },
-  {
-    id: 'full-menu-summary',
-    titleAr: 'قائمة الأسعار والعروض',
-    titleEn: 'Price List & Offers',
-    descriptionAr: 'كل ما تحتاجه في مكان واحد! استمتع بصحة عائلتك مع أفضل أنواع العسل.',
-    descriptionEn: 'Everything you need in one place! Enjoy your family health with the best honey types.',
-    image: 'https://imgur.com/tpBWWTy.jpeg',
-    benefitsAr: ['خصم 10% للطلبات فوق 250 درهم', 'توصيل مجاني'],
-    benefitsEn: ['10% OFF over 250 AED', 'Free Delivery'],
-    prices: []
   }
 ];
 

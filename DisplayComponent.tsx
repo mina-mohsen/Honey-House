@@ -32,10 +32,10 @@ const DisplayComponent: React.FC = () => {
 
   useEffect(() => {
     const isManifesto = PRODUCTS[currentIndex]?.id === 'brand-manifesto-hook';
-    const isTeaser = PRODUCTS[currentIndex]?.id === 'teaser-hook';
+    const intervalTime = isManifesto ? 7000 : 10000;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % PRODUCTS.length);
-    }, 10000); // 10s for all slides as requested
+    }, intervalTime);
     return () => clearInterval(timer);
   }, [currentIndex]);
 
@@ -443,10 +443,10 @@ const DisplayComponent: React.FC = () => {
               href={`https://wa.me/${WHATSAPP_NUMBER}`}
               target="_blank"
               rel="noopener noreferrer"
+              dir="ltr"
               className="px-6 py-3 bg-black/50 border border-emerald-500/20 rounded-2xl text-xl md:text-3xl font-black text-white hover:text-emerald-400 transition-colors tracking-widest font-mono z-10 shadow-inner flex items-center gap-3 hover:scale-105 active:scale-95 duration-300"
             >
-              <span>+971</span>
-              <span>56 832 6116</span>
+              +971 56 832 6116
             </a>
 
             {/* Quick Interactive Button */}
@@ -698,7 +698,7 @@ const DisplayComponent: React.FC = () => {
                     transition={{ duration: 0.5 }}
                     src={product.images ? product.images[activeImgIndex] : product.image} 
                     alt={product.titleAr}
-                    className="max-w-[130%] max-h-[130%] object-contain drop-shadow-[0_80px_100px_rgba(0,0,0,0.85)] z-10"
+                    className="max-w-full max-h-[90%] object-contain drop-shadow-[0_40px_60px_rgba(0,0,0,0.85)] z-10"
                     referrerPolicy="no-referrer"
                   />
                 </AnimatePresence>
@@ -761,7 +761,7 @@ const DisplayComponent: React.FC = () => {
             key={currentIndex}
             initial={{ x: "-100%" }}
             animate={{ x: "0%" }}
-            transition={{ duration: 10, ease: "linear" }}
+            transition={{ duration: PRODUCTS[currentIndex]?.id === 'brand-manifesto-hook' ? 7 : 10, ease: "linear" }}
             className="h-full bg-amber-500 w-full shadow-[0_0_15px_rgba(245,158,11,0.6)]"
          />
       </div>
