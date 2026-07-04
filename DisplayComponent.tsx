@@ -322,7 +322,7 @@ const DisplayComponent: React.FC = () => {
                 />
                 <img 
                   src="https://imgur.com/tpBWWTy.jpeg" 
-                  alt="Honey House Logo" 
+                  alt="Honey House Logo" referrerPolicy="no-referrer" 
                   className="w-24 h-24 md:w-44 md:h-44 xl:w-56 xl:h-56 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-110 transition-transform duration-700"
                 />
                 <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-4 py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm shadow-2xl skew-x-[-10deg]`}>
@@ -388,7 +388,7 @@ const DisplayComponent: React.FC = () => {
                 className="bg-white/5 border border-white/10 rounded-[1.5rem] p-4 flex flex-col gap-3 group hover:border-amber-500/30 transition-all hover:bg-white/[0.08]"
               >
                  <div className={`flex items-center gap-4 ${lang === 'ar' ? '' : 'flex-row-reverse text-left'}`}>
-                   <img src={prod.image} className="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-lg group-hover:scale-110 transition-transform" alt="" />
+                   <img src={prod.image} referrerPolicy="no-referrer" className="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-lg group-hover:scale-110 transition-transform" alt="" />
                    <div className="flex-1">
                      <h3 className="text-sm md:text-lg font-black text-white">{lang === 'ar' ? prod.titleAr : prod.titleEn}</h3>
                      <p className="text-[10px] md:text-xs text-white/40 font-bold leading-tight line-clamp-2 mt-0.5">{lang === 'ar' ? prod.descriptionAr : prod.descriptionEn}</p>
@@ -474,8 +474,8 @@ const DisplayComponent: React.FC = () => {
            <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full overflow-hidden flex items-center justify-center border-2 border-amber-500 shadow-2xl shrink-0 p-1">
               <img 
                 src="https://imgur.com/tpBWWTy.jpeg" 
-                referrerPolicy="no-referrer"
                 alt="Honey House Logo" 
+                referrerPolicy="no-referrer" 
                 className="w-full h-full object-contain"
               />
            </div>
