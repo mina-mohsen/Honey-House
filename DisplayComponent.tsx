@@ -604,14 +604,49 @@ const DisplayComponent: React.FC = () => {
                 </motion.h2>
               </div>
 
-              <motion.p 
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
+              <motion.div 
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3 }}
-                className={`text-base md:text-2xl lg:text-3xl text-white/80 font-bold leading-relaxed ${lang === 'ar' ? 'border-r-4 md:border-r-8' : 'border-l-4 md:border-l-8'} border-amber-500 ${lang === 'ar' ? 'pr-5' : 'pl-5'}`}
+                className={`space-y-3 md:space-y-4 ${lang === 'ar' ? 'border-r-4 md:border-r-8' : 'border-l-4 md:border-l-8'} border-amber-500 ${lang === 'ar' ? 'pr-5' : 'pl-5'}`}
               >
-                {lang === 'ar' ? product.descriptionAr : product.descriptionEn}
-              </motion.p>
+                {((lang === 'ar' ? product.descriptionAr : product.descriptionEn) || '').split('\n').map((line, idx) => {
+                  const trimmed = line.trim();
+                  if (!trimmed) return null;
+
+                  const totalLines = ((lang === 'ar' ? product.descriptionAr : product.descriptionEn) || '').split('\n').filter(l => l.trim()).length;
+                  const isHeader = totalLines > 1 && (idx === 0 || trimmed.endsWith('✨') || trimmed.includes('🍊'));
+                  const isBullet = trimmed.startsWith('•') || trimmed.startsWith('*') || trimmed.startsWith('🌟') || trimmed.startsWith('🔬');
+
+                  if (isHeader) {
+                    return (
+                      <h3 key={idx} className="text-xl md:text-3xl lg:text-4xl font-extrabold text-amber-400 leading-tight">
+                        {trimmed}
+                      </h3>
+                    );
+                  }
+
+                  if (isBullet) {
+                    const colonIndex = trimmed.indexOf(':');
+                    if (colonIndex !== -1) {
+                      const bulletTitle = trimmed.substring(0, colonIndex + 1);
+                      const bulletDesc = trimmed.substring(colonIndex + 1);
+                      return (
+                        <div key={idx} className="text-sm md:text-lg lg:text-xl text-white/90 leading-relaxed md:leading-loose font-medium">
+                          <span className="font-extrabold text-amber-300 block md:inline mb-1 md:mb-0">{bulletTitle}</span>
+                          <span className="text-white/80">{bulletDesc}</span>
+                        </div>
+                      );
+                    }
+                  }
+
+                  return (
+                    <p key={idx} className="text-sm md:text-lg lg:text-xl text-white/90 leading-relaxed md:leading-loose font-medium whitespace-pre-line">
+                      {trimmed}
+                    </p>
+                  );
+                })}
+              </motion.div>
 
               {/* Pricing Grid - Balanced & Eye-Catching */}
               <div className={`grid gap-2 md:gap-4 xl:gap-6 pt-2 md:pt-4 ${

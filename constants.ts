@@ -24,8 +24,26 @@ export const PRODUCTS: ProductExtended[] = [
     id: 'citrus-blossom-saim',
     titleAr: 'عسل زهرة الموالح الصائم',
     titleEn: 'Citrus Blossom Saim Honey',
-    descriptionAr: 'عسل زهرة الموالح الصائم الفاخر، يُنتج من رحيق أزهار الحمضيات والموالح الفواحة. يتميز بأنه عسل "صائم" تماماً، أي أن النحل لم يتغذى على أي محاليل سكرية طوال الموسم، مما يضمن نقاءً مطلقاً وجودة علاجية فائقة بنسبة سكريات مضافة صفرية. غني بالفيتامينات والمعادن وله نكهة حمضية منعشة وخفيفة.',
-    descriptionEn: 'Premium Citrus Blossom Saim Honey, harvested from aromatic citrus orchards. It is strictly "Saim" (produced without any sugar syrup feeding), guaranteeing absolute purity, maximum bio-activity, and zero added sugars. Rich in vitamin C and essential minerals, it offers a refreshing, mildly citrus-scented taste.',
+    descriptionAr: `عسل زهرة الموالح الصائم الفاخر 🍊✨
+
+• نقاء مطلق وجودة علاجية فائقة:
+يُنتج هذا العسل النادر من رحيق أزهار الحمضيات والموالح الفواحة. يتميز بأنه عسل "صائم" تماماً؛ حيث نمتنع نهائياً عن تغذية النحل بأي محاليل سكرية طوال الموسم، مما يضمن خلوه التام من السكريات المضافة ونقاءه بنسبة 100%.
+
+• تجربة مذاق غنية ومنعشة:
+يتمتع بنكهة حمضية خفيفة ومنعشة للغاية ورائحة عطرية زكية تأخذك مباشرة إلى حقول الموالح الفواحة.
+
+• فوائد صحية جبارة ومثبتة:
+غني بفيتامين C والمعادن الأساسية، مما يجعله مقوياً فعالاً للمناعة، ومضاداً للأكسدة، وبديلاً صحياً استثنائياً للتحلية اليومية الخالية من الإضافات الاصطناعية.`,
+    descriptionEn: `Premium Citrus Blossom Saim Honey 🍊✨
+
+• Absolute Purity & Maximum Bio-Activity:
+This rare honey is harvested from aromatic citrus orchards. It is strictly "Saim" (produced without any sugar syrup feeding), guaranteeing 100% purity, supreme therapeutic quality, and zero added sugars.
+
+• A Refreshing Citrus-Scented Taste:
+Offers a beautifully light, refreshing citrus flavour and a delicate floral aroma that takes you straight to citrus groves.
+
+• Outstanding Proven Health Benefits:
+Rich in natural Vitamin C, active enzymes, and minerals. It serves as a powerful immune booster, antioxidant support, and an exceptional clean sweetener with zero artificial inputs.`,
     image: 'https://imgur.com/SZsIZEg.jpeg',
     images: [
       'https://imgur.com/SZsIZEg.jpeg'

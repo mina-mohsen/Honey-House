@@ -1,4 +1,5 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import Markdown from "react-markdown";
 import { Language, CartItem } from "./types";
 import DisplayComponent from "./DisplayComponent";
 import {
@@ -471,7 +472,15 @@ const App: React.FC = () => {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          message: `You are a professional honey expert.\nExplain in detail (6–10 sentences), practical tips, and short bullet points if helpful.\nUser language: ${lang}.\nQuestion: ${aiMessage}`,
+          message: `You are a professional honey expert. Write a highly professional, beautifully structured, and detailed response.
+Use Markdown formatting:
+- Use clear headings (e.g., ### title) for different sections.
+- Use bullet points (* or -) for key points, scientific analyses, or advice.
+- Use bold text (**keyword**) to highlight important information.
+- Use paragraph breaks (double newlines) so that the lines are very comfortable to read.
+- Keep the style elegant, clean, and highly professional like an expert article.
+User language: ${lang === 'ar' ? 'Arabic (العربية)' : 'English'}.
+Question: ${aiMessage}`,
         }),
       });
 
@@ -1009,10 +1018,12 @@ const App: React.FC = () => {
               </button>
             </div>
             {aiResponse && (
-              <div className="mt-4 bg-white/10 p-4 rounded-xl leading-relaxed text-sm md:text-base">
-                <div className="flex items-start gap-2">
-                  <span className="text-lg">💡</span>
-                  <p>{aiResponse}</p>
+              <div className="mt-6 bg-amber-950/40 border border-amber-500/20 p-6 md:p-8 rounded-2xl shadow-inner">
+                <div className="flex items-start gap-3">
+                  <span className="text-2xl mt-0.5 select-none">💡</span>
+                  <div className="markdown-body w-full">
+                    <Markdown>{aiResponse}</Markdown>
+                  </div>
                 </div>
               </div>
             )}

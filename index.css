@@ -9,6 +9,103 @@ body {
   @apply bg-[#FEFBF6] antialiased;
 }
 
+.markdown-body {
+  @apply text-white/95 space-y-4 text-sm md:text-base leading-relaxed;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3, .markdown-body h4 {
+  @apply text-amber-400 font-black mt-6 mb-3 tracking-wide leading-tight;
+}
+
+.markdown-body h1 {
+  @apply text-xl md:text-2xl border-b border-white/10 pb-2;
+}
+
+.markdown-body h2 {
+  @apply text-lg md:text-xl border-b border-white/5 pb-1;
+}
+
+.markdown-body h3 {
+  @apply text-base md:text-lg;
+}
+
+.markdown-body h4 {
+  @apply text-sm md:text-base;
+}
+
+.markdown-body p {
+  @apply leading-relaxed mb-3;
+}
+
+.markdown-body ul {
+  @apply list-disc list-inside space-y-2 my-3;
+}
+
+.markdown-body ol {
+  @apply list-decimal list-inside space-y-2 my-3;
+}
+
+.markdown-body li {
+  @apply text-white/90 leading-relaxed inline-block w-full;
+}
+
+/* Bullet list marker spacing adjustment for RTL / LTR */
+[dir="rtl"] .markdown-body ul {
+  @apply list-none pr-4;
+}
+[dir="rtl"] .markdown-body ul li::before {
+  content: "•";
+  @apply text-amber-500 font-bold ml-2 inline-block;
+}
+
+[dir="ltr"] .markdown-body ul {
+  @apply list-none pl-4;
+}
+[dir="ltr"] .markdown-body ul li::before {
+  content: "•";
+  @apply text-amber-500 font-bold mr-2 inline-block;
+}
+
+[dir="rtl"] .markdown-body ol {
+  @apply list-none pr-4;
+}
+[dir="rtl"] .markdown-body ol li {
+  counter-increment: step-counter;
+}
+[dir="rtl"] .markdown-body ol li::before {
+  content: counter(step-counter) ".";
+  @apply text-amber-500 font-bold ml-2 inline-block;
+}
+
+[dir="ltr"] .markdown-body ol {
+  @apply list-none pl-4;
+}
+[dir="ltr"] .markdown-body ol li {
+  counter-increment: step-counter;
+}
+[dir="ltr"] .markdown-body ol li::before {
+  content: counter(step-counter) ".";
+  @apply text-amber-500 font-bold mr-2 inline-block;
+}
+
+.markdown-body strong {
+  @apply text-amber-300 font-black;
+}
+
+.markdown-body blockquote {
+  @apply bg-white/5 px-4 py-3 rounded-lg italic my-4 border-amber-500;
+}
+[dir="rtl"] .markdown-body blockquote {
+  @apply border-r-4;
+}
+[dir="ltr"] .markdown-body blockquote {
+  @apply border-l-4;
+}
+
+.markdown-body hr {
+  @apply border-white/10 my-5;
+}
+
 .font-primary {
   font-family: var(--font-cairo);
 }
