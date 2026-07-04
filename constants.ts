@@ -10,6 +10,17 @@ export interface ProductExtended extends Product {
 
 export const PRODUCTS: ProductExtended[] = [
   {
+    id: 'teaser-hook',
+    titleAr: 'جاري فحص الجودة...',
+    titleEn: 'Scanning Quality...',
+    descriptionAr: 'استعد لاكتشاف أنقى أنواع العسل في الإمارات. فحص النقاء: 100% عسل خام.',
+    descriptionEn: 'Get ready to discover the purest honey in UAE. Purity Check: 100% Raw Honey.',
+    image: 'https://images.unsplash.com/photo-1558611997-d60293774640?q=80&w=2070&auto=format&fit=crop',
+    benefitsAr: [],
+    benefitsEn: [],
+    prices: []
+  },
+  {
     id: 'citrus-blossom-saim',
     titleAr: 'عسل زهرة الموالح الصائم',
     titleEn: 'Citrus Blossom Saim Honey',
@@ -36,17 +47,6 @@ export const PRODUCTS: ProductExtended[] = [
       { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 40, originalPrice: 75 },
       { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 75, originalPrice: 150 },
     ]
-  },
-  {
-    id: 'teaser-hook',
-    titleAr: 'جاري فحص الجودة...',
-    titleEn: 'Scanning Quality...',
-    descriptionAr: 'استعد لاكتشاف أنقى أنواع العسل في الإمارات. فحص النقاء: 100% عسل خام.',
-    descriptionEn: 'Get ready to discover the purest honey in UAE. Purity Check: 100% Raw Honey.',
-    image: 'https://images.unsplash.com/photo-1558611997-d60293774640?q=80&w=2070&auto=format&fit=crop',
-    benefitsAr: [],
-    benefitsEn: [],
-    prices: []
   },
   {
     id: 'squeeze-honey',

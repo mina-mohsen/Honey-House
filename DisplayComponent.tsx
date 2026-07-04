@@ -32,7 +32,8 @@ const DisplayComponent: React.FC = () => {
 
   useEffect(() => {
     const isManifesto = PRODUCTS[currentIndex]?.id === 'brand-manifesto-hook';
-    const intervalTime = isManifesto ? 7000 : 10000;
+    const isTeaser = PRODUCTS[currentIndex]?.id === 'teaser-hook';
+    const intervalTime = isManifesto ? 7000 : isTeaser ? 13000 : 10000;
     const timer = setInterval(() => {
       setCurrentIndex((prev) => (prev + 1) % PRODUCTS.length);
     }, intervalTime);
@@ -761,7 +762,7 @@ const DisplayComponent: React.FC = () => {
             key={currentIndex}
             initial={{ x: "-100%" }}
             animate={{ x: "0%" }}
-            transition={{ duration: PRODUCTS[currentIndex]?.id === 'brand-manifesto-hook' ? 7 : 10, ease: "linear" }}
+            transition={{ duration: PRODUCTS[currentIndex]?.id === 'brand-manifesto-hook' ? 7 : PRODUCTS[currentIndex]?.id === 'teaser-hook' ? 13 : 10, ease: "linear" }}
             className="h-full bg-amber-500 w-full shadow-[0_0_15px_rgba(245,158,11,0.6)]"
          />
       </div>

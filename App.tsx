@@ -475,10 +475,24 @@ const App: React.FC = () => {
         }),
       });
 
+      if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error("STATIC_HOSTING_ERROR");
+        }
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || "SERVER_ERROR");
+      }
+
       const data = await res.json();
       setAiResponse(data.reply || "");
-    } catch {
-      setAiResponse(lang === "ar" ? "خطأ في الاتصال بالذكاء الاصطناعي." : "Error connecting to AI.");
+    } catch (err: any) {
+      if (err?.message === "STATIC_HOSTING_ERROR") {
+        setAiResponse(lang === "ar" 
+          ? "تنبيه: ميزة خبير العسل الذكي تحتاج إلى خادم (Backend) للعمل. الاستضافات الساكنة مثل GitHub Pages لا تدعم تشغيل ميزات الذكاء الاصطناعي التفاعلية مباشرة. يرجى تفعيل الاستضافة الكاملة (Full-Stack) على منصة تدعم Node.js مثل Vercel أو Render أو السيرفر الخاص ببيت العسل للتمتع بكامل الميزات."
+          : "Notice: The AI Expert feature requires a backend server to run. Static hosting services like GitHub Pages do not support running interactive AI backends. Please deploy to a full-stack platform like Vercel or Render to enable this feature.");
+      } else {
+        setAiResponse(lang === "ar" ? "خطأ في الاتصال بالذكاء الاصطناعي." : "Error connecting to AI.");
+      }
     } finally {
       setIsAiThinking(false);
     }
@@ -505,9 +519,17 @@ const App: React.FC = () => {
         }),
       });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data?.error || "Failed to submit");
+      if (!res.ok) {
+        if (res.status === 404) {
+          throw new Error(lang === "ar" 
+            ? "الخادم (Backend) غير متوفر على الاستضافة الحالية مثل GitHub Pages. لا يمكن حفظ التقييمات على السيرفر بدون استضافة كاملة (Full-Stack)."
+            : "The backend server is not available on this static hosting platform (e.g., GitHub Pages). Submitting reviews requires a full-stack deployment.");
+        }
+        const data = await res.json().catch(() => ({}));
+        throw new Error(data?.error || "Failed to submit");
+      }
 
+      const data = await res.json();
       setShowReviewForm(false);
       setNewReview({ name: "", rating: 5, comment: "" });
 
