@@ -10,9 +10,25 @@ const DisplayComponent: React.FC = () => {
   const [isRecording, setIsRecording] = useState(false);
   const [recordDuration, setRecordDuration] = useState(0);
   const [permissionError, setPermissionError] = useState(false);
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
   const mediaRecorderRef = useRef<MediaRecorder | null>(null);
   const chunksRef = useRef<Blob[]>([]);
   const timerRef = useRef<NodeJS.Timeout | null>(null);
+
+  useEffect(() => {
+    setActiveImgIndex(0);
+  }, [currentIndex]);
+
+  useEffect(() => {
+    const activeProduct = PRODUCTS[currentIndex];
+    const images = activeProduct?.images || [];
+    if (images.length <= 1) return;
+
+    const imgTimer = setInterval(() => {
+      setActiveImgIndex((prev) => (prev + 1) % images.length);
+    }, 3000); // Cycle images every 3 seconds
+    return () => clearInterval(imgTimer);
+  }, [currentIndex]);
 
   useEffect(() => {
     const isManifesto = PRODUCTS[currentIndex]?.id === 'brand-manifesto-hook';
@@ -150,6 +166,7 @@ const DisplayComponent: React.FC = () => {
                 />
                 <img 
                   src="https://imgur.com/tpBWWTy.jpeg" 
+                  referrerPolicy="no-referrer"
                   alt="Honey House Legacy" 
                   className="w-20 h-20 md:w-32 md:h-32 xl:w-40 xl:h-40 object-contain relative z-10 drop-shadow-[0_0_50px_rgba(245,158,11,0.4)]"
                 />
@@ -457,6 +474,7 @@ const DisplayComponent: React.FC = () => {
            <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full overflow-hidden flex items-center justify-center border-2 border-amber-500 shadow-2xl shrink-0 p-1">
               <img 
                 src="https://imgur.com/tpBWWTy.jpeg" 
+                referrerPolicy="no-referrer"
                 alt="Honey House Logo" 
                 className="w-full h-full object-contain"
               />
@@ -613,11 +631,19 @@ const DisplayComponent: React.FC = () => {
                 className="relative w-full h-[40vh] md:h-[50vh] lg:h-full flex items-center justify-center"
               >
                 <div className="absolute inset-0 bg-amber-500/10 blur-[120px] rounded-full"></div>
-                <img 
-                  src={product.image} 
-                  alt={product.titleAr}
-                  className="max-w-[130%] max-h-[130%] object-contain drop-shadow-[0_80px_100px_rgba(0,0,0,0.85)] z-10"
-                />
+                <AnimatePresence mode="wait">
+                  <motion.img 
+                    key={activeImgIndex}
+                    initial={{ opacity: 0, scale: 0.95 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    exit={{ opacity: 0, scale: 1.05 }}
+                    transition={{ duration: 0.5 }}
+                    src={product.images ? product.images[activeImgIndex] : product.image} 
+                    alt={product.titleAr}
+                    className="max-w-[130%] max-h-[130%] object-contain drop-shadow-[0_80px_100px_rgba(0,0,0,0.85)] z-10"
+                    referrerPolicy="no-referrer"
+                  />
+                </AnimatePresence>
               </motion.div>
             </div>
           </motion.div>

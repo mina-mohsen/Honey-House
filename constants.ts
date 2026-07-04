@@ -92,17 +92,32 @@ export const PRODUCTS: ProductExtended[] = [
   },
   {
     id: 'citrus-blossom-saim',
-    titleAr: 'عسل زهرة الموالح صائم',
+    titleAr: 'عسل زهرة الموالح الصائم',
     titleEn: 'Citrus Blossom Saim Honey',
-    descriptionAr: 'عسل زهرة الموالح صائم طبيعي فاخر بدون أي تغذية زيرو سكريات.',
-    descriptionEn: 'Premium Citrus Blossom Saim Honey, 100% natural, produced without any feeding and with zero sugars.',
+    descriptionAr: 'عسل زهرة الموالح الصائم الفاخر، يُنتج من رحيق أزهار الحمضيات والموالح الفواحة. يتميز بأنه عسل "صائم" تماماً، أي أن النحل لم يتغذى على أي محاليل سكرية طوال الموسم، مما يضمن نقاءً مطلقاً وجودة علاجية فائقة بنسبة سكريات مضافة صفرية. غني بالفيتامينات والمعادن وله نكهة حمضية منعشة وخفيفة.',
+    descriptionEn: 'Premium Citrus Blossom Saim Honey, harvested from aromatic citrus orchards. It is strictly "Saim" (produced without any sugar syrup feeding), guaranteeing absolute purity, maximum bio-activity, and zero added sugars. Rich in vitamin C and essential minerals, it offers a refreshing, mildly citrus-scented taste.',
     image: 'https://imgur.com/QCqn0kZ.jpeg',
-    benefitsAr: ['طبيعي وصائم', 'بدون أي تغذية', 'زيرو سكريات'],
-    benefitsEn: ['Natural & Saim', 'No Bee-Feeding', 'Zero Sugars'],
+    images: [
+      'https://imgur.com/QCqn0kZ.jpeg',
+      'https://images.unsplash.com/photo-1587049352851-8d4e89134292?q=80&w=600&auto=format&fit=crop',
+      'https://images.unsplash.com/photo-1473081556163-2a17de81fc97?q=80&w=600&auto=format&fit=crop'
+    ],
+    benefitsAr: [
+      'طبيعي وصائم 100%',
+      'بدون أي محاليل سكرية طوال الموسم',
+      'زيرو سكريات مضافة',
+      'غني بالفيتامينات ومقوي فائق للمناعة'
+    ],
+    benefitsEn: [
+      '100% Pure & Saim',
+      'No Sugar Feeding All Season',
+      'Zero Added Sugars',
+      'Immune Boosting & Rich in Vitamins'
+    ],
     prices: [
-      { id: 'saim_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 70, originalPrice: 120 },
-      { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 75, originalPrice: 130 },
-      { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 150, originalPrice: 250 },
+      { id: 'saim_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 70 },
+      { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 40, originalPrice: 75 },
+      { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 75, originalPrice: 150 },
     ]
   },
   {

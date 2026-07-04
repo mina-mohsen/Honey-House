@@ -16,6 +16,7 @@ export interface Product {
   descriptionAr: string;
   descriptionEn: string;
   image: string;
+  images?: string[];
   prices: ProductPrice[];
   featuresAr?: string[];
   featuresEn?: string[];

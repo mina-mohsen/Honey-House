@@ -23,6 +23,125 @@ type Review = {
 
 const ADMIN_KEY_STORAGE = "honeyhouse_admin_key_v1";
 
+interface ProductCardProps {
+  product: any;
+  lang: Language;
+  t: any;
+  addToCart: (productId: string, priceId: string, productTitle: string, priceSize: string) => void;
+}
+
+const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart }) => {
+  const [activeImgIndex, setActiveImgIndex] = useState(0);
+  const images = product.images && product.images.length > 0 ? product.images : [product.image];
+
+  return (
+    <div
+      className="bg-gradient-to-b from-white to-amber-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-amber-100 overflow-hidden flex flex-col justify-between"
+    >
+      <div className="relative group overflow-hidden">
+        <img
+          src={images[activeImgIndex]}
+          alt={lang === "ar" ? product.titleAr : product.titleEn}
+          className="w-full h-48 object-cover transition-transform duration-500 group-hover:scale-105"
+          referrerPolicy="no-referrer"
+          onError={(e) => {
+            (e.currentTarget as HTMLImageElement).src = "https://imgur.com/vIdADYw.jpeg";
+          }}
+        />
+        <div className="absolute top-2 left-2 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">
+          🏷️ {lang === "ar" ? "أفضل بيع" : "Best Seller"}
+        </div>
+
+        {/* Gallery switcher dot indicators */}
+        {images.length > 1 && (
+          <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1 bg-black/40 backdrop-blur-sm px-2 py-1 rounded-full z-10">
+            {images.map((_, idx) => (
+              <button
+                key={idx}
+                type="button"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setActiveImgIndex(idx);
+                }}
+                className={`w-1.5 h-1.5 rounded-full transition-all ${
+                  idx === activeImgIndex ? "bg-amber-500 scale-125" : "bg-white/60"
+                }`}
+                title={`Image ${idx + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </div>
+
+      <div className="p-4 flex-1 flex flex-col justify-between">
+        <div>
+          <h3 className="font-black text-lg mb-2 text-amber-900 line-clamp-1">
+            {lang === "ar" ? product.titleAr : product.titleEn}
+          </h3>
+
+          <p className="text-sm text-gray-600 mb-3 line-clamp-2 min-h-[40px]">
+            {lang === "ar" ? product.descriptionAr : product.descriptionEn}
+          </p>
+
+          <div className="mb-4">
+            <h4 className="font-bold text-amber-800 text-sm mb-2">
+              {lang === "ar" ? "الفوائد:" : "Benefits:"}
+            </h4>
+            <div className="flex flex-wrap gap-1.5">
+              {(lang === "ar" ? product.benefitsAr : product.benefitsEn).slice(0, 3).map((benefit: string, idx: number) => (
+                <span key={idx} className="px-2 py-0.5 bg-amber-100 text-amber-800 rounded-lg text-xs font-semibold">
+                  {benefit}
+                </span>
+              ))}
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <h4 className="font-bold text-amber-800 text-sm mb-2">{t.chooseSize}:</h4>
+          <div className="space-y-2">
+            {product.prices.map((price: any) => (
+              <div
+                key={price.id}
+                className="flex items-center justify-between p-3 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors border border-amber-100/50"
+              >
+                <div className="flex flex-col">
+                  <span className="font-bold text-sm text-amber-900">{lang === "ar" ? price.sizeAr : price.sizeEn}</span>
+                  <div className="flex items-center gap-2">
+                    <span className="font-bold text-green-600">
+                      {price.price} {t.currency}
+                    </span>
+                    {price.originalPrice && (
+                      <span className="text-xs text-gray-400 line-through">
+                        {price.originalPrice} {t.currency}
+                      </span>
+                    )}
+                  </div>
+                </div>
+
+                <button
+                  onClick={() =>
+                    addToCart(
+                      product.id,
+                      price.id,
+                      lang === "ar" ? product.titleAr : product.titleEn,
+                      lang === "ar" ? price.sizeAr : price.sizeEn
+                    )
+                  }
+                  className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all font-bold text-sm flex items-center gap-2"
+                >
+                  <span>🛒</span>
+                  <span>{lang === "ar" ? "أضف" : "Add"}</span>
+                </button>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const App: React.FC = () => {
   const [lang, setLang] = useState<Language>("ar");
   const [route, setRoute] = useState(window.location.hash || "#/");
@@ -580,6 +699,7 @@ const App: React.FC = () => {
                     src="https://imgur.com/tpBWWTy.jpeg"
                     alt="بيت العسل Honey House"
                     className="w-full h-full object-cover"
+                    referrerPolicy="no-referrer"
                   />
                 </div>
                 <div className="flex flex-col">
@@ -893,88 +1013,13 @@ const App: React.FC = () => {
             <div className="px-5 md:px-6 pb-6">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
                 {PRODUCTS.filter(p => !['teaser-hook', 'brand-manifesto-hook', 'full-menu-summary'].includes(p.id)).map((product) => (
-                  <div
+                  <ProductCard
                     key={product.id}
-                    className="bg-gradient-to-b from-white to-amber-50 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 border border-amber-100 overflow-hidden"
-                  >
-                    <div className="relative">
-                      <img
-                        src={product.image}
-                        alt={lang === "ar" ? product.titleAr : product.titleEn}
-                        className="w-full h-48 object-cover"
-                        onError={(e) => {
-                          (e.currentTarget as HTMLImageElement).src = "https://imgur.com/vIdADYw.jpeg";
-                        }}
-                      />
-                      <div className="absolute top-2 left-2 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold">
-                        🏷️ {lang === "ar" ? "أفضل بيع" : "Best Seller"}
-                      </div>
-                    </div>
-
-                    <div className="p-4">
-                      <h3 className="font-black text-lg mb-2 text-amber-900 line-clamp-1">
-                        {lang === "ar" ? product.titleAr : product.titleEn}
-                      </h3>
-
-                      <p className="text-sm text-gray-600 mb-3 line-clamp-2">
-                        {lang === "ar" ? product.descriptionAr : product.descriptionEn}
-                      </p>
-
-                      <div className="mb-4">
-                        <h4 className="font-bold text-amber-800 text-sm mb-2">
-                          {lang === "ar" ? "الفوائد:" : "Benefits:"}
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {(lang === "ar" ? product.benefitsAr : product.benefitsEn).slice(0, 2).map((benefit, idx) => (
-                            <span key={idx} className="px-2 py-1 bg-amber-100 text-amber-800 rounded-lg text-xs">
-                              {benefit}
-                            </span>
-                          ))}
-                        </div>
-                      </div>
-
-                      <div>
-                        <h4 className="font-bold text-amber-800 text-sm mb-2">{t.chooseSize}:</h4>
-                        <div className="space-y-2">
-                          {product.prices.map((price) => (
-                            <div
-                              key={price.id}
-                              className="flex items-center justify-between p-3 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors"
-                            >
-                              <div className="flex flex-col">
-                                <span className="font-bold text-sm text-amber-900">{lang === "ar" ? price.sizeAr : price.sizeEn}</span>
-                                <div className="flex items-center gap-2">
-                                  <span className="font-bold text-green-600">
-                                    {price.price} {t.currency}
-                                  </span>
-                                  {price.originalPrice && (
-                                    <span className="text-xs text-gray-400 line-through">
-                                      {price.originalPrice} {t.currency}
-                                    </span>
-                                  )}
-                                </div>
-                              </div>
-
-                              <button
-                                onClick={() =>
-                                  addToCart(
-                                    product.id,
-                                    price.id,
-                                    lang === "ar" ? product.titleAr : product.titleEn,
-                                    lang === "ar" ? price.sizeAr : price.sizeEn
-                                  )
-                                }
-                                className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all font-bold text-sm flex items-center gap-2"
-                              >
-                                <span>🛒</span>
-                                <span>{lang === "ar" ? "أضف" : "Add"}</span>
-                              </button>
-                            </div>
-                          ))}
-                        </div>
-                      </div>
-                    </div>
-                  </div>
+                    product={product}
+                    lang={lang}
+                    t={t}
+                    addToCart={addToCart}
+                  />
                 ))}
               </div>
             </div>
@@ -1023,7 +1068,7 @@ const App: React.FC = () => {
           <div className="text-center">
             <div className="flex justify-center mb-6">
               <div className="w-16 h-16 rounded-full overflow-hidden border-2 border-amber-500 shadow-lg">
-                <img src="https://imgur.com/tpBWWTy.jpeg" alt="بيت العسل Honey House" className="w-full h-full object-cover" />
+                <img src="https://imgur.com/tpBWWTy.jpeg" alt="بيت العسل Honey House" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
               </div>
             </div>
 
