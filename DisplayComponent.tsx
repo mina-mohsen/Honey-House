@@ -263,11 +263,11 @@ const DisplayComponent: React.FC = () => {
     }, [step]);
 
     return (
-      <div className="w-full h-full flex flex-col items-center justify-center p-4 lg:p-12 xl:p-16" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
-        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center flex-1 h-full max-h-[85vh]">
+      <div className="w-full h-full flex flex-col items-center justify-center p-2 md:p-12" dir={lang === 'ar' ? 'rtl' : 'ltr'}>
+        <div className="max-w-7xl w-full grid grid-cols-1 lg:grid-cols-2 gap-4 md:gap-16 items-center flex-1 h-full max-h-[85vh]">
           
           {/* Simulation Chat Box - Fluid Height Intelligence */}
-          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[1.5rem] md:rounded-[3rem] p-4 md:p-8 border border-amber-500/20 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-3 md:space-y-4 h-full min-h-[280px] md:min-h-[400px] lg:min-h-[500px] flex flex-col relative overflow-hidden">
+          <div className="bg-white/[0.03] backdrop-blur-3xl rounded-[1.2rem] md:rounded-[3rem] p-3 md:p-8 border border-amber-500/20 shadow-[0_0_100px_rgba(245,158,11,0.1)] space-y-2 md:space-y-4 h-[35vh] lg:h-full lg:min-h-[500px] flex flex-col relative overflow-hidden">
             <div className="flex items-center gap-2 border-b border-white/5 pb-2">
                <div className="w-1.5 h-1.5 rounded-full bg-red-500/50" />
                <div className="w-1.5 h-1.5 rounded-full bg-amber-500/50" />
@@ -277,7 +277,7 @@ const DisplayComponent: React.FC = () => {
             
             <div 
               ref={chatContainerRef}
-              className="flex-1 space-y-3 md:space-y-6 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
+              className="flex-1 space-y-2 md:space-y-6 overflow-y-auto scrollbar-hide [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden"
             >
                <AnimatePresence mode="popLayout">
                  {messages.slice(0, step).map((msg, i) => (
@@ -287,7 +287,7 @@ const DisplayComponent: React.FC = () => {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     className={`flex ${msg.sender === 'user' ? 'justify-start' : 'justify-end'}`}
                    >
-                      <div className={`max-w-[85%] p-3 md:p-6 rounded-[1.2rem] md:rounded-[2rem] text-xs md:text-lg lg:text-xl font-bold shadow-xl overflow-hidden relative
+                      <div className={`max-w-[85%] p-2.5 md:p-6 rounded-[1rem] md:rounded-[2rem] text-[11px] md:text-lg lg:text-xl font-bold shadow-xl overflow-hidden relative
                         ${msg.sender === 'user' 
                           ? 'bg-white/5 text-white/60 border border-white/10 rounded-tr-none' 
                           : 'bg-gradient-to-br from-amber-500 to-amber-600 text-black border border-amber-400 rounded-tl-none shadow-[0_8px_25px_rgba(245,158,11,0.2)]'
@@ -312,28 +312,28 @@ const DisplayComponent: React.FC = () => {
           <motion.div 
             initial={{ opacity: 0, x: lang === 'ar' ? 50 : -50 }}
             animate={{ opacity: 1, x: 0 }}
-            className={`flex flex-col items-center ${lang === 'ar' ? 'lg:items-start text-center lg:text-right' : 'lg:items-end text-center lg:text-left'} space-y-8 lg:space-y-12`}
+            className={`flex flex-col items-center ${lang === 'ar' ? 'lg:items-start text-center lg:text-right' : 'lg:items-end text-center lg:text-left'} space-y-4 lg:space-y-12`}
           >
              <div className="relative group">
                 <motion.div 
                   animate={{ rotate: 360 }}
                   transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-                  className="absolute -inset-12 bg-gradient-to-tr from-amber-500/0 via-amber-500/10 to-amber-500/0 rounded-full blur-[60px]"
+                  className="absolute -inset-8 md:-inset-12 bg-gradient-to-tr from-amber-500/0 via-amber-500/10 to-amber-500/0 rounded-full blur-[60px]"
                 />
                 <img 
                   src="https://imgur.com/tpBWWTy.jpeg" 
                   alt="Honey House Logo" referrerPolicy="no-referrer" 
-                  className="w-24 h-24 md:w-44 md:h-44 xl:w-56 xl:h-56 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-110 transition-transform duration-700"
+                  className="w-16 h-16 md:w-44 md:h-44 xl:w-56 xl:h-56 object-contain relative z-10 drop-shadow-[0_0_80px_rgba(245,158,11,0.6)] group-hover:scale-110 transition-transform duration-700"
                 />
-                <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-4 py-1 rounded-full border-2 border-black z-20 text-[10px] md:text-sm shadow-2xl skew-x-[-10deg]`}>
+                <div className={`absolute -bottom-1 left-1/2 -translate-x-1/2 bg-amber-500 text-black font-black px-3 py-0.5 md:px-4 md:py-1 rounded-full border-2 border-black z-20 text-[9px] md:text-sm shadow-2xl skew-x-[-10deg]`}>
                   {lang === 'ar' ? 'مـنـذ ٢٠٠١' : 'Since 2001'}
                 </div>
              </div>
-             <div className="space-y-4">
-                <h2 className="text-3xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-tight">
+             <div className="space-y-2 md:space-y-4">
+                <h2 className="text-xl sm:text-2xl md:text-6xl lg:text-7xl xl:text-8xl font-black text-white leading-tight">
                   {lang === 'ar' ? 'بيت العسل:' : 'Honey House:'} <br/> <span className="text-amber-500">{lang === 'ar' ? 'صحتك هي استثمارك' : 'Your Health is Your Investment'}</span>
                 </h2>
-                <p className="text-lg md:text-2xl lg:text-3xl text-white/40 font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed italic">
+                <p className="text-xs sm:text-base md:text-2xl lg:text-3xl text-white/40 font-bold max-w-2xl mx-auto lg:mx-0 leading-relaxed italic">
                   {lang === 'ar' ? '"عسل خام، نقي، ومضمون.. أقوى عروض التعافي والنشاط تبدأ من هنا!"' : '"Raw, pure, guaranteed honey.. The strongest recovery and vitality offers start here!"'}
                 </p>
              </div>
@@ -343,10 +343,10 @@ const DisplayComponent: React.FC = () => {
         <motion.div 
           animate={{ y: [0, 5, 0] }}
           transition={{ duration: 2, repeat: Infinity }}
-          className="mt-6 md:mt-10 flex flex-col items-center gap-2"
+          className="mt-4 md:mt-10 flex flex-col items-center gap-1.5"
         >
-           <span className="text-amber-500/60 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">{lang === 'ar' ? 'Scroll For Products' : 'Scroll For Products'}</span>
-           <div className="w-px h-6 md:h-10 bg-gradient-to-b from-amber-500 to-transparent" />
+           <span className="text-amber-500/60 font-black text-[9px] md:text-xs tracking-[0.4em] uppercase">{lang === 'ar' ? 'Scroll For Products' : 'Scroll For Products'}</span>
+           <div className="w-px h-5 md:h-10 bg-gradient-to-b from-amber-500 to-transparent" />
         </motion.div>
       </div>
     );
@@ -487,49 +487,49 @@ const DisplayComponent: React.FC = () => {
       </div>
 
       {/* 🚀 Header: Slim Luxury Rail - Unified Branding on Right */}
-      <div className="h-[12vh] min-h-[80px] bg-black/40 backdrop-blur-md flex items-center justify-between px-6 md:px-12 lg:px-20 border-b border-white/5 z-50 overflow-hidden">
+      <div className="h-[10vh] lg:h-[12vh] min-h-[65px] md:min-h-[85px] bg-black/40 backdrop-blur-md flex items-center justify-between px-4 md:px-12 lg:px-20 border-b border-white/5 z-50 overflow-hidden">
         {/* Left: Dynamic Promo Tags */}
-        <div className="flex gap-4 md:gap-8">
+        <div className="flex gap-2 md:gap-6">
            <div className="flex flex-col items-center group relative">
-              <div className={`relative overflow-hidden rounded-full border border-white/10 ${isStandardMode ? 'bg-green-600/20 border-green-500/30' : 'bg-white/5'} px-6 md:px-10 py-1.5 md:py-2.5`}>
+              <div className={`relative overflow-hidden rounded-full border border-white/10 ${isStandardMode ? 'bg-green-600/20 border-green-500/30' : 'bg-white/5'} px-3 py-1.5 md:px-8 md:py-2.5`}>
                 <motion.div 
                   animate={{ x: ['-200%', '200%'] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent skew-x-[35deg] pointer-events-none"
                 />
-                <span className={`text-xl md:text-2xl font-black ${isStandardMode ? 'text-green-500' : 'text-white'} leading-none relative z-10`}>
+                <span className={`text-xs sm:text-sm md:text-xl lg:text-2xl font-black ${isStandardMode ? 'text-green-500' : 'text-white'} leading-none relative z-10`}>
                   {isStandardMode 
                     ? (lang === 'ar' ? 'توصيل مجاني 🚚' : 'Free Delivery 🚚') 
                     : (lang === 'ar' ? 'الحق العرض اليوم' : 'Grab Today\'s Offer')}
                 </span>
               </div>
-              <span className={`text-xs md:text-sm font-bold ${isStandardMode ? 'text-green-500/50' : 'text-white/50'} mt-1 uppercase tracking-wider`}>
+              <span className={`text-[8px] md:text-xs font-bold ${isStandardMode ? 'text-green-500/50' : 'text-white/50'} mt-0.5 md:mt-1 uppercase tracking-wider`}>
                 {isStandardMode ? 'FREE UAE DELIVERY' : 'LIMITED QUANTITY'}
               </span>
            </div>
            
            <div className="flex flex-col items-center group relative">
-              <div className="relative overflow-hidden rounded-full border border-amber-500/30 bg-amber-500/5 px-6 md:px-10 py-1.5 md:py-2.5">
+              <div className="relative overflow-hidden rounded-full border border-amber-500/30 bg-amber-500/5 px-3 py-1.5 md:px-8 md:py-2.5">
                 <motion.div 
                   animate={{ x: ['-200%', '200%'] }}
                   transition={{ duration: 4, repeat: Infinity, ease: "easeInOut", delay: 0.5 }}
                   className="absolute inset-0 bg-gradient-to-r from-transparent via-amber-400/30 to-transparent skew-x-[35deg] pointer-events-none"
                 />
-                <span className="text-xl md:text-2xl font-black text-amber-500 leading-none relative z-10">
+                <span className="text-xs sm:text-sm md:text-xl lg:text-2xl font-black text-amber-500 leading-none relative z-10">
                   {isStandardMode 
                     ? (lang === 'ar' ? 'خصم %10 فوق 250د.إ' : '10% OFF over 250 AED') 
                     : (lang === 'ar' ? 'خصم خاص وحصري' : 'Exclusive Discount')}
                 </span>
               </div>
-              <span className="text-xs md:text-sm font-bold text-amber-500/50 mt-1 uppercase tracking-wider">
+              <span className={`text-[8px] md:text-xs font-bold text-amber-500/50 mt-0.5 md:mt-1 uppercase tracking-wider`}>
                 {isStandardMode ? 'LOYALTY DISCOUNT' : 'LIMITED TIME PROMO'}
               </span>
            </div>
         </div>
 
         {/* Right: Brand Identity - English Only */}
-        <div className="flex items-center gap-4 md:gap-6 flex-row-reverse">
-           <div className="w-12 h-12 md:w-16 md:h-16 bg-white rounded-full overflow-hidden flex items-center justify-center border-2 border-amber-500 shadow-2xl shrink-0 p-1">
+        <div className="flex items-center gap-2 md:gap-4 flex-row-reverse">
+           <div className="w-10 h-10 md:w-16 md:h-16 bg-white rounded-full overflow-hidden flex items-center justify-center border-2 border-amber-500 shadow-2xl shrink-0 p-0.5 md:p-1">
               <img 
                 src="https://imgur.com/tpBWWTy.jpeg" 
                 alt="Honey House Logo" 
@@ -538,14 +538,14 @@ const DisplayComponent: React.FC = () => {
               />
            </div>
            <div className="flex flex-col text-right">
-              <h1 className="text-xl md:text-3xl font-black text-white tracking-widest leading-none uppercase">Honey House</h1>
-              <span className="text-[8px] md:text-[9px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200 tracking-[0.4em] uppercase mt-1">Premium Quality Selection</span>
+              <h1 className="text-sm md:text-2xl lg:text-3xl font-black text-white tracking-widest leading-none uppercase">Honey House</h1>
+              <span className="text-[6px] md:text-[9px] font-bold text-transparent bg-clip-text bg-gradient-to-r from-amber-500 to-amber-200 tracking-[0.2em] md:tracking-[0.4em] mt-0.5 md:mt-1">Premium Quality Selection</span>
            </div>
         </div>
       </div>
 
-      {/* 🍯 Advertising Canvas: Strictly Contained Layout */}
-      <div className="flex-1 relative flex items-center justify-center overflow-hidden px-4 md:px-16 lg:px-24 py-6 md:py-12">
+      {/* 🍯 Advertising Canvas: Fully Responsive scrollable on mobile, contained on large */}
+      <div className="flex-1 relative flex items-center justify-center overflow-y-auto lg:overflow-hidden px-4 md:px-16 lg:px-24 py-4 md:py-12 custom-scrollbar">
         <AnimatePresence mode="wait">
           {product.id === 'brand-manifesto-hook' ? (
             <motion.div
@@ -710,11 +710,19 @@ const DisplayComponent: React.FC = () => {
       </div>
 
       {/* 📜 Footer: Robust Status Rail */}
-      <div className="h-[10vh] min-h-[60px] bg-black/95 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-10 md:px-20 relative shrink-0">
-        <div className="flex items-center gap-10 overflow-hidden">
-          <div className="flex flex-col shrink-0">
+      <div className="h-[10vh] min-h-[60px] bg-black/95 backdrop-blur-xl border-t border-white/5 flex items-center justify-between px-4 md:px-12 lg:px-20 relative shrink-0">
+        <div className="flex items-center gap-4 md:gap-10 overflow-hidden">
+          {/* Language Switcher */}
+          <button
+            onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
+            className="flex items-center gap-2 px-4 py-2 md:px-6 md:py-3 rounded-full font-black text-[10px] md:text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-xl border bg-amber-500 text-black border-amber-500 hover:bg-amber-400 shrink-0"
+          >
+            {lang === 'ar' ? 'English' : 'عربي'}
+          </button>
+
+          <div className="hidden sm:flex flex-col shrink-0">
             <span className="text-[9px] uppercase text-white/20 font-black tracking-widest mb-0.5">PREMIUM SELECTION VIEW</span>
-            <span className="text-base md:text-xl font-bold text-white whitespace-nowrap">
+            <span className="text-sm md:text-xl font-bold text-white whitespace-nowrap font-cairo">
               {lang === 'ar' ? 'عسل طبيعي 100% من المنحل مباشرة إلى منزلك في الإمارات' : '100% Natural Honey from the Apiary directly to your home in UAE'}
             </span>
           </div>
@@ -728,31 +736,23 @@ const DisplayComponent: React.FC = () => {
           </motion.span>
         </div>
 
-        <div className="flex gap-4 items-center">
+        <div className="flex gap-2 md:gap-4 items-center shrink-0">
           {/* Controls */}
           <button 
              onClick={() => { window.location.hash = ""; window.location.reload(); }}
-             className="text-[10px] font-black text-white/20 hover:text-white transition-colors tracking-widest uppercase mr-6"
+             className="text-[9px] md:text-[10px] font-black text-white/20 hover:text-white transition-colors tracking-widest uppercase mr-2 md:mr-6"
           >
             {lang === 'ar' ? 'إغلاق الشاشة' : 'Close View'}
           </button>
 
-          {PRODUCTS.map((_, idx) => (
-            <div 
-              key={idx} 
-              className={`h-2.5 rounded-full transition-all duration-700 ${currentIndex === idx ? 'w-24 bg-amber-500' : 'w-4 bg-white/10'}`} 
-            />
-          ))}
-        </div>
-
-        {/* 🎥 Language Switcher Controls - Floating Left */}
-        <div className="absolute left-6 bottom-4 md:left-12 md:bottom-6 flex items-center gap-3">
-          <button
-            onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
-            className="flex items-center gap-2 px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-xl border bg-amber-500 text-black border-amber-500 hover:bg-amber-400"
-          >
-            {lang === 'ar' ? 'English' : 'عربي'}
-          </button>
+          <div className="flex gap-1 md:gap-1.5">
+            {PRODUCTS.map((_, idx) => (
+              <div 
+                key={idx} 
+                className={`h-1.5 md:h-2.5 rounded-full transition-all duration-700 ${currentIndex === idx ? 'w-8 md:w-24 bg-amber-500' : 'w-2 md:w-4 bg-white/10'}`} 
+              />
+            ))}
+          </div>
         </div>
       </div>
 
@@ -772,6 +772,22 @@ const DisplayComponent: React.FC = () => {
           100% { transform: translateX(300%); }
         }
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap');
+        
+        .custom-scrollbar::-webkit-scrollbar {
+          width: 4px;
+          height: 4px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-track {
+          background: rgba(255, 255, 255, 0.02);
+          border-radius: 999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb {
+          background: rgba(245, 158, 11, 0.2);
+          border-radius: 999px;
+        }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+          background: rgba(245, 158, 11, 0.5);
+        }
       `}</style>
     </div>
   );
