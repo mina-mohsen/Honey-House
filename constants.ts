@@ -10,6 +10,34 @@ export interface ProductExtended extends Product {
 
 export const PRODUCTS: ProductExtended[] = [
   {
+    id: 'citrus-blossom-saim',
+    titleAr: 'عسل زهرة الموالح الصائم',
+    titleEn: 'Citrus Blossom Saim Honey',
+    descriptionAr: 'عسل زهرة الموالح الصائم الفاخر، يُنتج من رحيق أزهار الحمضيات والموالح الفواحة. يتميز بأنه عسل "صائم" تماماً، أي أن النحل لم يتغذى على أي محاليل سكرية طوال الموسم، مما يضمن نقاءً مطلقاً وجودة علاجية فائقة بنسبة سكريات مضافة صفرية. غني بالفيتامينات والمعادن وله نكهة حمضية منعشة وخفيفة.',
+    descriptionEn: 'Premium Citrus Blossom Saim Honey, harvested from aromatic citrus orchards. It is strictly "Saim" (produced without any sugar syrup feeding), guaranteeing absolute purity, maximum bio-activity, and zero added sugars. Rich in vitamin C and essential minerals, it offers a refreshing, mildly citrus-scented taste.',
+    image: 'https://imgur.com/SZsIZEg.jpeg',
+    images: [
+      'https://imgur.com/SZsIZEg.jpeg'
+    ],
+    benefitsAr: [
+      'طبيعي وصائم 100%',
+      'بدون أي محاليل سكرية طوال الموسم',
+      'زيرو سكريات مضافة',
+      'غني بالفيتامينات ومقوي فائق للمناعة'
+    ],
+    benefitsEn: [
+      '100% Pure & Saim',
+      'No Sugar Feeding All Season',
+      'Zero Added Sugars',
+      'Immune Boosting & Rich in Vitamins'
+    ],
+    prices: [
+      { id: 'saim_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 70 },
+      { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 40, originalPrice: 75 },
+      { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 75, originalPrice: 150 },
+    ]
+  },
+  {
     id: 'teaser-hook',
     titleAr: 'جاري فحص الجودة...',
     titleEn: 'Scanning Quality...',
@@ -111,34 +139,6 @@ export const PRODUCTS: ProductExtended[] = [
     benefitsAr: ['خصم 10% للطلبات فوق 250 درهم', 'توصيل مجاني'],
     benefitsEn: ['10% OFF over 250 AED', 'Free Delivery'],
     prices: []
-  },
-  {
-    id: 'citrus-blossom-saim',
-    titleAr: 'عسل زهرة الموالح الصائم',
-    titleEn: 'Citrus Blossom Saim Honey',
-    descriptionAr: 'عسل زهرة الموالح الصائم الفاخر، يُنتج من رحيق أزهار الحمضيات والموالح الفواحة. يتميز بأنه عسل "صائم" تماماً، أي أن النحل لم يتغذى على أي محاليل سكرية طوال الموسم، مما يضمن نقاءً مطلقاً وجودة علاجية فائقة بنسبة سكريات مضافة صفرية. غني بالفيتامينات والمعادن وله نكهة حمضية منعشة وخفيفة.',
-    descriptionEn: 'Premium Citrus Blossom Saim Honey, harvested from aromatic citrus orchards. It is strictly "Saim" (produced without any sugar syrup feeding), guaranteeing absolute purity, maximum bio-activity, and zero added sugars. Rich in vitamin C and essential minerals, it offers a refreshing, mildly citrus-scented taste.',
-    image: 'https://imgur.com/SZsIZEg.jpeg',
-    images: [
-      'https://imgur.com/SZsIZEg.jpeg'
-    ],
-    benefitsAr: [
-      'طبيعي وصائم 100%',
-      'بدون أي محاليل سكرية طوال الموسم',
-      'زيرو سكريات مضافة',
-      'غني بالفيتامينات ومقوي فائق للمناعة'
-    ],
-    benefitsEn: [
-      '100% Pure & Saim',
-      'No Sugar Feeding All Season',
-      'Zero Added Sugars',
-      'Immune Boosting & Rich in Vitamins'
-    ],
-    prices: [
-      { id: 'saim_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 70 },
-      { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 40, originalPrice: 75 },
-      { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 75, originalPrice: 150 },
-    ]
   }
 ];
 
