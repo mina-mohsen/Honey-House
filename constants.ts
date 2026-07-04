@@ -96,11 +96,9 @@ export const PRODUCTS: ProductExtended[] = [
     titleEn: 'Citrus Blossom Saim Honey',
     descriptionAr: 'عسل زهرة الموالح الصائم الفاخر، يُنتج من رحيق أزهار الحمضيات والموالح الفواحة. يتميز بأنه عسل "صائم" تماماً، أي أن النحل لم يتغذى على أي محاليل سكرية طوال الموسم، مما يضمن نقاءً مطلقاً وجودة علاجية فائقة بنسبة سكريات مضافة صفرية. غني بالفيتامينات والمعادن وله نكهة حمضية منعشة وخفيفة.',
     descriptionEn: 'Premium Citrus Blossom Saim Honey, harvested from aromatic citrus orchards. It is strictly "Saim" (produced without any sugar syrup feeding), guaranteeing absolute purity, maximum bio-activity, and zero added sugars. Rich in vitamin C and essential minerals, it offers a refreshing, mildly citrus-scented taste.',
-    image: 'https://imgur.com/QCqn0kZ.jpeg',
+    image: 'https://imgur.com/SZsIZEg.jpeg',
     images: [
-      'https://imgur.com/QCqn0kZ.jpeg',
-      'https://images.unsplash.com/photo-1587049352851-8d4e89134292?q=80&w=600&auto=format&fit=crop',
-      'https://images.unsplash.com/photo-1473081556163-2a17de81fc97?q=80&w=600&auto=format&fit=crop'
+      'https://imgur.com/SZsIZEg.jpeg'
     ],
     benefitsAr: [
       'طبيعي وصائم 100%',

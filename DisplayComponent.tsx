@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
 import { Video, Square, Download, Settings, Info } from 'lucide-react';
-import { PRODUCTS } from './constants';
+import { PRODUCTS, WHATSAPP_NUMBER } from './constants';
 
 const DisplayComponent: React.FC = () => {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -360,60 +360,118 @@ const DisplayComponent: React.FC = () => {
         <motion.div 
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          className="max-w-[1600px] w-full flex flex-col items-center gap-6"
+          className="max-w-[1400px] w-full grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center"
         >
-          {/* Header Section */}
-          <div className="text-center space-y-2">
-            <h2 className="text-3xl md:text-5xl lg:text-6xl font-black text-amber-500 uppercase tracking-tight">
-              {lang === 'ar' ? 'قائمة الأسعار والأوزان الرئيسية' : 'Main Price List & Weights'}
-            </h2>
-            <div className="flex items-center justify-center gap-4 flex-wrap">
-              <span className="bg-green-600/20 text-green-500 border border-green-500/30 px-6 py-2 rounded-full font-black text-sm md:text-xl">
-                {lang === 'ar' ? 'توصيل مجاني 🚚' : 'Free Delivery 🚚'}
-              </span>
-              <span className="bg-amber-500 text-black px-6 py-2 rounded-full font-black text-sm md:text-xl shadow-[0_0_20px_rgba(245,158,11,0.5)]">
-                {lang === 'ar' ? '10% خصم للمبيعات فوق 250 درهم 🔥' : '10% OFF on orders over 250 AED 🔥'}
-              </span>
+          {/* Side A: Minimal Elegant Product Showcase (Takes 5 cols) */}
+          <div className="lg:col-span-5 flex flex-col gap-4">
+            <div className="mb-2">
+              <h3 className="text-xl md:text-2xl font-black text-amber-500">
+                {lang === 'ar' ? 'منتجاتنا العضوية الفاخرة 🍯' : 'Our Premium Organic Products 🍯'}
+              </h3>
+              <p className="text-xs text-white/50 font-bold mt-1">
+                {lang === 'ar' ? 'عسل خام نقي وطبيعي 100% تم فحصه ومضمون الجودة.' : '100% pure raw natural honey, certified and quality-assured.'}
+              </p>
+            </div>
+
+            <div className="flex flex-col gap-3">
+              {productsList.map((prod, idx) => (
+                <motion.div
+                  key={prod.id}
+                  initial={{ opacity: 0, x: lang === 'ar' ? 20 : -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: idx * 0.1 }}
+                  className="flex items-center gap-4 bg-white/[0.02] border border-white/5 rounded-2xl p-3 md:p-4 hover:border-amber-500/20 hover:bg-white/[0.04] transition-all"
+                >
+                  <img
+                    src={prod.image}
+                    alt={lang === 'ar' ? prod.titleAr : prod.titleEn}
+                    referrerPolicy="no-referrer"
+                    className="w-12 h-12 md:w-16 md:h-16 object-contain drop-shadow-xl shrink-0"
+                  />
+                  <div className="flex-1 min-w-0">
+                    <h4 className="text-sm md:text-base font-black text-white truncate">
+                      {lang === 'ar' ? prod.titleAr : prod.titleEn}
+                    </h4>
+                    <p className="text-[10px] md:text-xs text-amber-500/70 font-bold mt-0.5 truncate">
+                      {lang === 'ar' ? 'متاح للتوصيل الفوري 🚚' : 'Available for Instant Delivery 🚚'}
+                    </p>
+                  </div>
+                </motion.div>
+              ))}
             </div>
           </div>
 
-          {/* Catalog Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 md:gap-4 w-full overflow-y-auto max-h-[60vh] pr-2 custom-scrollbar">
-            {productsList.map((prod, pIdx) => (
-              <motion.div 
-                key={prod.id} 
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: pIdx * 0.05 }}
-                className="bg-white/5 border border-white/10 rounded-[1.5rem] p-4 flex flex-col gap-3 group hover:border-amber-500/30 transition-all hover:bg-white/[0.08]"
-              >
-                 <div className={`flex items-center gap-4 ${lang === 'ar' ? '' : 'flex-row-reverse text-left'}`}>
-                   <img src={prod.image} referrerPolicy="no-referrer" className="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-lg group-hover:scale-110 transition-transform" alt="" />
-                   <div className="flex-1">
-                     <h3 className="text-sm md:text-lg font-black text-white">{lang === 'ar' ? prod.titleAr : prod.titleEn}</h3>
-                     <p className="text-[10px] md:text-xs text-white/40 font-bold leading-tight line-clamp-2 mt-0.5">{lang === 'ar' ? prod.descriptionAr : prod.descriptionEn}</p>
-                   </div>
-                 </div>
-                 <div className="flex flex-wrap gap-2">
-                    {prod.prices.map(price => (
-                      <div key={price.id} className="bg-black/40 border border-white/5 px-3 py-2 rounded-xl flex items-center justify-between flex-1 min-w-[120px]">
-                        <span className="text-[10px] md:text-xs font-black text-amber-500">{lang === 'ar' ? price.sizeAr : price.sizeEn}</span>
-                        <div className="flex flex-col items-end">
-                           <span className="text-sm md:text-lg font-black text-white">{price.originalPrice || price.price} {lang === 'ar' ? 'درهم' : 'AED'}</span>
-                           {price.originalPrice && !isStandardMode && (
-                             <span className="text-[8px] md:text-[10px] text-white/20 line-through">{lang === 'ar' ? 'خصم خاص' : 'Special Discount'}</span>
-                           )}
-                        </div>
-                      </div>
-                    ))}
-                 </div>
-              </motion.div>
-            ))}
-          </div>
+          {/* Side B: Glowing Call-To-Action WhatsApp Panel (Takes 7 cols) */}
+          <div className="lg:col-span-7 bg-gradient-to-b from-emerald-950/40 to-black/80 border border-emerald-500/30 rounded-[2.5rem] p-6 md:p-10 text-center flex flex-col items-center gap-6 relative overflow-hidden shadow-[0_0_80px_rgba(16,185,129,0.15)]">
+            {/* Ambient emerald lights */}
+            <div className="absolute -top-12 -left-12 w-48 h-48 bg-emerald-500/10 blur-3xl rounded-full pointer-events-none" />
+            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-emerald-500/5 blur-3xl rounded-full pointer-events-none" />
 
-          <div className="mt-4 flex flex-col items-center gap-1">
-             <span className="text-white/40 font-black text-[10px] md:text-xs tracking-[0.4em] uppercase">Trusted and Certified Honey House</span>
-             <div className="w-px h-8 bg-gradient-to-b from-amber-500 to-transparent" />
+            {/* Pulsing WhatsApp Logo */}
+            <div className="relative">
+              <motion.div
+                animate={{ scale: [1, 1.15, 1], opacity: [0.3, 0.6, 0.3] }}
+                transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+                className="absolute inset-0 bg-emerald-500 rounded-full blur-[25px]"
+              />
+              <div className="w-20 h-20 md:w-24 md:h-24 rounded-full bg-gradient-to-tr from-emerald-500 to-green-400 flex items-center justify-center text-white border-4 border-black shadow-[0_10px_35px_rgba(16,185,129,0.4)] relative z-10 text-4xl md:text-5xl">
+                💬
+              </div>
+            </div>
+
+            <div className="space-y-3 max-w-lg z-10">
+              <h2 className="text-2xl md:text-4xl font-black text-emerald-400 tracking-tight">
+                {lang === 'ar' ? 'اطلب الآن مباشرة عبر واتساب' : 'Order Directly via WhatsApp'}
+              </h2>
+              <p className="text-sm md:text-lg text-white/90 font-bold leading-relaxed">
+                {lang === 'ar' ? (
+                  <>
+                    اضغط على الزر بالأسفل للتحدث معنا مباشرة! <br className="hidden md:block"/>
+                    أو تواصل معنا على الرقم التالي لتأكيد طلبك فورا وسنقوم بتوصيله إلى باب بيتك مجاناً.
+                  </>
+                ) : (
+                  <>
+                    Click the button below to chat with us directly! <br className="hidden md:block"/>
+                    Or contact us on the number below to confirm your order and get free delivery.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Big Phone Number Display */}
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="px-6 py-3 bg-black/50 border border-emerald-500/20 rounded-2xl text-xl md:text-3xl font-black text-white hover:text-emerald-400 transition-colors tracking-widest font-mono z-10 shadow-inner flex items-center gap-3 hover:scale-105 active:scale-95 duration-300"
+            >
+              <span>+971</span>
+              <span>56 832 6116</span>
+            </a>
+
+            {/* Quick Interactive Button */}
+            <a
+              href={`https://wa.me/${WHATSAPP_NUMBER}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full max-w-md bg-gradient-to-r from-emerald-500 to-green-500 text-black px-6 py-4 md:py-5 rounded-2xl font-black text-sm md:text-lg uppercase tracking-wider hover:from-emerald-400 hover:to-green-400 transition-all text-center flex items-center justify-center gap-3 shadow-[0_0_30px_rgba(16,185,129,0.3)] hover:scale-[1.02] active:scale-[0.98] duration-300 z-10"
+            >
+              <span>⚡</span>
+              <span>{lang === 'ar' ? 'اضغط هنا للطلب الفوري السريع' : 'Click Here for Instant Ordering'}</span>
+            </a>
+
+            {/* Quick trust assurances */}
+            <div className="flex flex-wrap items-center justify-center gap-3 md:gap-5 mt-2 text-white/60 font-bold text-xs md:text-sm z-10">
+              <span className="bg-white/5 border border-white/5 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                🚚 {lang === 'ar' ? 'توصيل مجاني سريع' : 'Free Express Delivery'}
+              </span>
+              <span className="bg-white/5 border border-white/5 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                💵 {lang === 'ar' ? 'الدفع عند الاستلام' : 'Cash on Delivery'}
+              </span>
+              <span className="bg-white/5 border border-white/5 px-3 py-1.5 rounded-full flex items-center gap-1.5">
+                🍯 {lang === 'ar' ? 'جودة نقية 100% مضمونة' : '100% Guaranteed Pure Quality'}
+              </span>
+            </div>
           </div>
         </motion.div>
       </div>
@@ -621,7 +679,7 @@ const DisplayComponent: React.FC = () => {
 
             {/* Right Column: Hero Visual - contained and centered */}
             <div className="h-full flex items-center justify-center relative order-1 lg:order-2 overflow-visible">
-               <motion.div
+              <motion.div
                 animate={{ 
                   y: [0, -20, 0],
                   rotate: [0.5, -0.5, 0.5],
@@ -687,7 +745,7 @@ const DisplayComponent: React.FC = () => {
           ))}
         </div>
 
-        {/* 🎥 Recording Controls - Floating Left */}
+        {/* 🎥 Language Switcher Controls - Floating Left */}
         <div className="absolute left-6 bottom-4 md:left-12 md:bottom-6 flex items-center gap-3">
           <button
             onClick={() => setLang(lang === 'ar' ? 'en' : 'ar')}
@@ -695,151 +753,18 @@ const DisplayComponent: React.FC = () => {
           >
             {lang === 'ar' ? 'English' : 'عربي'}
           </button>
-
-          <button
-            onClick={() => setIsStandardMode(!isStandardMode)}
-            className={`flex items-center gap-2 px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-xl border ${
-              isStandardMode 
-              ? 'bg-white text-black border-white' 
-              : 'bg-black/40 text-amber-500 border-amber-500/30 hover:bg-black/60'
-            }`}
-          >
-            {isStandardMode 
-              ? (lang === 'ar' ? 'شاشة العروض' : 'Promo View') 
-              : (lang === 'ar' ? 'شاشة العرض الأساسية' : 'Standard View')}
-          </button>
-
-          <AnimatePresence>
-            {isRecording && (
-              <motion.div
-                initial={{ opacity: 0, x: -20 }}
-                animate={{ opacity: 1, x: 0 }}
-                exit={{ opacity: 0, x: -20 }}
-                className="flex items-center gap-3 bg-red-600 px-4 py-2 rounded-full border border-red-500 shadow-[0_0_20px_rgba(220,38,38,0.5)]"
-              >
-                <div className="w-2 h-2 rounded-full bg-white animate-pulse" />
-                <span className="text-xs font-black uppercase tracking-widest text-white">Recording </span>
-                <span className="text-xs font-mono font-bold text-white/80">
-                  {Math.floor(recordDuration / 60)}:{String(recordDuration % 60).padStart(2, '0')}
-                </span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-          
-          <div className="relative group">
-            <button
-              onClick={isRecording ? stopRecording : startRecording}
-              className={`flex items-center gap-2 px-6 py-3 rounded-full font-black text-xs uppercase tracking-[0.2em] transition-all duration-500 shadow-xl ${
-                isRecording 
-                ? 'bg-white text-black hover:bg-gray-200' 
-                : 'bg-amber-500 text-black hover:bg-amber-400 hover:scale-105 active:scale-95'
-              }`}
-            >
-              {isRecording ? <Square size={14} fill="currentColor" /> : <Video size={14} fill="currentColor" />}
-              {isRecording 
-                ? (lang === 'ar' ? 'إيقاف التسجيل' : 'Stop Recording') 
-                : (lang === 'ar' ? 'حفظ كفيديو' : 'Save Video')}
-            </button>
-
-            {!isRecording && (
-              <div className="absolute bottom-full left-0 mb-4 w-64 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none z-[100]">
-                <div className="bg-black/90 backdrop-blur-xl border border-white/10 p-3 rounded-2xl shadow-2xl">
-                   <div className="flex items-start gap-2">
-                     <Info size={14} className="text-amber-500 shrink-0 mt-0.5" />
-                     <p className="text-[10px] text-white/60 leading-relaxed font-bold">
-                       {lang === 'ar' ? (
-                         <>
-                           لتحويل الشاشة إلى فيديو لمشاركته على واتساب: <br/>
-                           ١. اضغط "حفظ كفيديو"<br/>
-                           ٢. اختر <span className="text-amber-500">هذه العلامة (Current Tab)</span><br/>
-                           ٣. اختر <span className="text-amber-500">مشاركة (Share)</span><br/>
-                           ٤. سيبدأ التسجيل فوراً ويحفظ تلقائياً عند الإيقاف.
-                         </>
-                       ) : (
-                         <>
-                           To convert screen to video: <br/>
-                           1. Click "Save Video"<br/>
-                           2. Select <span className="text-amber-500">This Tab (Current Tab)</span><br/>
-                           3. Click <span className="text-amber-500">Share</span><br/>
-                           4. Recording starts and saves automatically on stop.
-                         </>
-                       )}
-                     </p>
-                   </div>
-                </div>
-                <div className="w-3 h-3 bg-black/90 rotate-45 border-r border-b border-white/10 ml-6 -mt-1.5" />
-              </div>
-            )}
-          </div>
-        </div>
-
-        <div className="absolute top-0 left-0 h-[3px] bg-white/5 w-full">
-           <motion.div 
-              key={currentIndex}
-              initial={{ x: "-100%" }}
-              animate={{ x: "0%" }}
-              transition={{ duration: 10, ease: "linear" }}
-              className="h-full bg-amber-500 w-full shadow-[0_0_15px_rgba(245,158,11,0.6)]"
-           />
         </div>
       </div>
 
-      {/* 🛡️ Browser/iFrame Permission Policy Error Guidance Modal */}
-      <AnimatePresence>
-        {permissionError && (
-          <motion.div 
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 bg-black/85 backdrop-blur-md z-[9999] flex items-center justify-center p-4 font-cairo"
-          >
-            <motion.div 
-              initial={{ scale: 0.95, y: 30 }}
-              animate={{ scale: 1, y: 0 }}
-              exit={{ scale: 0.95, y: 30 }}
-              className="bg-black/95 border border-amber-500/30 rounded-[2rem] p-6 md:p-10 max-w-xl w-full flex flex-col items-center text-center gap-6 shadow-[0_0_50px_rgba(245,158,11,0.15)] relative overflow-hidden"
-              dir={lang === 'ar' ? 'rtl' : 'ltr'}
-            >
-              <div className="absolute -top-10 -left-10 w-40 h-40 bg-amber-500/10 blur-3xl rounded-full" />
-              <div className="absolute -bottom-10 -right-10 w-40 h-40 bg-amber-500/5 blur-3xl rounded-full" />
-              
-              <div className="w-16 h-16 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-500 border border-amber-500/30 text-3xl shadow-[0_0_20px_rgba(245,158,11,0.1)]">
-                ⚠️
-              </div>
-
-              <div className="space-y-3 relative z-10">
-                <h3 className="text-2xl md:text-3xl font-black text-amber-500 tracking-tight">
-                  {lang === 'ar' ? 'تنبيه أمان المتصفح' : 'Browser Security Alert'}
-                </h3>
-                <p className="text-sm md:text-lg text-white/80 leading-relaxed font-bold">
-                  {lang === 'ar' ? (
-                    'ميزة تسجيل الشاشة لتصدير الفيديو غير مسموح بها داخل إطار المعاينة (iFrame) الخاص بـ AI Studio لأسباب أمنية بالمتصفح. يرجى فتح التطبيق في علامة تبويب جديدة وسيعمل التسجيل بشكل مثالي وبأعلى دقة!'
-                  ) : (
-                    'Screen recording is disabled inside the AI Studio preview iframe due to browser security policy. Please open the app in a new tab to capture and save your video with pristine quality!'
-                  )}
-                </p>
-              </div>
-
-              <div className="flex flex-col sm:flex-row gap-4 w-full mt-2 relative z-10">
-                <a 
-                  href={typeof window !== 'undefined' ? window.location.href : '#'}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 bg-amber-500 text-black px-6 py-4 rounded-xl font-black text-xs md:text-sm uppercase tracking-wider hover:bg-amber-400 hover:scale-[1.02] active:scale-[0.98] transition-all text-center flex items-center justify-center gap-2 shadow-[0_0_30px_rgba(245,158,11,0.4)]"
-                >
-                  🚀 {lang === 'ar' ? 'افتح في صفحة جديدة' : 'Open in New Tab'}
-                </a>
-                <button 
-                  onClick={() => setPermissionError(false)}
-                  className="flex-1 bg-white/5 border border-white/10 text-white hover:bg-white/10 px-6 py-4 rounded-xl font-black text-xs md:text-sm uppercase tracking-wider hover:scale-[1.02] active:scale-[0.98] transition-all text-center"
-                >
-                  {lang === 'ar' ? 'إغلاق' : 'Close'}
-                </button>
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <div className="absolute top-0 left-0 h-[3px] bg-white/5 w-full">
+         <motion.div 
+            key={currentIndex}
+            initial={{ x: "-100%" }}
+            animate={{ x: "0%" }}
+            transition={{ duration: 10, ease: "linear" }}
+            className="h-full bg-amber-500 w-full shadow-[0_0_15px_rgba(245,158,11,0.6)]"
+         />
+      </div>
 
       <style>{`
         @keyframes shimmer {
