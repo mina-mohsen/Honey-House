@@ -198,11 +198,18 @@ const App: React.FC = () => {
 
   /* ================= Discount Settings ================= */
   const [discountMode, setDiscountMode] = useState<"default" | "custom" | "none">(() => {
-    return (localStorage.getItem("honeyhouse_discount_mode") as any) || "default";
+    const initialized30 = localStorage.getItem("honeyhouse_initialized_30");
+    if (!initialized30) {
+      localStorage.setItem("honeyhouse_initialized_30", "true");
+      localStorage.setItem("honeyhouse_discount_mode", "custom");
+      localStorage.setItem("honeyhouse_custom_discount_percent", "30");
+      return "custom";
+    }
+    return (localStorage.getItem("honeyhouse_discount_mode") as any) || "custom";
   });
   const [customDiscountPercent, setCustomDiscountPercent] = useState<number>(() => {
     const saved = localStorage.getItem("honeyhouse_custom_discount_percent");
-    return saved ? parseInt(saved, 10) : 50;
+    return saved ? parseInt(saved, 10) : 30;
   });
 
   useEffect(() => {
