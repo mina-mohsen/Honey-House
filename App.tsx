@@ -29,9 +29,10 @@ interface ProductCardProps {
   lang: Language;
   t: any;
   addToCart: (productId: string, priceId: string, productTitle: string, priceSize: string) => void;
+  getProductPriceInfo: (priceObj: any) => { price: number; originalPrice?: number; hasDiscount: boolean };
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart, getProductPriceInfo }) => {
   const [activeImgIndex, setActiveImgIndex] = useState(0);
   const images = product.images && product.images.length > 0 ? product.images : [product.image];
 
@@ -101,41 +102,44 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart }
         <div>
           <h4 className="font-bold text-amber-800 text-sm mb-2">{t.chooseSize}:</h4>
           <div className="space-y-2">
-            {product.prices.map((price: any) => (
-              <div
-                key={price.id}
-                className="flex items-center justify-between p-3 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors border border-amber-100/50"
-              >
-                <div className="flex flex-col">
-                  <span className="font-bold text-sm text-amber-900">{lang === "ar" ? price.sizeAr : price.sizeEn}</span>
-                  <div className="flex items-center gap-2">
-                    <span className="font-bold text-green-600">
-                      {price.price} {t.currency}
-                    </span>
-                    {price.originalPrice && (
-                      <span className="text-xs text-gray-400 line-through">
-                        {price.originalPrice} {t.currency}
-                      </span>
-                    )}
-                  </div>
-                </div>
-
-                <button
-                  onClick={() =>
-                    addToCart(
-                      product.id,
-                      price.id,
-                      lang === "ar" ? product.titleAr : product.titleEn,
-                      lang === "ar" ? price.sizeAr : price.sizeEn
-                    )
-                  }
-                  className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all font-bold text-sm flex items-center gap-2"
+            {product.prices.map((price: any) => {
+              const priceInfo = getProductPriceInfo(price);
+              return (
+                <div
+                  key={price.id}
+                  className="flex items-center justify-between p-3 bg-amber-50 rounded-lg hover:bg-amber-100 transition-colors border border-amber-100/50"
                 >
-                  <span>🛒</span>
-                  <span>{lang === "ar" ? "أضف" : "Add"}</span>
-                </button>
-              </div>
-            ))}
+                  <div className="flex flex-col">
+                    <span className="font-bold text-sm text-amber-900">{lang === "ar" ? price.sizeAr : price.sizeEn}</span>
+                    <div className="flex items-center gap-2">
+                      <span className="font-bold text-green-600">
+                        {priceInfo.price} {t.currency}
+                      </span>
+                      {priceInfo.hasDiscount && priceInfo.originalPrice && (
+                        <span className="text-xs text-gray-400 line-through">
+                          {priceInfo.originalPrice} {t.currency}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  <button
+                    onClick={() =>
+                      addToCart(
+                        product.id,
+                        price.id,
+                        lang === "ar" ? product.titleAr : product.titleEn,
+                        lang === "ar" ? price.sizeAr : price.sizeEn
+                      )
+                    }
+                    className="px-4 py-2 bg-gradient-to-r from-amber-500 to-orange-500 text-white rounded-lg hover:from-amber-600 hover:to-orange-600 transition-all font-bold text-sm flex items-center gap-2"
+                  >
+                    <span>🛒</span>
+                    <span>{lang === "ar" ? "أضف" : "Add"}</span>
+                  </button>
+                </div>
+              );
+            })}
           </div>
         </div>
       </div>
@@ -192,6 +196,63 @@ const App: React.FC = () => {
   /* ================= Products ================= */
   const [openProducts, setOpenProducts] = useState(true);
 
+  /* ================= Discount Settings ================= */
+  const [discountMode, setDiscountMode] = useState<"default" | "custom" | "none">(() => {
+    return (localStorage.getItem("honeyhouse_discount_mode") as any) || "default";
+  });
+  const [customDiscountPercent, setCustomDiscountPercent] = useState<number>(() => {
+    const saved = localStorage.getItem("honeyhouse_custom_discount_percent");
+    return saved ? parseInt(saved, 10) : 50;
+  });
+
+  useEffect(() => {
+    localStorage.setItem("honeyhouse_discount_mode", discountMode);
+  }, [discountMode]);
+
+  useEffect(() => {
+    localStorage.setItem("honeyhouse_custom_discount_percent", String(customDiscountPercent));
+  }, [customDiscountPercent]);
+
+  const getProductPriceInfo = (priceObj: any) => {
+    if (!priceObj) return { price: 0, originalPrice: undefined, hasDiscount: false };
+    const orig = priceObj.originalPrice || priceObj.price;
+    if (discountMode === "none") {
+      return {
+        price: orig,
+        originalPrice: undefined,
+        hasDiscount: false,
+      };
+    } else if (discountMode === "custom") {
+      if (customDiscountPercent <= 0) {
+        return {
+          price: orig,
+          originalPrice: undefined,
+          hasDiscount: false,
+        };
+      } else if (customDiscountPercent >= 100) {
+        return {
+          price: 0,
+          originalPrice: orig,
+          hasDiscount: true,
+        };
+      } else {
+        const discounted = Math.round(orig * (1 - customDiscountPercent / 100));
+        return {
+          price: discounted,
+          originalPrice: orig,
+          hasDiscount: true,
+        };
+      }
+    } else {
+      const hasDiscount = !!priceObj.originalPrice && priceObj.originalPrice > priceObj.price;
+      return {
+        price: priceObj.price,
+        originalPrice: priceObj.originalPrice,
+        hasDiscount,
+      };
+    }
+  };
+
   const t = useMemo(() => TRANSLATIONS[lang], [lang]);
 
   /* RTL / LTR */
@@ -205,7 +266,7 @@ const App: React.FC = () => {
     const savedKey =
       sessionStorage.getItem(ADMIN_KEY_STORAGE) ||
       localStorage.getItem(ADMIN_KEY_STORAGE);
-    if (savedKey) setIsAdmin(true);
+    if (savedKey === "Lio@240724") setIsAdmin(true);
   }, []);
 
   const getAdminKey = () =>
@@ -256,9 +317,10 @@ const App: React.FC = () => {
       if (!product) return total;
       const price = product.prices.find((p) => p.id === item.priceId);
       if (!price) return total;
-      return total + price.price * item.quantity;
+      const priceInfo = getProductPriceInfo(price);
+      return total + priceInfo.price * item.quantity;
     }, 0);
-  }, [cartItems]);
+  }, [cartItems, discountMode, customDiscountPercent]);
 
   const approvedReviews = useMemo(
     () => reviews.filter((r) => r.approved !== false),
@@ -275,6 +337,11 @@ const App: React.FC = () => {
   const handleAdminLogin = () => {
     if (!adminKeyInput.trim()) {
       setAdminMessage(lang === "ar" ? "اكتب كود الادمن" : "Enter admin key");
+      return;
+    }
+    if (adminKeyInput.trim() !== "Lio@240724") {
+      setAdminMessage(lang === "ar" ? "كود الادمن غير صحيح ❌" : "Incorrect admin key ❌");
+      setTimeout(() => setAdminMessage(""), 2500);
       return;
     }
     sessionStorage.setItem(ADMIN_KEY_STORAGE, adminKeyInput.trim());
@@ -440,8 +507,9 @@ const App: React.FC = () => {
       if (!product) return;
       const price = product.prices.find((p) => p.id === item.priceId);
       if (!price) return;
+      const priceInfo = getProductPriceInfo(price);
       message += `- ${lang === "ar" ? product.titleAr : product.titleEn} (${lang === "ar" ? price.sizeAr : price.sizeEn}) x${item.quantity}: ${
-        price.price * item.quantity
+        priceInfo.price * item.quantity
       } ${t.currency}\n`;
     });
 
@@ -838,6 +906,7 @@ Question: ${aiMessage}`,
                       const product = PRODUCTS.find((p) => p.id === item.productId);
                       const price = product?.prices.find((p) => p.id === item.priceId);
                       if (!product || !price) return null;
+                      const priceInfo = getProductPriceInfo(price);
 
                       return (
                         <div key={item.id} className="bg-amber-50 rounded-xl p-3 border border-amber-100">
@@ -847,7 +916,7 @@ Question: ${aiMessage}`,
                                 {lang === "ar" ? product.titleAr : product.titleEn}
                               </h3>
                               <p className="text-xs text-gray-600">
-                                {lang === "ar" ? price.sizeAr : price.sizeEn} • {price.price} {t.currency}
+                                {lang === "ar" ? price.sizeAr : price.sizeEn} • {priceInfo.price} {t.currency}
                               </p>
                             </div>
 
@@ -870,7 +939,7 @@ Question: ${aiMessage}`,
 
                               <div className="text-right min-w-20">
                                 <p className="font-bold text-green-600">
-                                  {price.price * item.quantity} {t.currency}
+                                  {priceInfo.price * item.quantity} {t.currency}
                                 </p>
                               </div>
 
@@ -984,6 +1053,149 @@ Question: ${aiMessage}`,
           </section>
         )}
 
+        {/* ================= ADMIN DASHBOARD PANEL ================= */}
+        {isAdmin && (
+          <section className="bg-gradient-to-r from-slate-900 to-indigo-950 text-white rounded-2xl shadow-2xl overflow-hidden border-2 border-purple-500/30 animate-slide-in">
+            <div className="p-5 md:p-6">
+              <div className="flex flex-wrap items-center justify-between gap-4 mb-4 border-b border-white/10 pb-4">
+                <h2 className="text-xl md:text-2xl font-black flex items-center gap-2">
+                  <span className="text-2xl">⚙️</span>
+                  {lang === "ar" ? "لوحة تحكم المدير" : "Admin Dashboard"}
+                </h2>
+                <div className="flex items-center gap-2">
+                  <span className="bg-purple-500/30 text-purple-200 text-xs font-bold px-3 py-1 rounded-full uppercase border border-purple-500/40">
+                    {lang === "ar" ? "الوضع النشط: مسؤول" : "Status: Authorized"}
+                  </span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {/* Discount Control Section */}
+                <div className="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-bold text-amber-400 mb-2 flex items-center gap-2 text-base">
+                      <span>🏷️</span>
+                      {lang === "ar" ? "التحكم في نسبة الخصومات على الموقع" : "Discounts Control Panel"}
+                    </h3>
+                    <p className="text-xs text-white/70 mb-4 leading-relaxed">
+                      {lang === "ar"
+                        ? "تحكم في أسعار العرض وسلة الطلبات على الموقع. يمكنك إيقاف الخصومات نهائياً للبيع بالسعر الأصلي أو تحديد نسبة مئوية موحدة."
+                        : "Control display prices and cart calculations on the website. Toggle discounts off or set a unified percentage."}
+                    </p>
+
+                    <div className="space-y-3">
+                      <div>
+                        <label className="block text-xs font-bold text-white/60 mb-2">
+                          {lang === "ar" ? "اختر وضع الخصم:" : "Select Discount Mode:"}
+                        </label>
+                        <div className="grid grid-cols-3 gap-2">
+                          <button
+                            onClick={() => setDiscountMode("default")}
+                            className={`px-3 py-2.5 rounded-lg text-xs font-bold transition-all border ${
+                              discountMode === "default"
+                                ? "bg-amber-500 text-amber-950 border-amber-500 font-black shadow-lg shadow-amber-500/20"
+                                : "bg-white/5 text-white/80 border-white/10 hover:bg-white/10"
+                            }`}
+                          >
+                            {lang === "ar" ? "الخصومات الافتراضية" : "Product Defaults"}
+                          </button>
+                          <button
+                            onClick={() => setDiscountMode("custom")}
+                            className={`px-3 py-2.5 rounded-lg text-xs font-bold transition-all border ${
+                              discountMode === "custom"
+                                ? "bg-amber-500 text-amber-950 border-amber-500 font-black shadow-lg shadow-amber-500/20"
+                                : "bg-white/5 text-white/80 border-white/10 hover:bg-white/10"
+                            }`}
+                          >
+                            {lang === "ar" ? "نسبة خصم موحدة" : "Unified Percent"}
+                          </button>
+                          <button
+                            onClick={() => setDiscountMode("none")}
+                            className={`px-3 py-2.5 rounded-lg text-xs font-bold transition-all border ${
+                              discountMode === "none"
+                                ? "bg-red-500 text-white border-red-500 font-black shadow-lg shadow-red-500/20"
+                                : "bg-white/5 text-white/80 border-white/10 hover:bg-white/10"
+                            }`}
+                          >
+                            {lang === "ar" ? "إلغاء الخصومات" : "No Discounts"}
+                          </button>
+                        </div>
+                      </div>
+
+                      {discountMode === "custom" && (
+                        <div className="animate-slide-in space-y-2 bg-white/5 p-3 rounded-lg border border-white/5">
+                          <div className="flex justify-between items-center text-xs">
+                            <span className="font-bold text-white/80">{lang === "ar" ? "نسبة الخصم المطلوبة:" : "Discount Percentage:"}</span>
+                            <span className="bg-amber-500 text-amber-950 font-black px-2 py-0.5 rounded text-sm">{customDiscountPercent}%</span>
+                          </div>
+                          <input
+                            type="range"
+                            min="0"
+                            max="90"
+                            step="5"
+                            value={customDiscountPercent}
+                            onChange={(e) => setCustomDiscountPercent(parseInt(e.target.value, 10))}
+                            className="w-full h-2 bg-indigo-950 rounded-lg appearance-none cursor-pointer accent-amber-500"
+                          />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-white/10 flex justify-between items-center text-xs">
+                    <span className="text-amber-300 font-bold">
+                      {discountMode === "default" && (lang === "ar" ? "🎯 نشط: الخصومات الافتراضية لكل منتج" : "🎯 Active: Individual product discounts")}
+                      {discountMode === "custom" && (lang === "ar" ? `🎯 نشط: خصم موحد بقيمة ${customDiscountPercent}%` : `🎯 Active: Unified ${customDiscountPercent}% discount`)}
+                      {discountMode === "none" && (lang === "ar" ? "🛑 نشط: تم إلغاء كل الخصومات" : "🛑 Active: All discounts disabled")}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Quick Reviews / Actions Info */}
+                <div className="bg-white/5 rounded-xl p-4 border border-white/10 flex flex-col justify-between">
+                  <div>
+                    <h3 className="font-bold text-purple-300 mb-2 flex items-center gap-2 text-base">
+                      <span>📊</span>
+                      {lang === "ar" ? "إدارة التقييمات والآراء" : "Customer Reviews Management"}
+                    </h3>
+                    <p className="text-xs text-white/70 mb-4 leading-relaxed">
+                      {lang === "ar"
+                        ? "تحكم في آراء العملاء المعروضة على الموقع. يمكنك مراجعة واعتماد أو حذف التقييمات المعلقة."
+                        : "Manage customer reviews shown on the site. Approve or remove pending reviews."}
+                    </p>
+
+                    <div className="grid grid-cols-2 gap-3">
+                      <button
+                        onClick={() => { window.location.hash = "#/display"; }}
+                        className="p-3 bg-orange-600 hover:bg-orange-500 rounded-xl text-center font-bold text-xs transition-colors flex items-center justify-center gap-2"
+                      >
+                        🖥️ {lang === "ar" ? "شاشة عرض المتجر" : "Store Display Mode"}
+                      </button>
+                      <button
+                        onClick={() => {
+                          setOpenReviews(true);
+                          const element = document.getElementById("reviews-section") || document.querySelector("footer");
+                          if (element) {
+                            element.scrollIntoView({ behavior: "smooth" });
+                          }
+                        }}
+                        className="p-3 bg-blue-600 hover:bg-blue-500 rounded-xl text-center font-bold text-xs transition-colors flex items-center justify-center gap-2"
+                      >
+                        ⭐ {lang === "ar" ? "عرض التقييمات" : "View Reviews"}
+                      </button>
+                    </div>
+                  </div>
+
+                  <div className="mt-4 pt-3 border-t border-white/10 text-xs text-purple-300 font-bold flex justify-between">
+                    <span>{lang === "ar" ? `إجمالي التقييمات: ${reviews.length}` : `Total reviews: ${reviews.length}`}</span>
+                    <span>{lang === "ar" ? `متوسط التقييم: ⭐ ${avgRating}` : `Avg Rating: ⭐ ${avgRating}`}</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
+
         {/* ================= AI SECTION ================= */}
         <section className="bg-gradient-to-r from-amber-700 to-amber-900 text-white rounded-2xl shadow-xl overflow-hidden">
           <div className="p-5 md:p-6">
@@ -1052,6 +1264,7 @@ Question: ${aiMessage}`,
                     lang={lang}
                     t={t}
                     addToCart={addToCart}
+                    getProductPriceInfo={getProductPriceInfo}
                   />
                 ))}
               </div>
