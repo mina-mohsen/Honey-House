@@ -830,7 +830,7 @@ Question: ${aiMessage}`,
                 <span className="drop-shadow-sm">
                   {discountMode === "custom" && customDiscountPercent > 0
                     ? (lang === "ar" ? `خصم حصري ${customDiscountPercent}% على كل المنتجات!` : `Exclusive ${customDiscountPercent}% OFF on all products!`)
-                    : (lang === "ar" ? "عروض وخصومات كبرى تصل حتى 36% لفترة محدودة!" : "Major limited-time discounts up to 36% OFF!")}
+                    : (lang === "ar" ? "عروض وخصومات كبرى تصل حتى 33% لفترة محدودة!" : "Major limited-time discounts up to 33% OFF!")}
                 </span>
               </span>
             </>

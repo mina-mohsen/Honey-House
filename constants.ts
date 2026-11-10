@@ -90,9 +90,9 @@ Rich in natural Vitamin C, active enzymes, and minerals. It serves as a powerful
     benefitsAr: ['مقوي للمناعة', 'مضاد حيوي طبيعي'],
     benefitsEn: ['Immunity Boost', 'Natural Antibiotic'],
     prices: [
-      { id: 'clover_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 20, originalPrice: 30 },
-      { id: 'clover_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 55 },
-      { id: 'clover_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 80, originalPrice: 100 },
+      { id: 'clover_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 25, originalPrice: 30 },
+      { id: 'clover_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 45, originalPrice: 55 },
+      { id: 'clover_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 85, originalPrice: 100 },
     ]
   },
   {
