@@ -30,11 +30,28 @@ interface ProductCardProps {
   t: any;
   addToCart: (productId: string, priceId: string, productTitle: string, priceSize: string) => void;
   getProductPriceInfo: (priceObj: any) => { price: number; originalPrice?: number; hasDiscount: boolean };
+  discountPercent?: number;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart, getProductPriceInfo }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart, getProductPriceInfo, discountPercent }) => {
   const [activeImgIndex, setActiveImgIndex] = useState(0);
   const images = product.images && product.images.length > 0 ? product.images : [product.image];
+
+  const productDiscounts = (product.prices || [])
+    .map((p: any) => {
+      const info = getProductPriceInfo(p);
+      if (info.hasDiscount && info.originalPrice && info.originalPrice > info.price) {
+        return Math.round(((info.originalPrice - info.price) / info.originalPrice) * 100);
+      }
+      return 0;
+    })
+    .filter((d: number) => d > 0);
+
+  const maxDiscount = discountPercent !== undefined && discountPercent > 0 
+    ? discountPercent 
+    : (productDiscounts.length > 0 ? Math.max(...productDiscounts) : 0);
+  const minDiscount = productDiscounts.length > 0 ? Math.min(...productDiscounts) : 0;
+  const isRange = discountPercent === undefined && productDiscounts.length > 1 && minDiscount !== maxDiscount;
 
   return (
     <div
@@ -50,8 +67,17 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart, 
             (e.currentTarget as HTMLImageElement).src = "https://imgur.com/vIdADYw.jpeg";
           }}
         />
-        <div className="absolute top-2 left-2 bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold z-10">
-          🏷️ {lang === "ar" ? "أفضل بيع" : "Best Seller"}
+        <div className="absolute top-2 left-2 flex flex-col gap-1 z-10">
+          <span className="bg-amber-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-sm">
+            🏷️ {lang === "ar" ? "أفضل بيع" : "Best Seller"}
+          </span>
+          {maxDiscount > 0 && (
+            <span className="bg-red-600 text-white px-2.5 py-0.5 rounded-full text-[11px] font-black shadow-md text-center">
+              {lang === "ar"
+                ? (isRange ? `خصم حتى ${maxDiscount}%` : `خصم ${maxDiscount}%`)
+                : (isRange ? `Up to ${maxDiscount}% OFF` : `${maxDiscount}% OFF`)}
+            </span>
+          )}
         </div>
 
         {/* Gallery switcher dot indicators */}
@@ -111,14 +137,21 @@ const ProductCard: React.FC<ProductCardProps> = ({ product, lang, t, addToCart, 
                 >
                   <div className="flex flex-col">
                     <span className="font-bold text-sm text-amber-900">{lang === "ar" ? price.sizeAr : price.sizeEn}</span>
-                    <div className="flex items-center gap-2">
+                    <div className="flex items-center gap-2 flex-wrap">
                       <span className="font-bold text-green-600">
                         {priceInfo.price} {t.currency}
                       </span>
                       {priceInfo.hasDiscount && priceInfo.originalPrice && (
-                        <span className="text-xs text-gray-400 line-through">
-                          {priceInfo.originalPrice} {t.currency}
-                        </span>
+                        <>
+                          <span className="text-xs text-gray-400 line-through">
+                            {priceInfo.originalPrice} {t.currency}
+                          </span>
+                          <span className="text-[10px] font-black bg-red-100 text-red-600 px-1.5 py-0.5 rounded">
+                            {lang === "ar"
+                              ? `خصم ${Math.round(((priceInfo.originalPrice - priceInfo.price) / priceInfo.originalPrice) * 100)}%`
+                              : `${Math.round(((priceInfo.originalPrice - priceInfo.price) / priceInfo.originalPrice) * 100)}% OFF`}
+                          </span>
+                        </>
                       )}
                     </div>
                   </div>
@@ -198,18 +231,17 @@ const App: React.FC = () => {
 
   /* ================= Discount Settings ================= */
   const [discountMode, setDiscountMode] = useState<"default" | "custom" | "none">(() => {
-    const initialized30 = localStorage.getItem("honeyhouse_initialized_30");
-    if (!initialized30) {
-      localStorage.setItem("honeyhouse_initialized_30", "true");
-      localStorage.setItem("honeyhouse_discount_mode", "custom");
-      localStorage.setItem("honeyhouse_custom_discount_percent", "30");
-      return "custom";
+    const initializedItemPricing = localStorage.getItem("honeyhouse_item_pricing_active_v1");
+    if (!initializedItemPricing) {
+      localStorage.setItem("honeyhouse_item_pricing_active_v1", "true");
+      localStorage.setItem("honeyhouse_discount_mode", "default");
+      return "default";
     }
-    return (localStorage.getItem("honeyhouse_discount_mode") as any) || "custom";
+    return (localStorage.getItem("honeyhouse_discount_mode") as any) || "default";
   });
   const [customDiscountPercent, setCustomDiscountPercent] = useState<number>(() => {
     const saved = localStorage.getItem("honeyhouse_custom_discount_percent");
-    return saved ? parseInt(saved, 10) : 30;
+    return saved ? parseInt(saved, 10) : 20;
   });
 
   useEffect(() => {
@@ -790,6 +822,19 @@ Question: ${aiMessage}`,
               </b>
             </span>
           </span>
+          {discountMode !== "none" && (
+            <>
+              <span className="opacity-90 hidden sm:inline">|</span>
+              <span className="inline-flex items-center gap-2 bg-red-600/90 px-3 py-0.5 rounded-full border border-white/30 text-white shadow-sm font-black">
+                <span className="text-base">🏷️</span>
+                <span className="drop-shadow-sm">
+                  {discountMode === "custom" && customDiscountPercent > 0
+                    ? (lang === "ar" ? `خصم حصري ${customDiscountPercent}% على كل المنتجات!` : `Exclusive ${customDiscountPercent}% OFF on all products!`)
+                    : (lang === "ar" ? "عروض وخصومات كبرى تصل حتى 36% لفترة محدودة!" : "Major limited-time discounts up to 36% OFF!")}
+                </span>
+              </span>
+            </>
+          )}
         </div>
       </div>
 
@@ -1272,6 +1317,7 @@ Question: ${aiMessage}`,
                     t={t}
                     addToCart={addToCart}
                     getProductPriceInfo={getProductPriceInfo}
+                    discountPercent={discountMode === "custom" ? customDiscountPercent : undefined}
                   />
                 ))}
               </div>

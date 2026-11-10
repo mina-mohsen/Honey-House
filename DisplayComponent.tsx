@@ -40,6 +40,24 @@ const DisplayComponent: React.FC = () => {
     return () => clearInterval(timer);
   }, [currentIndex]);
 
+  const getDisplayPriceData = (p: any) => {
+    const orig = p.originalPrice || p.price;
+    const discountMode = localStorage.getItem("honeyhouse_discount_mode") || "default";
+    const customPercentStr = localStorage.getItem("honeyhouse_custom_discount_percent");
+    const customPercent = customPercentStr ? parseInt(customPercentStr, 10) : 20;
+
+    if (isStandardMode || discountMode === "none") {
+      return { price: orig, originalPrice: undefined, hasDiscount: false, discountPercent: 0 };
+    }
+    if (discountMode === "custom") {
+      const discounted = Math.round(orig * (1 - customPercent / 100));
+      return { price: discounted, originalPrice: orig, hasDiscount: customPercent > 0, discountPercent: customPercent };
+    }
+    const hasDiscount = !!p.originalPrice && p.originalPrice > p.price;
+    const pct = p.originalPrice ? Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100) : 0;
+    return { price: p.price, originalPrice: p.originalPrice, hasDiscount, discountPercent: pct };
+  };
+
   const startRecording = async () => {
     // Detect if embedded inside an iframe (e.g. AI Studio preview)
     const isInIframe = typeof window !== 'undefined' && window.self !== window.top;
@@ -519,7 +537,7 @@ const DisplayComponent: React.FC = () => {
                 <span className="text-xs sm:text-sm md:text-xl lg:text-2xl font-black text-amber-500 leading-none relative z-10">
                   {isStandardMode 
                     ? (lang === 'ar' ? 'خصم %10 فوق 250د.إ' : '10% OFF over 250 AED') 
-                    : (lang === 'ar' ? 'خصم خاص وحصري' : 'Exclusive Discount')}
+                    : (lang === 'ar' ? 'خصومات حصرية كبرى' : 'Major Exclusive Discounts')}
                 </span>
               </div>
               <span className={`text-[8px] md:text-xs font-bold text-amber-500/50 mt-0.5 md:mt-1 uppercase tracking-wider`}>
@@ -668,46 +686,53 @@ const DisplayComponent: React.FC = () => {
                         : 'from-white/10 to-amber-950/20 hover:border-amber-500/30'
                     }`}
                   >
-                    {p.originalPrice && !isStandardMode && (
-                      <div className={`absolute top-1.5 ${lang === 'ar' ? 'right-3 md:right-6' : 'left-3 md:left-6'} md:top-3 flex flex-col items-end gap-0.5 md:gap-1`}>
-                        <div className="flex items-center gap-1">
-                          <span className="text-[10px] md:text-lg font-bold text-white/30 line-through decoration-red-500/50 decoration-1 md:decoration-2">
-                             {p.originalPrice}
-                          </span>
-                          <span className="text-[8px] md:text-xs text-white/40">{lang === 'ar' ? 'درهم' : 'AED'}</span>
-                        </div>
-                        <div className="bg-red-500 text-[8px] md:text-xs font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
-                          {lang === 'ar' ? 'وفر' : 'Save'} {Math.round(((p.originalPrice - p.price) / p.originalPrice) * 100)}%
-                        </div>
-                      </div>
-                    )}
+                    {(() => {
+                      const priceData = getDisplayPriceData(p);
+                      return (
+                        <>
+                          {priceData.hasDiscount && priceData.originalPrice && !isStandardMode && (
+                            <div className={`absolute top-1.5 ${lang === 'ar' ? 'right-3 md:right-6' : 'left-3 md:left-6'} md:top-3 flex flex-col items-end gap-0.5 md:gap-1`}>
+                              <div className="flex items-center gap-1">
+                                <span className="text-[10px] md:text-lg font-bold text-white/30 line-through decoration-red-500/50 decoration-1 md:decoration-2">
+                                  {priceData.originalPrice}
+                                </span>
+                                <span className="text-[8px] md:text-xs text-white/40">{lang === 'ar' ? 'درهم' : 'AED'}</span>
+                              </div>
+                              <div className="bg-red-500 text-[8px] md:text-xs font-black px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-white shadow-[0_0_15px_rgba(239,68,68,0.4)] animate-pulse">
+                                {lang === 'ar' ? 'وفر' : 'Save'} {priceData.discountPercent}%
+                              </div>
+                            </div>
+                          )}
 
-                    <span className={`font-black uppercase tracking-widest mb-1 md:mb-2 ${product.prices.length === 1 ? 'text-lg md:text-2xl text-white' : 'text-sm md:text-xl text-amber-500'}`}>
-                      {lang === 'ar' ? p.sizeAr : p.sizeEn}
-                    </span>
-                    
-                    {(isStandardMode ? (p.originalPrice || p.price) : p.price) > 0 && (
-                      <div className="flex flex-col items-center">
-                        <div className="flex items-baseline gap-1 md:gap-2">
-                          <motion.span 
-                            animate={{ 
-                              textShadow: isStandardMode ? [] : ['0 0 10px rgba(251,191,36,0)', '0 0 30px rgba(251,191,36,0.8)', '0 0 10px rgba(251,191,36,0)'],
-                              scale: isStandardMode ? [1] : [1, 1.08, 1]
-                            }}
-                            transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
-                            className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black ${isStandardMode ? 'text-white' : 'text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]'}`}
-                          >
-                            {isStandardMode ? (p.originalPrice || p.price) : p.price}
-                          </motion.span>
-                          <span className="text-[10px] md:text-xl lg:text-2xl font-bold text-white/60 lowercase">{lang === 'ar' ? 'درهم' : 'AED'}</span>
-                        </div>
-                        <span className="text-[8px] md:text-sm font-black text-amber-500/50 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-1 md:mt-2">
-                          {isStandardMode 
-                            ? (lang === 'ar' ? 'السعر الأساسي' : 'Standard Price') 
-                            : (lang === 'ar' ? 'السعر النهائي' : 'Final Price')}
-                        </span>
-                      </div>
-                    )}
+                          <span className={`font-black uppercase tracking-widest mb-1 md:mb-2 ${product.prices.length === 1 ? 'text-lg md:text-2xl text-white' : 'text-sm md:text-xl text-amber-500'}`}>
+                            {lang === 'ar' ? p.sizeAr : p.sizeEn}
+                          </span>
+                          
+                          {priceData.price > 0 && (
+                            <div className="flex flex-col items-center">
+                              <div className="flex items-baseline gap-1 md:gap-2">
+                                <motion.span 
+                                  animate={{ 
+                                    textShadow: isStandardMode ? [] : ['0 0 10px rgba(251,191,36,0)', '0 0 30px rgba(251,191,36,0.8)', '0 0 10px rgba(251,191,36,0)'],
+                                    scale: isStandardMode ? [1] : [1, 1.08, 1]
+                                  }}
+                                  transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut", delay: idx * 0.4 }}
+                                  className={`text-2xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-black ${isStandardMode ? 'text-white' : 'text-amber-500 drop-shadow-[0_0_15px_rgba(245,158,11,0.5)]'}`}
+                                >
+                                  {priceData.price}
+                                </motion.span>
+                                <span className="text-[10px] md:text-xl lg:text-2xl font-bold text-white/60 lowercase">{lang === 'ar' ? 'درهم' : 'AED'}</span>
+                              </div>
+                              <span className="text-[8px] md:text-sm font-black text-amber-500/50 uppercase tracking-[0.2em] md:tracking-[0.3em] mt-1 md:mt-2">
+                                {isStandardMode 
+                                  ? (lang === 'ar' ? 'السعر الأساسي' : 'Standard Price') 
+                                  : (lang === 'ar' ? 'السعر النهائي' : 'Final Price')}
+                              </span>
+                            </div>
+                          )}
+                        </>
+                      );
+                    })()}
                   </motion.div>
                 ))}
               </div>

@@ -61,23 +61,23 @@ Rich in natural Vitamin C, active enzymes, and minerals. It serves as a powerful
       'Immune Boosting & Rich in Vitamins'
     ],
     prices: [
-      { id: 'saim_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 70 },
-      { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 40, originalPrice: 75 },
-      { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 75, originalPrice: 150 },
+      { id: 'saim_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 50, originalPrice: 70 },
+      { id: 'saim_1_2_squeeze', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 50, originalPrice: 70 },
+      { id: 'saim_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 100, originalPrice: 120 },
     ]
   },
   {
     id: 'squeeze-honey',
-    titleAr: 'عسل طبيعي (عبوة اسكويز)',
-    titleEn: 'Natural Honey (Squeeze Bottle)',
-    descriptionAr: 'عسلنا النقي في عبوة "اسكويز" العصرية. رفيقك المثالي لتقوية مناعة أطفالك وحمايتهم يومياً من نوبات البرد المتكررة بلمسة واحدة سهلة.',
-    descriptionEn: 'Pure honey in a modern squeeze bottle. Your perfect companion to strengthen your children\'s immunity and protect them daily from recurring colds with one easy squeeze.',
+    titleAr: 'عسل زهرة البرسيم الطبيعي',
+    titleEn: 'Natural Clover Honey',
+    descriptionAr: 'عسل زهرة البرسيم النقي في عبوة "اسكويز" العصرية. رفيقك المثالي لتقوية مناعة أطفالك وحمايتهم يومياً من نوبات البرد المتكررة بلمسة واحدة سهلة.',
+    descriptionEn: 'Pure clover honey in a modern squeeze bottle. Your perfect companion to strengthen your children\'s immunity and protect them daily from recurring colds with one easy squeeze.',
     image: 'https://imgur.com/vIdADYw.jpeg',
     benefitsAr: ['سهل الاستخدام', 'غني بالأنزيمات'],
     benefitsEn: ['Mess-free', 'Enzyme Rich'],
     prices: [
       { id: 'squeeze_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 20, originalPrice: 30 },
-      { id: 'squeeze_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 50 },
+      { id: 'squeeze_1_2', sizeAr: '½ كيلو سكويز', sizeEn: '½ KG Squeeze', price: 40, originalPrice: 50 },
     ]
   },
   {
@@ -90,9 +90,9 @@ Rich in natural Vitamin C, active enzymes, and minerals. It serves as a powerful
     benefitsAr: ['مقوي للمناعة', 'مضاد حيوي طبيعي'],
     benefitsEn: ['Immunity Boost', 'Natural Antibiotic'],
     prices: [
-      { id: 'clover_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 15, originalPrice: 25 },
-      { id: 'clover_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 30, originalPrice: 45 },
-      { id: 'clover_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 50, originalPrice: 85 },
+      { id: 'clover_1_4', sizeAr: '¼ كيلو', sizeEn: '¼ KG', price: 20, originalPrice: 30 },
+      { id: 'clover_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 35, originalPrice: 55 },
+      { id: 'clover_1', sizeAr: '1 كيلو', sizeEn: '1 KG', price: 80, originalPrice: 100 },
     ]
   },
   {
@@ -107,7 +107,7 @@ Rich in natural Vitamin C, active enzymes, and minerals. It serves as a powerful
     featuresAr: ['500 جم عسل برسيم نقي', '20 جم حبوب لقاح طبيعية', '10 جم غذاء ملكات النحل الأصلي'],
     featuresEn: ['500g Pure Clover Honey', '20g Natural Bee Pollen', '10g Original Royal Jelly'],
     prices: [
-      { id: 'health_full', sizeAr: 'عرض كامل', sizeEn: 'Full Package', price: 50, originalPrice: 100 }
+      { id: 'health_full', sizeAr: 'عرض كامل', sizeEn: 'Full Package', price: 80, originalPrice: 100 }
     ]
   },
   {
@@ -120,7 +120,7 @@ Rich in natural Vitamin C, active enzymes, and minerals. It serves as a powerful
     benefitsAr: ['صحي لللثة', 'خام وغير مصفى'],
     benefitsEn: ['Gum Health', 'Raw & Unfiltered'],
     prices: [
-      { id: 'honeycomb_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 40, originalPrice: 65 },
+      { id: 'honeycomb_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 55, originalPrice: 75 },
     ]
   },
   {
@@ -133,7 +133,7 @@ Rich in natural Vitamin C, active enzymes, and minerals. It serves as a powerful
     benefitsAr: ['بديل صحي للحلويات', 'غني بالأوميغا'],
     benefitsEn: ['Healthy Dessert', 'Omega Rich'],
     prices: [
-      { id: 'royal_nuts_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 50, originalPrice: 80 },
+      { id: 'royal_nuts_1_2', sizeAr: '½ كيلو', sizeEn: '½ KG', price: 60, originalPrice: 80 },
     ]
   },
   {
